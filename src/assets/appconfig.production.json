@@ -1,6 +1,6 @@
 {
-  "remoteServiceBaseUrl": "http://localhost:21021",
-  "appBaseUrl": "http://localhost:4200",
+  "remoteServiceBaseUrl": "http://ismanager-001-site2.ctempurl.com",
+  "appBaseUrl": "http://ismanager-001-site1.ctempurl.com",
   "localeMappings": [
     {
       "from": "pt-BR",

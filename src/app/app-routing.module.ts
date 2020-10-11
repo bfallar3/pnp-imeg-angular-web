@@ -10,6 +10,8 @@ import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from 'app/roles/roles.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { ComplaintsComponent } from './complaints/complaints.component';
+import { CreateComplaintComponent } from './complaints/create-complaint/create-complaint.component';
+import { EditComplaintComponent } from './complaints/edit-complaint/edit-complaint.component';
 
 @NgModule({
     imports: [
@@ -18,14 +20,37 @@ import { ComplaintsComponent } from './complaints/complaints.component';
                 path: '',
                 component: AppComponent,
                 children: [
-                    { path: 'home', component: HomeComponent, canActivate: [AppRouteGuard] },
-                    { path: 'complaints', component: ComplaintsComponent, canActivate: [AppRouteGuard] },
-                    { path: 'dosiers', component: DosiersComponent, canActivate: [AppRouteGuard] },
-                    { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
-                    { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
-                    // { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
-                    { path: 'about', component: AboutComponent },
-                    { path: 'update-password', component: ChangePasswordComponent }
+                    {
+                        path: 'home', component: HomeComponent,
+                        canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'complaints', component: ComplaintsComponent,
+                        canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'create-complaint', component: CreateComplaintComponent
+                    },
+                    {
+                        path: 'edit-complaint', component: EditComplaintComponent
+                    },
+                    {
+                        path: 'dosiers', component: DosiersComponent, canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' },
+                        canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' },
+                        canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'about', component: AboutComponent
+                    },
+                    {
+                        path: 'update-password', component: ChangePasswordComponent
+                    }
                 ]
             }
         ])

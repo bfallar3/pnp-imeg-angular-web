@@ -41,6 +41,8 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 
 import { ComplaintsComponent } from './complaints/complaints.component';
 import { DosiersComponent } from './dosiers/dosiers.component';
+import { CreateComplaintComponent } from './complaints/create-complaint/create-complaint.component';
+import { EditComplaintComponent } from './complaints/edit-complaint/edit-complaint.component';
 
 @NgModule({
   declarations: [
@@ -71,8 +73,12 @@ import { DosiersComponent } from './dosiers/dosiers.component';
     SidebarLogoComponent,
     SidebarUserPanelComponent,
     SidebarMenuComponent,
+    // Dosiers
     DosiersComponent,
-    ComplaintsComponent
+    // Complaints
+    ComplaintsComponent,
+    CreateComplaintComponent,
+    EditComplaintComponent
   ],
   imports: [
     CommonModule,
@@ -100,7 +106,7 @@ import { DosiersComponent } from './dosiers/dosiers.component';
     // users
     CreateUserDialogComponent,
     EditUserDialogComponent,
-    ResetPasswordDialogComponent,
+    ResetPasswordDialogComponent
   ],
 })
 export class AppModule { }

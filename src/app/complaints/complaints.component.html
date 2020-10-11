@@ -6,7 +6,7 @@
                     <h1>{{ "Complaints" | localize }}</h1>
                 </div>
                 <div class="col-6 text-right">
-                    <a href="javascript:;" class="btn bg-blue" (click)="create()">
+                    <a class="btn bg-blue" (click)="create()">
                         <i class="fa fa-plus-square"></i>
                         {{ "Create" | localize }}
                     </a>
@@ -88,16 +88,16 @@
                     <table class="table table-hover text-nowrap" [busy]="isTableLoading">
                         <thead class="bg-light">
                             <tr>
-                                <th>{{ "UserName" | localize }}</th>
-                                <th>{{ "FullName" | localize }}</th>
-                                <th>{{ "EmailAddress" | localize }}</th>
-                                <th>{{ "IsActive" | localize }}</th>
+                                <th>Number</th>
+                                <th>Incident Date</th>
+                                <th>Nature</th>
+                                <th>Assigned to</th>
                                 <th style="width: 310px;">{{ "Actions" | localize }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="
-                  let user of complaints
+                  let complaint of complaints
                     | paginate
                       : {
                           id: 'server',
@@ -106,22 +106,16 @@
                           totalItems: totalItems
                         }
                 ">
-                                <td>{{ user.userName }}</td>
-                                <td>{{ user.fullName }}</td>
-                                <td>{{ user.emailAddress }}</td>
+                                <td>{{ complaint.sheetNumber }}</td>
+                                <td>{{ complaint.dateIncident }}</td>
+                                <td>{{ complaint.nature }}</td>
+                                <td>{{ complaint.assignedTo }}</td>
                                 <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" disabled
-                                            [checked]="user.isActive" />
-                                        <label class="custom-control-label"></label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-sm bg-secondary" (click)="edit(user)">
+                                    <button type="button" class="btn btn-sm bg-secondary" (click)="edit(complaint)">
                                         <i class="fas fa-pencil-alt"></i>
                                         {{ "Edit" | localize }}
                                     </button>
-                                    <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(user)">
+                                    <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(complaint)">
                                         <i class="fas fa-trash"></i>
                                         {{ "Delete" | localize }}
                                     </button>

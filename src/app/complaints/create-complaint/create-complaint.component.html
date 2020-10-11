@@ -1,0 +1,102 @@
+<div [@routerTransition]>
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-6">
+          <h1>Complaint Form</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content px-2">
+    <div class="container-fluid">
+        <form class="form-horizontal" autocomplete="off" (ngSubmit)="save()">
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Sheet number">
+            </div>
+            <div class="col">
+              <input type="datetime" class="form-control" placeholder="Date and time">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <select class="form-control">
+                <option value="In Person">Reported thru: In Person</option>
+                <option value="Phone call">Reported thru: Phone call</option>
+                <option value="SMS">Reported thru: SMS</option>
+                <option value="Web">Reported thru: Web</option>
+              </select>
+            </div>
+            <div class="col">
+              <select class="form-control">
+                <option value="No">Reported to other agency: No</option>
+                <option value="Yes">Reported to other agency: Yes</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="To what agency">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="By whom">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="When previosly reported">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Nature of complaint">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Place of incident">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Date of incident">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Name of complainant">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Address of complainant">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Contact Number of complainant">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <textarea class="form-control" row="10" placeholder="Statement of complaint"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Date and time complaint received">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Receiving Officer">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Referred By">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Referral number">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Assigned to">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Person/Office making assignment">
+            </div>
+          </div>
+        </form>
+      </div>
+  </section>
+</div>

@@ -7,15 +7,16 @@ import {
   PagedRequestDto
 } from 'shared/paged-listing-component-base';
 import {
-  UserServiceProxy,
+  ComplaintServiceProxy,
   UserDto,
-  UserDtoPagedResultDto
+  UserDtoPagedResultDto,
+  ComplaintDto,
+  ComplaintDtoPagedResultDto
 } from '@shared/service-proxies/service-proxies';
-//import { CreateUserDialogComponent } from './create-user/create-user-dialog.component';
-//import { EditUserDialogComponent } from './edit-user/edit-user-dialog.component';
-//import { ResetPasswordDialogComponent } from './reset-password/reset-password.component';
+import { CreateComplaintComponent } from './create-complaint/create-complaint.component';
+import { Router } from '@angular/router';
 
-class PagedUsersRequestDto extends PagedRequestDto {
+class PagedComplaintsRequestDto extends PagedRequestDto {
   keyword: string;
   isActive: boolean | null;
 }
@@ -24,26 +25,27 @@ class PagedUsersRequestDto extends PagedRequestDto {
   templateUrl: './complaints.component.html',
   animations: [appModuleAnimation()]
 })
-export class ComplaintsComponent extends PagedListingComponentBase<UserDto> {
-  complaints: UserDto[] = [];
+export class ComplaintsComponent extends PagedListingComponentBase<ComplaintDto> {
+  complaints: ComplaintDto[] = [];
   keyword = '';
   isActive: boolean | null;
   advancedFiltersVisible = false;
 
   constructor(
     injector: Injector,
-    private _userService: UserServiceProxy,
+    private router: Router,
+    private _complaintService: ComplaintServiceProxy,
     private _modalService: BsModalService
   ) {
     super(injector);
   }
 
   create(): void {
-    this.showCreateOrEditUserDialog();
+    this.router.navigate(['/app/create-complaint']);
   }
 
-  edit(user: UserDto): void {
-    this.showCreateOrEditUserDialog(user.id);
+  edit(complaint: ComplaintDto): void {
+    this.router.navigate(['/app/edit-complaint']);
   }
 
   clearFilters(): void {
@@ -53,17 +55,16 @@ export class ComplaintsComponent extends PagedListingComponentBase<UserDto> {
   }
 
   protected list(
-    request: PagedUsersRequestDto,
+    request: PagedComplaintsRequestDto,
     pageNumber: number,
     finishedCallback: Function
   ): void {
     request.keyword = this.keyword;
     request.isActive = this.isActive;
 
-    this._userService
+    this._complaintService
       .getAll(
         request.keyword,
-        request.isActive,
         request.skipCount,
         request.maxResultCount
       )
@@ -72,28 +73,24 @@ export class ComplaintsComponent extends PagedListingComponentBase<UserDto> {
           finishedCallback();
         })
       )
-      .subscribe((result: UserDtoPagedResultDto) => {
+      .subscribe((result: ComplaintDtoPagedResultDto) => {
         this.complaints = result.items;
         this.showPaging(result, pageNumber);
       });
   }
 
-  protected delete(user: UserDto): void {
+  protected delete(complaint: ComplaintDto): void {
     abp.message.confirm(
-      this.l('UserDeleteWarningMessage', user.fullName),
+      this.l('UserDeleteWarningMessage', complaint.nature),
       undefined,
       (result: boolean) => {
         if (result) {
-          this._userService.delete(user.id).subscribe(() => {
+          this._complaintService.delete(complaint.id).subscribe(() => {
             abp.notify.success(this.l('SuccessfullyDeleted'));
             this.refresh();
           });
         }
       }
     );
-  }
-
-  private showCreateOrEditUserDialog(id?: number): void {
-
   }
 }
