@@ -8,95 +8,157 @@
       </div>
     </div>
   </section>
-
   <section class="content px-2">
     <div class="container-fluid">
-        <form class="form-horizontal" autocomplete="off" (ngSubmit)="save()">
-          <div class="row">
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Sheet number">
-            </div>
-            <div class="col">
-              <input type="datetime" class="form-control" placeholder="Date and time">
+      <form class="form-horizontal" autocomplete="off" (ngSubmit)="save()">
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Sheet Number</label>
+              <input type="text" class="form-control" [(ngModel)]="complaint.sheetNumber"
+                [ngModelOptions]="{standalone: true}">
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <select class="form-control">
-                <option value="In Person">Reported thru: In Person</option>
-                <option value="Phone call">Reported thru: Phone call</option>
-                <option value="SMS">Reported thru: SMS</option>
-                <option value="Web">Reported thru: Web</option>
+          <div class="col">
+            <div class="form-group">
+              <label>Date Today</label>
+              <input readonly type="datetime" class="form-control" bsDatepicker [bsConfig]="{isAnimated: true}"
+                [bsValue]="currentDate">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Reported Thru</label>
+              <select class="form-control" [(ngModel)]="complaint.reportedThru"
+                [ngModelOptions]="{standalone: true}">
+                <option value="In Person">In Person</option>
+                <option value="Phone call">Phone call</option>
+                <option value="SMS">SMS</option>
+                <option value="Web">Web</option>
               </select>
             </div>
-            <div class="col">
-              <select class="form-control">
-                <option value="No">Reported to other agency: No</option>
-                <option value="Yes">Reported to other agency: Yes</option>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label>Reported to other agency?</label>
+              <select class="form-control" [(ngModel)]="complaint.previouslyReported"
+                [ngModelOptions]="{standalone: true}">
+                <option [ngValue]="false">No</option>
+                <option [ngValue]="true">Yes</option>
               </select>
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <input type="text" class="form-control" placeholder="To what agency">
-            </div>
-            <div class="col">
-              <input type="text" class="form-control" placeholder="By whom">
-            </div>
-            <div class="col">
-              <input type="text" class="form-control" placeholder="When previosly reported">
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>To what agency</label>
+              <input type="text" class="form-control" [(ngModel)]="complaint.previouslyReportedAgency"
+                [ngModelOptions]="{standalone: true}">
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Nature of complaint">
-            </div>
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Place of incident">
-            </div>
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Date of incident">
+          <div class="col">
+            <div class="form-group">
+              <label>By whom</label>
+              <input type="text" class="form-control" [(ngModel)]="complaint.previouslyReportedWhom"
+                [ngModelOptions]="{standalone: true}">
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Name of complainant">
-            </div>
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Address of complainant">
-            </div>
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Contact Number of complainant">
+          <div class="col">
+            <div class="form-group">
+              <label>When previously reported</label>
+              <input type="text" class="form-control" bsDatepicker [bsConfig]="{isAnimated: true}"
+                [bsValue]="currentDate" [(ngModel)]="complaint.previouslyReportedWhen"
+                [ngModelOptions]="{standalone: true}">
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <textarea class="form-control" row="10" placeholder="Statement of complaint"></textarea>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Nature of complaint</label>
+              <input type="text" class="form-control" [(ngModel)]="complaint.nature"
+                [ngModelOptions]="{standalone: true}">
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Date and time complaint received">
-            </div>
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Receiving Officer">
-            </div>
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Referred By">
+          <div class="col">
+            <div class="form-group">
+              <label>Place of incident</label>
+              <input type="text" class="form-control" [(ngModel)]="complaint.placeIncident"
+                [ngModelOptions]="{standalone: true}">
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Referral number">
-            </div>
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Assigned to">
-            </div>
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Person/Office making assignment">
+          <div class="col">
+            <div class="form-group">
+              <label>Date of incident</label>
+              <input type="text" class="form-control" bsDatepicker [bsConfig]="{isAnimated: true}"
+                [bsValue]="currentDate" [(ngModel)]="complaint.dateIncident"
+                [ngModelOptions]="{standalone: true}">
             </div>
           </div>
-        </form>
-      </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Statement or Brief Narrate</label>
+              <textarea class="form-control" rows="10" [(ngModel)]="complaint.statement"
+                [ngModelOptions]="{standalone: true}"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Date received</label>
+              <input type="text" class="form-control" bsDatepicker [bsConfig]="{isAnimated: true}"
+                [bsValue]="currentDate" [(ngModel)]="complaint.receivedOn"
+                [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label>Receiving officer</label>
+              <input type="text" class="form-control" [(ngModel)]="complaint.receivingOffice"
+                [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label>Referred by</label>
+              <input type="text" class="form-control" [(ngModel)]="complaint.referredBy"
+                [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Referral number</label>
+              <input type="text" class="form-control" [(ngModel)]="complaint.referralNumber"
+                [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label>Assigned to</label>
+              <input type="text" class="form-control" [(ngModel)]="complaint.assignedTo"
+                [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label>Person/office making assignment</label>
+              <input type="text" class="form-control" [(ngModel)]="complaint.officeMakingAssignment"
+                [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <input type="submit" class="btn btn-primary" value="Submit">
+        </div>
+      </form>
+    </div>
   </section>
 </div>

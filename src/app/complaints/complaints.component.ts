@@ -8,12 +8,9 @@ import {
 } from 'shared/paged-listing-component-base';
 import {
   ComplaintServiceProxy,
-  UserDto,
-  UserDtoPagedResultDto,
   ComplaintDto,
   ComplaintDtoPagedResultDto
 } from '@shared/service-proxies/service-proxies';
-import { CreateComplaintComponent } from './create-complaint/create-complaint.component';
 import { Router } from '@angular/router';
 
 class PagedComplaintsRequestDto extends PagedRequestDto {
@@ -50,7 +47,7 @@ export class ComplaintsComponent extends PagedListingComponentBase<ComplaintDto>
 
   clearFilters(): void {
     this.keyword = '';
-    this.isActive = undefined;
+    this.isActive = true;
     this.getDataPage(1);
   }
 
@@ -60,11 +57,12 @@ export class ComplaintsComponent extends PagedListingComponentBase<ComplaintDto>
     finishedCallback: Function
   ): void {
     request.keyword = this.keyword;
-    request.isActive = this.isActive;
+    request.isActive = true;
 
     this._complaintService
       .getAll(
         request.keyword,
+        request.isActive,
         request.skipCount,
         request.maxResultCount
       )

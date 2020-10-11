@@ -5,6 +5,8 @@ import { HttpClientJsonpModule } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -94,6 +96,8 @@ import { EditComplaintComponent } from './complaints/edit-complaint/edit-complai
     ServiceProxyModule,
     SharedModule,
     NgxPaginationModule,
+    BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot()
   ],
   providers: [],
   entryComponents: [

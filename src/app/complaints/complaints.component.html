@@ -90,6 +90,7 @@
                             <tr>
                                 <th>Number</th>
                                 <th>Incident Date</th>
+                                <th>Channel</th>
                                 <th>Nature</th>
                                 <th>Assigned to</th>
                                 <th style="width: 310px;">{{ "Actions" | localize }}</th>
@@ -107,7 +108,8 @@
                         }
                 ">
                                 <td>{{ complaint.sheetNumber }}</td>
-                                <td>{{ complaint.dateIncident }}</td>
+                                <td>{{ complaint.dateIncident | date }}</td>
+                                <td>{{ complaint.reportedThru }}</td>
                                 <td>{{ complaint.nature }}</td>
                                 <td>{{ complaint.assignedTo }}</td>
                                 <td>

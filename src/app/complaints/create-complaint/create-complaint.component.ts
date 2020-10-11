@@ -1,8 +1,9 @@
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { ComplaintDto, ComplaintServiceProxy } from './../../../shared/service-proxies/service-proxies';
+import { ComplaintDto, ComplaintServiceProxy, CreateComplaintDto } from './../../../shared/service-proxies/service-proxies';
 import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { AppComponentBase } from '@shared/app-component-base';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-complaint',
@@ -13,11 +14,12 @@ import { AppComponentBase } from '@shared/app-component-base';
 export class CreateComplaintComponent extends AppComponentBase implements OnInit {
 
   saving = false;
-  complaint = new ComplaintDto();
-  @Output() onSave = new EventEmitter<any>();
+  currentDate = new Date();
+  complaint = new CreateComplaintDto();
 
   constructor(
     injector: Injector,
+    private router: Router,
     public complaintService: ComplaintServiceProxy) {
     super(injector);
   }
@@ -34,8 +36,8 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
         })
       )
       .subscribe(() => {
-        this.notify.info(this.l('SavedSuccessfully'));
-        this.onSave.emit();
+        abp.notify.success(this.l('SavedSuccessfully'));
+        this.router.navigate(['/app/complaints']);
       });
   }
 

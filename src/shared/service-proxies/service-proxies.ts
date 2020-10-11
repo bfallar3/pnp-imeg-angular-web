@@ -208,15 +208,18 @@ export class ComplaintServiceProxy {
     }
 
     /**
-     * @param sorting (optional) 
+     * @param keyword (optional) 
+     * @param isActive (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(sorting: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ComplaintDtoPagedResultDto> {
+    getAll(keyword: string | null | undefined, isActive: boolean | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ComplaintDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Complaint/GetAll?";
-        if (sorting !== undefined && sorting !== null)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (keyword !== undefined && keyword !== null)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (isActive !== undefined && isActive !== null)
+            url_ += "IsActive=" + encodeURIComponent("" + isActive) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -275,7 +278,7 @@ export class ComplaintServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    create(body: ComplaintDto | undefined): Observable<ComplaintDto> {
+    create(body: CreateComplaintDto | undefined): Observable<ComplaintDto> {
         let url_ = this.baseUrl + "/api/services/app/Complaint/Create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2219,6 +2222,7 @@ export class ComplaintDto implements IComplaintDto {
     reportedThru: string | undefined;
     previouslyReported: boolean;
     previouslyReportedAgency: string | undefined;
+    previouslyReportedWhom: string | undefined;
     previouslyReportedWhen: moment.Moment;
     nature: string | undefined;
     placeIncident: string | undefined;
@@ -2230,9 +2234,6 @@ export class ComplaintDto implements IComplaintDto {
     receivedOn: moment.Moment;
     receivingOffice: string | undefined;
     officeMakingAssignment: string | undefined;
-    isDeleted: boolean;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -2254,6 +2255,7 @@ export class ComplaintDto implements IComplaintDto {
             this.reportedThru = _data["reportedThru"];
             this.previouslyReported = _data["previouslyReported"];
             this.previouslyReportedAgency = _data["previouslyReportedAgency"];
+            this.previouslyReportedWhom = _data["previouslyReportedWhom"];
             this.previouslyReportedWhen = _data["previouslyReportedWhen"] ? moment(_data["previouslyReportedWhen"].toString()) : <any>undefined;
             this.nature = _data["nature"];
             this.placeIncident = _data["placeIncident"];
@@ -2265,9 +2267,6 @@ export class ComplaintDto implements IComplaintDto {
             this.receivedOn = _data["receivedOn"] ? moment(_data["receivedOn"].toString()) : <any>undefined;
             this.receivingOffice = _data["receivingOffice"];
             this.officeMakingAssignment = _data["officeMakingAssignment"];
-            this.isDeleted = _data["isDeleted"];
-            this.deleterUserId = _data["deleterUserId"];
-            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
             this.lastModifierUserId = _data["lastModifierUserId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
@@ -2289,6 +2288,7 @@ export class ComplaintDto implements IComplaintDto {
         data["reportedThru"] = this.reportedThru;
         data["previouslyReported"] = this.previouslyReported;
         data["previouslyReportedAgency"] = this.previouslyReportedAgency;
+        data["previouslyReportedWhom"] = this.previouslyReportedWhom;
         data["previouslyReportedWhen"] = this.previouslyReportedWhen ? this.previouslyReportedWhen.toISOString() : <any>undefined;
         data["nature"] = this.nature;
         data["placeIncident"] = this.placeIncident;
@@ -2300,9 +2300,6 @@ export class ComplaintDto implements IComplaintDto {
         data["receivedOn"] = this.receivedOn ? this.receivedOn.toISOString() : <any>undefined;
         data["receivingOffice"] = this.receivingOffice;
         data["officeMakingAssignment"] = this.officeMakingAssignment;
-        data["isDeleted"] = this.isDeleted;
-        data["deleterUserId"] = this.deleterUserId;
-        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         data["lastModifierUserId"] = this.lastModifierUserId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
@@ -2324,6 +2321,7 @@ export interface IComplaintDto {
     reportedThru: string | undefined;
     previouslyReported: boolean;
     previouslyReportedAgency: string | undefined;
+    previouslyReportedWhom: string | undefined;
     previouslyReportedWhen: moment.Moment;
     nature: string | undefined;
     placeIncident: string | undefined;
@@ -2335,9 +2333,6 @@ export interface IComplaintDto {
     receivedOn: moment.Moment;
     receivingOffice: string | undefined;
     officeMakingAssignment: string | undefined;
-    isDeleted: boolean;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -2398,6 +2393,109 @@ export class ComplaintDtoPagedResultDto implements IComplaintDtoPagedResultDto {
 export interface IComplaintDtoPagedResultDto {
     totalCount: number;
     items: ComplaintDto[] | undefined;
+}
+
+export class CreateComplaintDto implements ICreateComplaintDto {
+    sheetNumber: string | undefined;
+    reportedThru: string | undefined;
+    previouslyReported: boolean;
+    previouslyReportedAgency: string | undefined;
+    previouslyReportedWhom: string | undefined;
+    previouslyReportedWhen: moment.Moment;
+    nature: string | undefined;
+    placeIncident: string | undefined;
+    dateIncident: moment.Moment;
+    statement: string | undefined;
+    referredBy: string | undefined;
+    referralNumber: string | undefined;
+    assignedTo: string | undefined;
+    receivedOn: moment.Moment;
+    receivingOffice: string | undefined;
+    officeMakingAssignment: string | undefined;
+
+    constructor(data?: ICreateComplaintDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.sheetNumber = _data["sheetNumber"];
+            this.reportedThru = _data["reportedThru"];
+            this.previouslyReported = _data["previouslyReported"];
+            this.previouslyReportedAgency = _data["previouslyReportedAgency"];
+            this.previouslyReportedWhom = _data["previouslyReportedWhom"];
+            this.previouslyReportedWhen = _data["previouslyReportedWhen"] ? moment(_data["previouslyReportedWhen"].toString()) : <any>undefined;
+            this.nature = _data["nature"];
+            this.placeIncident = _data["placeIncident"];
+            this.dateIncident = _data["dateIncident"] ? moment(_data["dateIncident"].toString()) : <any>undefined;
+            this.statement = _data["statement"];
+            this.referredBy = _data["referredBy"];
+            this.referralNumber = _data["referralNumber"];
+            this.assignedTo = _data["assignedTo"];
+            this.receivedOn = _data["receivedOn"] ? moment(_data["receivedOn"].toString()) : <any>undefined;
+            this.receivingOffice = _data["receivingOffice"];
+            this.officeMakingAssignment = _data["officeMakingAssignment"];
+        }
+    }
+
+    static fromJS(data: any): CreateComplaintDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateComplaintDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["sheetNumber"] = this.sheetNumber;
+        data["reportedThru"] = this.reportedThru;
+        data["previouslyReported"] = this.previouslyReported;
+        data["previouslyReportedAgency"] = this.previouslyReportedAgency;
+        data["previouslyReportedWhom"] = this.previouslyReportedWhom;
+        data["previouslyReportedWhen"] = this.previouslyReportedWhen ? this.previouslyReportedWhen.toISOString() : <any>undefined;
+        data["nature"] = this.nature;
+        data["placeIncident"] = this.placeIncident;
+        data["dateIncident"] = this.dateIncident ? this.dateIncident.toISOString() : <any>undefined;
+        data["statement"] = this.statement;
+        data["referredBy"] = this.referredBy;
+        data["referralNumber"] = this.referralNumber;
+        data["assignedTo"] = this.assignedTo;
+        data["receivedOn"] = this.receivedOn ? this.receivedOn.toISOString() : <any>undefined;
+        data["receivingOffice"] = this.receivingOffice;
+        data["officeMakingAssignment"] = this.officeMakingAssignment;
+        return data; 
+    }
+
+    clone(): CreateComplaintDto {
+        const json = this.toJSON();
+        let result = new CreateComplaintDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateComplaintDto {
+    sheetNumber: string | undefined;
+    reportedThru: string | undefined;
+    previouslyReported: boolean;
+    previouslyReportedAgency: string | undefined;
+    previouslyReportedWhom: string | undefined;
+    previouslyReportedWhen: moment.Moment;
+    nature: string | undefined;
+    placeIncident: string | undefined;
+    dateIncident: moment.Moment;
+    statement: string | undefined;
+    referredBy: string | undefined;
+    referralNumber: string | undefined;
+    assignedTo: string | undefined;
+    receivedOn: moment.Moment;
+    receivingOffice: string | undefined;
+    officeMakingAssignment: string | undefined;
 }
 
 export class ChangeUiThemeInput implements IChangeUiThemeInput {
