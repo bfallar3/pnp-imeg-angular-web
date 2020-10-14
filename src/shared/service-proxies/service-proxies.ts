@@ -2234,6 +2234,7 @@ export class ComplaintDto implements IComplaintDto {
     receivedOn: moment.Moment;
     receivingOffice: string | undefined;
     officeMakingAssignment: string | undefined;
+    status: string | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -2267,6 +2268,7 @@ export class ComplaintDto implements IComplaintDto {
             this.receivedOn = _data["receivedOn"] ? moment(_data["receivedOn"].toString()) : <any>undefined;
             this.receivingOffice = _data["receivingOffice"];
             this.officeMakingAssignment = _data["officeMakingAssignment"];
+            this.status = _data["status"];
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
             this.lastModifierUserId = _data["lastModifierUserId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
@@ -2300,6 +2302,7 @@ export class ComplaintDto implements IComplaintDto {
         data["receivedOn"] = this.receivedOn ? this.receivedOn.toISOString() : <any>undefined;
         data["receivingOffice"] = this.receivingOffice;
         data["officeMakingAssignment"] = this.officeMakingAssignment;
+        data["status"] = this.status;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         data["lastModifierUserId"] = this.lastModifierUserId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
@@ -2333,6 +2336,7 @@ export interface IComplaintDto {
     receivedOn: moment.Moment;
     receivingOffice: string | undefined;
     officeMakingAssignment: string | undefined;
+    status: string | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -2412,6 +2416,7 @@ export class CreateComplaintDto implements ICreateComplaintDto {
     receivedOn: moment.Moment;
     receivingOffice: string | undefined;
     officeMakingAssignment: string | undefined;
+    status: string | undefined;
 
     constructor(data?: ICreateComplaintDto) {
         if (data) {
@@ -2440,6 +2445,7 @@ export class CreateComplaintDto implements ICreateComplaintDto {
             this.receivedOn = _data["receivedOn"] ? moment(_data["receivedOn"].toString()) : <any>undefined;
             this.receivingOffice = _data["receivingOffice"];
             this.officeMakingAssignment = _data["officeMakingAssignment"];
+            this.status = _data["status"];
         }
     }
 
@@ -2468,6 +2474,7 @@ export class CreateComplaintDto implements ICreateComplaintDto {
         data["receivedOn"] = this.receivedOn ? this.receivedOn.toISOString() : <any>undefined;
         data["receivingOffice"] = this.receivingOffice;
         data["officeMakingAssignment"] = this.officeMakingAssignment;
+        data["status"] = this.status;
         return data; 
     }
 
@@ -2496,6 +2503,7 @@ export interface ICreateComplaintDto {
     receivedOn: moment.Moment;
     receivingOffice: string | undefined;
     officeMakingAssignment: string | undefined;
+    status: string | undefined;
 }
 
 export class ChangeUiThemeInput implements IChangeUiThemeInput {

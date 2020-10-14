@@ -25,6 +25,9 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
   }
 
   ngOnInit(): void {
+    this.complaint.status = 'New';
+    this.complaint.reportedThru = 'In Person';
+    this.complaint.previouslyReported = false;
   }
 
   save(): void {

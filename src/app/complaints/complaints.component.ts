@@ -79,7 +79,7 @@ export class ComplaintsComponent extends PagedListingComponentBase<ComplaintDto>
 
   protected delete(complaint: ComplaintDto): void {
     abp.message.confirm(
-      this.l('UserDeleteWarningMessage', complaint.nature),
+      this.l('ComplaintDeleteWarningMessage', complaint.nature),
       undefined,
       (result: boolean) => {
         if (result) {

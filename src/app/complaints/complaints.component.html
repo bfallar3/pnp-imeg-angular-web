@@ -92,6 +92,7 @@
                                 <th>Incident Date</th>
                                 <th>Channel</th>
                                 <th>Nature</th>
+                                <th>Status</th>
                                 <th>Assigned to</th>
                                 <th style="width: 310px;">{{ "Actions" | localize }}</th>
                             </tr>
@@ -111,6 +112,7 @@
                                 <td>{{ complaint.dateIncident | date }}</td>
                                 <td>{{ complaint.reportedThru }}</td>
                                 <td>{{ complaint.nature }}</td>
+                                <td>{{ complaint.status }}</td>
                                 <td>{{ complaint.assignedTo }}</td>
                                 <td>
                                     <button type="button" class="btn btn-sm bg-secondary" (click)="edit(complaint)">
