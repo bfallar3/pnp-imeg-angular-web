@@ -106,6 +106,62 @@
           </div>
         </div>
         <div class="row">
+          <div class="col" *ngIf="!this.complaint.complainant">
+            <input type="button" class="btn btn-secondary" value="Add Complainant or Informer" (click)="createInformer()">
+          </div>
+          <div class="col" *ngIf="this.complaint.complainant">
+            <input type="button" class="btn btn-secondary" value="Update Complainant or Informer" (click)="updateInformer()">
+          </div>
+        </div>
+        <div *ngIf="this.complaint.complainant">
+          <div class="row">
+            <div class="col">
+              <div class="form-group required">
+                <label class="col-form-label">FirstName</label>
+                <input type="text" class="form-control" [(ngModel)]="complaint.complainant.firstName" disabled
+                  [ngModelOptions]="{standalone: true}">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group required">
+                <label class="col-form-label">MiddleName</label>
+                <input type="text" class="form-control" [(ngModel)]="complaint.complainant.middleName" disabled
+                  [ngModelOptions]="{standalone: true}">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group required">
+                <label class="col-form-label">LastName</label>
+                <input type="text" class="form-control" [(ngModel)]="complaint.complainant.lastName" disabled
+                  [ngModelOptions]="{standalone: true}">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group required">
+                <label class="col-form-label">Qualifier</label>
+                <input type="text" class="form-control" [(ngModel)]="complaint.complainant.qualifier" disabled
+                  [ngModelOptions]="{standalone: true}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-group required">
+                <label class="col-form-label">Address</label>
+                <input type="text" class="form-control" [(ngModel)]="complaint.complainant.address" disabled
+                  [ngModelOptions]="{standalone: true}">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group required">
+                <label class="col-form-label">Contact Number</label>
+                <input type="text" class="form-control" [(ngModel)]="complaint.complainant.mobileNumber" disabled
+                  [ngModelOptions]="{standalone: true}">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
           <div class="col">
             <div class="form-group required">
               <label class="col-form-label">Statement or Brief Narrate</label>
@@ -165,6 +221,7 @@
             <input type="submit" class="btn btn-primary" value="Submit">
           </div>
         </div>
+        <br />
       </form>
     </div>
   </section>

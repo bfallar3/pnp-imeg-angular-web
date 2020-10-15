@@ -45,6 +45,9 @@ import { ComplaintsComponent } from './complaints/complaints.component';
 import { DosiersComponent } from './dosiers/dosiers.component';
 import { CreateComplaintComponent } from './complaints/create-complaint/create-complaint.component';
 import { EditComplaintComponent } from './complaints/edit-complaint/edit-complaint.component';
+import { PersonsComponent } from './persons/persons.component';
+import { CreatePersonDialogComponent } from './persons/create-person-dialog/create-person-dialog.component';
+import { EditPersonDialogComponent } from './persons/edit-person-dialog/edit-person-dialog.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +83,10 @@ import { EditComplaintComponent } from './complaints/edit-complaint/edit-complai
     // Complaints
     ComplaintsComponent,
     CreateComplaintComponent,
-    EditComplaintComponent
+    EditComplaintComponent,
+    PersonsComponent,
+    CreatePersonDialogComponent,
+    EditPersonDialogComponent
   ],
   imports: [
     CommonModule,
