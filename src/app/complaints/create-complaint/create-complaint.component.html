@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-6">
-          <h1>Complaint Form</h1>
+          <h1>New Complaint Form</h1>
         </div>
       </div>
     </div>
@@ -16,14 +16,15 @@
             <div class="form-group required">
               <label class="col-form-label">Sheet Number</label>
               <input type="text" class="form-control" [(ngModel)]="complaint.sheetNumber"
-                [ngModelOptions]="{standalone: true}">
+                (ngModelChange)="complaint.sheetNumber = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
             </div>
           </div>
           <div class="col">
             <div class="form-group">
               <label class="col-form-label">Status</label>
-              <select class="form-control" [(ngModel)]="complaint.status" [ngModelOptions]="{standalone: true}">
-                <option value="New">New</option>
+              <select class="form-control" [(ngModel)]="complaint.status"
+                (ngModelChange)="complaint.status = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+                <option value="NEW">NEW</option>
               </select>
             </div>
           </div>
@@ -39,11 +40,12 @@
           <div class="col">
             <div class="form-group">
               <label class="col-form-label">Reported Thru</label>
-              <select class="form-control" [(ngModel)]="complaint.reportedThru" [ngModelOptions]="{standalone: true}">
-                <option value="In Person">In Person</option>
-                <option value="Phone call">Phone call</option>
+              <select class="form-control" [(ngModel)]="complaint.reportedThru" [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="complaint.reportedThru = $event.toUpperCase()">
+                <option value="IN PERSON">IN PERSON</option>
+                <option value="PHONE CALL">PHONE CALL</option>
                 <option value="SMS">SMS</option>
-                <option value="Web">Web</option>
+                <option value="WEB">WEB</option>
               </select>
             </div>
           </div>
@@ -51,9 +53,10 @@
             <div class="form-group">
               <label class="col-form-label">Reported to other agency?</label>
               <select class="form-control" [(ngModel)]="complaint.previouslyReported"
+                (ngModelChange)="complaint.previouslyReported = $event.toUpperCase()"
                 [ngModelOptions]="{standalone: true}">
-                <option [ngValue]="false">No</option>
-                <option [ngValue]="true">Yes</option>
+                <option [ngValue]="false">NO</option>
+                <option [ngValue]="true">YES</option>
               </select>
             </div>
           </div>
@@ -63,6 +66,7 @@
             <div class="form-group">
               <label class="col-form-label">To what agency</label>
               <input type="text" class="form-control" [(ngModel)]="complaint.previouslyReportedAgency"
+                (ngModelChange)="complaint.previouslyReportedAgency = $event.toUpperCase()"
                 [ngModelOptions]="{standalone: true}">
             </div>
           </div>
@@ -70,15 +74,15 @@
             <div class="form-group">
               <label class="col-form-label">By whom</label>
               <input type="text" class="form-control" [(ngModel)]="complaint.previouslyReportedWhom"
+                (ngModelChange)="complaint.previouslyReportedWhom = $event.toUpperCase()"
                 [ngModelOptions]="{standalone: true}">
             </div>
           </div>
           <div class="col">
             <div class="form-group">
               <label class="col-form-label">When previously reported</label>
-              <input type="text" class="form-control" bsDatepicker [bsConfig]="{isAnimated: true}"
-                [bsValue]="currentDate" [(ngModel)]="complaint.previouslyReportedWhen"
-                [ngModelOptions]="{standalone: true}">
+              <input type="text" class="form-control" bsDatepicker [bsValue]="previouslyReportedOn"
+                (bsValueChange)="previouslyReportedOnValueChanged($event)">
             </div>
           </div>
         </div>
@@ -87,30 +91,32 @@
             <div class="form-group required">
               <label class="col-form-label">Nature of complaint</label>
               <input type="text" class="form-control" [(ngModel)]="complaint.nature"
-                [ngModelOptions]="{standalone: true}">
+                (ngModelChange)="complaint.nature = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
             </div>
           </div>
           <div class="col">
             <div class="form-group">
               <label class="col-form-label">Place of incident</label>
               <input type="text" class="form-control" [(ngModel)]="complaint.placeIncident"
-                [ngModelOptions]="{standalone: true}">
+                (ngModelChange)="complaint.placeIncident = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
             </div>
           </div>
           <div class="col">
             <div class="form-group required">
               <label class="col-form-label">Date of incident</label>
-              <input type="text" class="form-control" bsDatepicker [bsConfig]="{isAnimated: true}"
-                [bsValue]="currentDate" [(ngModel)]="complaint.dateIncident" [ngModelOptions]="{standalone: true}">
+              <input type="text" class="form-control" bsDatepicker [bsValue]="dateIncident"
+                (bsValueChange)="dateIncidentValueChanged($event)">
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col" *ngIf="!this.complaint.complainant">
-            <input type="button" class="btn btn-secondary" value="Add Complainant or Informer" (click)="createInformer()">
+            <input type="button" class="btn btn-secondary" value="Add Complainant or Informer"
+              (click)="createInformer()">
           </div>
           <div class="col" *ngIf="this.complaint.complainant">
-            <input type="button" class="btn btn-secondary" value="Update Complainant or Informer" (click)="updateInformer()">
+            <input type="button" class="btn btn-secondary" value="Update Complainant or Informer"
+              (click)="updateInformer()">
           </div>
         </div>
         <div *ngIf="this.complaint.complainant">
@@ -166,6 +172,7 @@
             <div class="form-group required">
               <label class="col-form-label">Statement or Brief Narrate</label>
               <textarea class="form-control" rows="10" [(ngModel)]="complaint.statement"
+                (ngModelChange)="complaint.statement = $event.toUpperCase()"
                 [ngModelOptions]="{standalone: true}"></textarea>
             </div>
           </div>
@@ -174,14 +181,15 @@
           <div class="col">
             <div class="form-group">
               <label class="col-form-label required">Date received</label>
-              <input type="text" class="form-control" bsDatepicker [bsConfig]="{isAnimated: true}"
-                [bsValue]="currentDate" [(ngModel)]="complaint.receivedOn" [ngModelOptions]="{standalone: true}">
+              <input type="text" class="form-control" bsDatepicker [bsValue]="receivedOn"
+                (bsValueChange)="receivedOnValueChanged($event)">
             </div>
           </div>
           <div class="col">
             <div class="form-group required">
               <label class="col-form-label">Receiving officer</label>
               <input type="text" class="form-control" [(ngModel)]="complaint.receivingOffice"
+                (ngModelChange)="complaint.receivingOffice = $event.toUpperCase()"
                 [ngModelOptions]="{standalone: true}">
             </div>
           </div>
@@ -189,7 +197,7 @@
             <div class="form-group">
               <label class="col-form-label">Referred by</label>
               <input type="text" class="form-control" [(ngModel)]="complaint.referredBy"
-                [ngModelOptions]="{standalone: true}">
+                (ngModelChange)="complaint.referredBy = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
             </div>
           </div>
         </div>
@@ -198,20 +206,21 @@
             <div class="form-group">
               <label class="col-form-label">Referral number</label>
               <input type="text" class="form-control" [(ngModel)]="complaint.referralNumber"
-                [ngModelOptions]="{standalone: true}">
+                (ngModelChange)="complaint.referralNumber = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
             </div>
           </div>
           <div class="col">
             <div class="form-group">
               <label class="col-form-label">Assigned to</label>
               <input type="text" class="form-control" [(ngModel)]="complaint.assignedTo"
-                [ngModelOptions]="{standalone: true}">
+                (ngModelChange)="complaint.assignedTo = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
             </div>
           </div>
           <div class="col">
             <div class="form-group">
               <label class="col-form-label">Person/office making assignment</label>
               <input type="text" class="form-control" [(ngModel)]="complaint.officeMakingAssignment"
+                (ngModelChange)="complaint.officeMakingAssignment = $event.toUpperCase()"
                 [ngModelOptions]="{standalone: true}">
             </div>
           </div>

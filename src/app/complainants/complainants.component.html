@@ -3,14 +3,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6">
-                    <h1>{{ "Complaints" | localize }}</h1>
+                    <h1>Complainants or Informers</h1>
                 </div>
-                <div class="col-6 text-right">
+                <!-- <div class="col-6 text-right">
                     <a class="btn bg-blue" (click)="create()">
                         <i class="fa fa-plus-square"></i>
                         {{ "Create" | localize }}
                     </a>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
@@ -88,17 +88,19 @@
                     <table class="table table-hover text-nowrap" [busy]="isTableLoading">
                         <thead class="bg-light">
                             <tr>
-                                <th>Number</th>
-                                <th>Incident Date</th>
-                                <th>Channel</th>
-                                <th>Nature</th>
-                                <th>Status</th>
-                                <th>Assigned to</th>
+                                <th>FirstName</th>
+                                <th>MiddleName</th>
+                                <th>LastName</th>
+                                <th>Qualifier</th>
+                                <th>Mobile Number</th>
+                                <th>Address</th>
                                 <th style="width: 310px;">{{ "Actions" | localize }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let complaint of complaints | paginate
+                            <tr *ngFor="
+                  let item of items
+                    | paginate
                       : {
                           id: 'server',
                           itemsPerPage: pageSize,
@@ -106,18 +108,18 @@
                           totalItems: totalItems
                         }
                 ">
-                                <td>{{ complaint.sheetNumber }}</td>
-                                <td>{{ complaint.dateIncident | date:'MM/dd/yyyy' }}</td>
-                                <td>{{ complaint.reportedThru }}</td>
-                                <td>{{ complaint.nature }}</td>
-                                <td>{{ complaint.status }}</td>
-                                <td>{{ complaint.assignedTo }}</td>
+                                <td>{{ item.firstName }}</td>
+                                <td>{{ item.middleName }}</td>
+                                <td>{{ item.lastName }}</td>
+                                <td>{{ item.qualifier }}</td>
+                                <td>{{ item.mobileNumber }}</td>
+                                <td>{{ item.address }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-sm bg-secondary" (click)="edit(complaint)">
+                                    <button type="button" class="btn btn-sm bg-secondary" (click)="edit(item)">
                                         <i class="fas fa-pencil-alt"></i>
                                         {{ "Edit" | localize }}
                                     </button>
-                                    <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(complaint)">
+                                    <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(item)">
                                         <i class="fas fa-trash"></i>
                                         {{ "Delete" | localize }}
                                     </button>

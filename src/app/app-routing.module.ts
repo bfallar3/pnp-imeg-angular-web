@@ -12,6 +12,10 @@ import { ChangePasswordComponent } from './users/change-password/change-password
 import { ComplaintsComponent } from './complaints/complaints.component';
 import { CreateComplaintComponent } from './complaints/create-complaint/create-complaint.component';
 import { EditComplaintComponent } from './complaints/edit-complaint/edit-complaint.component';
+import { ComplainantsComponent } from './complainants/complainants.component';
+import { VictimsComponent } from './victims/victims.component';
+import { WitnessesComponent } from './witnesses/witnesses.component';
+import { SuspectsComponent } from './suspects/suspects.component';
 
 @NgModule({
     imports: [
@@ -32,10 +36,22 @@ import { EditComplaintComponent } from './complaints/edit-complaint/edit-complai
                         path: 'create-complaint', component: CreateComplaintComponent
                     },
                     {
-                        path: 'edit-complaint', component: EditComplaintComponent
+                        path: 'edit-complaint/:id', component: EditComplaintComponent
                     },
                     {
                         path: 'dosiers', component: DosiersComponent, canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'complainants', component: ComplainantsComponent, canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'victims', component: VictimsComponent, canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'witnesses', component: WitnessesComponent, canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'suspects', component: SuspectsComponent, canActivate: [AppRouteGuard]
                     },
                     {
                         path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' },

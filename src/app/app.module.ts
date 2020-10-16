@@ -48,6 +48,10 @@ import { EditComplaintComponent } from './complaints/edit-complaint/edit-complai
 import { PersonsComponent } from './persons/persons.component';
 import { CreatePersonDialogComponent } from './persons/create-person-dialog/create-person-dialog.component';
 import { EditPersonDialogComponent } from './persons/edit-person-dialog/edit-person-dialog.component';
+import { ComplainantsComponent } from './complainants/complainants.component';
+import { VictimsComponent } from './victims/victims.component';
+import { SuspectsComponent } from './suspects/suspects.component';
+import { WitnessesComponent } from './witnesses/witnesses.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +90,11 @@ import { EditPersonDialogComponent } from './persons/edit-person-dialog/edit-per
     EditComplaintComponent,
     PersonsComponent,
     CreatePersonDialogComponent,
-    EditPersonDialogComponent
+    EditPersonDialogComponent,
+    ComplainantsComponent,
+    VictimsComponent,
+    SuspectsComponent,
+    WitnessesComponent
   ],
   imports: [
     CommonModule,

@@ -7,25 +7,32 @@
                     <div class="form-group required">
                         <label class="col-form-label">First Name</label>
                         <input type="text" class="form-control" [(ngModel)]="person.firstName"
+                            (ngModelChange)="person.firstName = $event.toUpperCase()"
                             [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label class="col-form-label">Middle Name</label>
-                        <input type="text" class="form-control" [(ngModel)]="person.middleName" [ngModelOptions]="{standalone: true}">
+                        <input type="text" class="form-control" [(ngModel)]="person.middleName"
+                            (ngModelChange)="person.middleName = $event.toUpperCase()"
+                            [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group required">
                         <label class="col-form-label">Last Name</label>
-                        <input type="text" class="form-control" [(ngModel)]="person.lastName" [ngModelOptions]="{standalone: true}">
+                        <input type="text" class="form-control" [(ngModel)]="person.lastName"
+                            (ngModelChange)="person.lastName = $event.toUpperCase()"
+                            [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label class="col-form-label">Qualifier</label>
-                        <input type="text" class="form-control" [(ngModel)]="person.qualifier" [ngModelOptions]="{standalone: true}">
+                        <input type="text" class="form-control" [(ngModel)]="person.qualifier"
+                            (ngModelChange)="person.qualifier = $event.toUpperCase()"
+                            [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
             </div>
@@ -33,13 +40,37 @@
                 <div class="col">
                     <div class="form-group">
                         <label class="col-form-label">Address</label>
-                        <input type="text" class="form-control" [(ngModel)]="person.address" [ngModelOptions]="{standalone: true}">
+                        <input type="text" class="form-control" [(ngModel)]="person.address"
+                            (ngModelChange)="person.address = $event.toUpperCase()"
+                            [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col">
                     <div class="form-group required">
                         <label class="col-form-label">Contact Number</label>
-                        <input type="text" class="form-control" [(ngModel)]="person.mobileNumber" [ngModelOptions]="{standalone: true}">
+                        <input type="text" class="form-control" [(ngModel)]="person.mobileNumber"
+                            (ngModelChange)="person.mobileNumber = $event.toUpperCase()"
+                            [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label class="col-form-label">Gender</label>
+                        <select class="form-control" [(ngModel)]="person.gender" [ngModelOptions]="{standalone: true}">
+                            <option value="MALE">MALE</option>
+                            <option value="FEMALE">FEMALE</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label class="col-form-label">Alias</label>
+                        <input type="text" class="form-control" [(ngModel)]="person.alias"
+                            (ngModelChange)="person.alias = $event.toUpperCase()"
+                            [ngModelOptions]="{standalone: true}">
+                        <i class="small">Provide alias name if the person is suspect</i>
                     </div>
                 </div>
             </div>

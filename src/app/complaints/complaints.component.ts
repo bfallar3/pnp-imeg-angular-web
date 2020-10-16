@@ -19,6 +19,7 @@ class PagedComplaintsRequestDto extends PagedRequestDto {
 }
 
 @Component({
+  selector: 'app-complaints',
   templateUrl: './complaints.component.html',
   animations: [appModuleAnimation()]
 })
@@ -42,7 +43,7 @@ export class ComplaintsComponent extends PagedListingComponentBase<ComplaintDto>
   }
 
   edit(complaint: ComplaintDto): void {
-    this.router.navigate(['/app/edit-complaint']);
+    this.router.navigate(['/app/edit-complaint', complaint.id]);
   }
 
   clearFilters(): void {
@@ -79,8 +80,7 @@ export class ComplaintsComponent extends PagedListingComponentBase<ComplaintDto>
 
   protected delete(complaint: ComplaintDto): void {
     abp.message.confirm(
-      this.l('ComplaintDeleteWarningMessage', complaint.nature),
-      undefined,
+      this.l('ComplaintDeleteWarningMessage', complaint.nature), undefined,
       (result: boolean) => {
         if (result) {
           this._complaintService.delete(complaint.id).subscribe(() => {

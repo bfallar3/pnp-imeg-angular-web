@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { CreatePersonDialogComponent } from '@app/persons/create-person-dialog/create-person-dialog.component';
 import { EditPersonDialogComponent } from '@app/persons/edit-person-dialog/edit-person-dialog.component';
 import { PersonDto } from '@shared/service-proxies/PersonDto';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-create-complaint',
@@ -19,6 +20,9 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
 
   saving = false;
   currentDate = new Date();
+  dateIncident = new Date();
+  receivedOn = new Date();
+  previouslyReportedOn = new Date();
   complaint = new CreateComplaintDto();
   person: PersonDto;
 
@@ -31,13 +35,17 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
   }
 
   ngOnInit(): void {
-    this.complaint.status = 'New';
-    this.complaint.reportedThru = 'In Person';
+    this.complaint.status = 'NEW';
+    this.complaint.reportedThru = 'IN PERSON';
     this.complaint.previouslyReported = false;
   }
 
   save(): void {
     this.saving = true;
+
+    this.complaint.dateIncident = moment(this.dateIncident);
+    this.complaint.receivedOn = moment(this.receivedOn);
+    this.complaint.previouslyReportedWhen = moment(this.previouslyReportedOn);
     this.complaintService.create(this.complaint)
       .pipe(
         finalize(() => {
@@ -96,6 +104,18 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
         this.complaint.complainant.mobileNumber = this.person.mobileNumber;
       });
     }
+  }
+
+  dateIncidentValueChanged(value: Date): void {
+    this.dateIncident = value;
+  }
+
+  receivedOnValueChanged(value: Date): void {
+    this.receivedOn = value;
+  }
+
+  previouslyReportedOnValueChanged(value: Date): void {
+    this.previouslyReportedOn = value;
   }
 
 }
