@@ -3788,161 +3788,6 @@ export interface IVictimDto {
     id: number;
 }
 
-export class ComplaintDto implements IComplaintDto {
-    sheetNumber: string | undefined;
-    reportedThru: string | undefined;
-    previouslyReported: boolean;
-    previouslyReportedAgency: string | undefined;
-    previouslyReportedWhom: string | undefined;
-    previouslyReportedWhen: moment.Moment;
-    nature: string | undefined;
-    placeIncident: string | undefined;
-    dateIncident: moment.Moment;
-    statement: string | undefined;
-    referredBy: string | undefined;
-    referralNumber: string | undefined;
-    assignedTo: string | undefined;
-    receivedOn: moment.Moment;
-    receivingOffice: string | undefined;
-    officeMakingAssignment: string | undefined;
-    status: string | undefined;
-    complainantId: number | undefined;
-    informerName: string | undefined;
-    informerAddress: string | undefined;
-    informerContactNumber: string | undefined;
-    victims: VictimDto[] | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    id: number;
-
-    constructor(data?: IComplaintDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.sheetNumber = _data["sheetNumber"];
-            this.reportedThru = _data["reportedThru"];
-            this.previouslyReported = _data["previouslyReported"];
-            this.previouslyReportedAgency = _data["previouslyReportedAgency"];
-            this.previouslyReportedWhom = _data["previouslyReportedWhom"];
-            this.previouslyReportedWhen = _data["previouslyReportedWhen"] ? moment(_data["previouslyReportedWhen"].toString()) : <any>undefined;
-            this.nature = _data["nature"];
-            this.placeIncident = _data["placeIncident"];
-            this.dateIncident = _data["dateIncident"] ? moment(_data["dateIncident"].toString()) : <any>undefined;
-            this.statement = _data["statement"];
-            this.referredBy = _data["referredBy"];
-            this.referralNumber = _data["referralNumber"];
-            this.assignedTo = _data["assignedTo"];
-            this.receivedOn = _data["receivedOn"] ? moment(_data["receivedOn"].toString()) : <any>undefined;
-            this.receivingOffice = _data["receivingOffice"];
-            this.officeMakingAssignment = _data["officeMakingAssignment"];
-            this.status = _data["status"];
-            this.complainantId = _data["complainantId"];
-            this.informerName = _data["informerName"];
-            this.informerAddress = _data["informerAddress"];
-            this.informerContactNumber = _data["informerContactNumber"];
-            if (Array.isArray(_data["victims"])) {
-                this.victims = [] as any;
-                for (let item of _data["victims"])
-                    this.victims.push(VictimDto.fromJS(item));
-            }
-            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = _data["lastModifierUserId"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = _data["creatorUserId"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): ComplaintDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ComplaintDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["sheetNumber"] = this.sheetNumber;
-        data["reportedThru"] = this.reportedThru;
-        data["previouslyReported"] = this.previouslyReported;
-        data["previouslyReportedAgency"] = this.previouslyReportedAgency;
-        data["previouslyReportedWhom"] = this.previouslyReportedWhom;
-        data["previouslyReportedWhen"] = this.previouslyReportedWhen ? this.previouslyReportedWhen.toISOString() : <any>undefined;
-        data["nature"] = this.nature;
-        data["placeIncident"] = this.placeIncident;
-        data["dateIncident"] = this.dateIncident ? this.dateIncident.toISOString() : <any>undefined;
-        data["statement"] = this.statement;
-        data["referredBy"] = this.referredBy;
-        data["referralNumber"] = this.referralNumber;
-        data["assignedTo"] = this.assignedTo;
-        data["receivedOn"] = this.receivedOn ? this.receivedOn.toISOString() : <any>undefined;
-        data["receivingOffice"] = this.receivingOffice;
-        data["officeMakingAssignment"] = this.officeMakingAssignment;
-        data["status"] = this.status;
-        data["complainantId"] = this.complainantId;
-        data["informerName"] = this.informerName;
-        data["informerAddress"] = this.informerAddress;
-        data["informerContactNumber"] = this.informerContactNumber;
-        if (Array.isArray(this.victims)) {
-            data["victims"] = [];
-            for (let item of this.victims)
-                data["victims"].push(item.toJSON());
-        }
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): ComplaintDto {
-        const json = this.toJSON();
-        let result = new ComplaintDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IComplaintDto {
-    sheetNumber: string | undefined;
-    reportedThru: string | undefined;
-    previouslyReported: boolean;
-    previouslyReportedAgency: string | undefined;
-    previouslyReportedWhom: string | undefined;
-    previouslyReportedWhen: moment.Moment;
-    nature: string | undefined;
-    placeIncident: string | undefined;
-    dateIncident: moment.Moment;
-    statement: string | undefined;
-    referredBy: string | undefined;
-    referralNumber: string | undefined;
-    assignedTo: string | undefined;
-    receivedOn: moment.Moment;
-    receivingOffice: string | undefined;
-    officeMakingAssignment: string | undefined;
-    status: string | undefined;
-    complainantId: number | undefined;
-    informerName: string | undefined;
-    informerAddress: string | undefined;
-    informerContactNumber: string | undefined;
-    victims: VictimDto[] | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    id: number;
-}
-
 export class SuspectDto implements ISuspectDto {
     firstName: string | undefined;
     middleName: string | undefined;
@@ -4122,6 +3967,185 @@ export interface IWitnessDto {
     address: string | undefined;
     complaintId: number | undefined;
     complaint: Complaint;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: number;
+}
+
+export class ComplaintDto implements IComplaintDto {
+    sheetNumber: string | undefined;
+    reportedThru: string | undefined;
+    previouslyReported: boolean;
+    previouslyReportedAgency: string | undefined;
+    previouslyReportedWhom: string | undefined;
+    previouslyReportedWhen: moment.Moment;
+    nature: string | undefined;
+    placeIncident: string | undefined;
+    dateIncident: moment.Moment;
+    statement: string | undefined;
+    referredBy: string | undefined;
+    referralNumber: string | undefined;
+    assignedTo: string | undefined;
+    receivedOn: moment.Moment;
+    receivingOffice: string | undefined;
+    officeMakingAssignment: string | undefined;
+    status: string | undefined;
+    complainantId: number | undefined;
+    informerName: string | undefined;
+    informerAddress: string | undefined;
+    informerContactNumber: string | undefined;
+    victims: VictimDto[] | undefined;
+    suspects: SuspectDto[] | undefined;
+    witnesses: WitnessDto[] | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: number;
+
+    constructor(data?: IComplaintDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.sheetNumber = _data["sheetNumber"];
+            this.reportedThru = _data["reportedThru"];
+            this.previouslyReported = _data["previouslyReported"];
+            this.previouslyReportedAgency = _data["previouslyReportedAgency"];
+            this.previouslyReportedWhom = _data["previouslyReportedWhom"];
+            this.previouslyReportedWhen = _data["previouslyReportedWhen"] ? moment(_data["previouslyReportedWhen"].toString()) : <any>undefined;
+            this.nature = _data["nature"];
+            this.placeIncident = _data["placeIncident"];
+            this.dateIncident = _data["dateIncident"] ? moment(_data["dateIncident"].toString()) : <any>undefined;
+            this.statement = _data["statement"];
+            this.referredBy = _data["referredBy"];
+            this.referralNumber = _data["referralNumber"];
+            this.assignedTo = _data["assignedTo"];
+            this.receivedOn = _data["receivedOn"] ? moment(_data["receivedOn"].toString()) : <any>undefined;
+            this.receivingOffice = _data["receivingOffice"];
+            this.officeMakingAssignment = _data["officeMakingAssignment"];
+            this.status = _data["status"];
+            this.complainantId = _data["complainantId"];
+            this.informerName = _data["informerName"];
+            this.informerAddress = _data["informerAddress"];
+            this.informerContactNumber = _data["informerContactNumber"];
+            if (Array.isArray(_data["victims"])) {
+                this.victims = [] as any;
+                for (let item of _data["victims"])
+                    this.victims.push(VictimDto.fromJS(item));
+            }
+            if (Array.isArray(_data["suspects"])) {
+                this.suspects = [] as any;
+                for (let item of _data["suspects"])
+                    this.suspects.push(SuspectDto.fromJS(item));
+            }
+            if (Array.isArray(_data["witnesses"])) {
+                this.witnesses = [] as any;
+                for (let item of _data["witnesses"])
+                    this.witnesses.push(WitnessDto.fromJS(item));
+            }
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): ComplaintDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ComplaintDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["sheetNumber"] = this.sheetNumber;
+        data["reportedThru"] = this.reportedThru;
+        data["previouslyReported"] = this.previouslyReported;
+        data["previouslyReportedAgency"] = this.previouslyReportedAgency;
+        data["previouslyReportedWhom"] = this.previouslyReportedWhom;
+        data["previouslyReportedWhen"] = this.previouslyReportedWhen ? this.previouslyReportedWhen.toISOString() : <any>undefined;
+        data["nature"] = this.nature;
+        data["placeIncident"] = this.placeIncident;
+        data["dateIncident"] = this.dateIncident ? this.dateIncident.toISOString() : <any>undefined;
+        data["statement"] = this.statement;
+        data["referredBy"] = this.referredBy;
+        data["referralNumber"] = this.referralNumber;
+        data["assignedTo"] = this.assignedTo;
+        data["receivedOn"] = this.receivedOn ? this.receivedOn.toISOString() : <any>undefined;
+        data["receivingOffice"] = this.receivingOffice;
+        data["officeMakingAssignment"] = this.officeMakingAssignment;
+        data["status"] = this.status;
+        data["complainantId"] = this.complainantId;
+        data["informerName"] = this.informerName;
+        data["informerAddress"] = this.informerAddress;
+        data["informerContactNumber"] = this.informerContactNumber;
+        if (Array.isArray(this.victims)) {
+            data["victims"] = [];
+            for (let item of this.victims)
+                data["victims"].push(item.toJSON());
+        }
+        if (Array.isArray(this.suspects)) {
+            data["suspects"] = [];
+            for (let item of this.suspects)
+                data["suspects"].push(item.toJSON());
+        }
+        if (Array.isArray(this.witnesses)) {
+            data["witnesses"] = [];
+            for (let item of this.witnesses)
+                data["witnesses"].push(item.toJSON());
+        }
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): ComplaintDto {
+        const json = this.toJSON();
+        let result = new ComplaintDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IComplaintDto {
+    sheetNumber: string | undefined;
+    reportedThru: string | undefined;
+    previouslyReported: boolean;
+    previouslyReportedAgency: string | undefined;
+    previouslyReportedWhom: string | undefined;
+    previouslyReportedWhen: moment.Moment;
+    nature: string | undefined;
+    placeIncident: string | undefined;
+    dateIncident: moment.Moment;
+    statement: string | undefined;
+    referredBy: string | undefined;
+    referralNumber: string | undefined;
+    assignedTo: string | undefined;
+    receivedOn: moment.Moment;
+    receivingOffice: string | undefined;
+    officeMakingAssignment: string | undefined;
+    status: string | undefined;
+    complainantId: number | undefined;
+    informerName: string | undefined;
+    informerAddress: string | undefined;
+    informerContactNumber: string | undefined;
+    victims: VictimDto[] | undefined;
+    suspects: SuspectDto[] | undefined;
+    witnesses: WitnessDto[] | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;

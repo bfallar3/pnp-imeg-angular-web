@@ -3,9 +3,12 @@ import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import {
   ComplaintDto, ComplaintServiceProxy, ComplaintUpdateServiceProxy,
   CreateComplaintDto,
+  CreateWitnessDto,
+  SuspectDto,
   UpdateComplaintDto,
   VictimDto,
-  VictimServiceProxy
+  VictimServiceProxy,
+  WitnessDto
 } from './../../../shared/service-proxies/service-proxies';
 import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { finalize } from 'rxjs/operators';
@@ -34,8 +37,9 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
   receivedOn: Date;
   dateCreated: string;
   previouslyReportedOn: Date;
-  lastModifiedDate: string;
   victims: VictimDto[] = [];
+  suspects: SuspectDto[] = [];
+  witnesses: WitnessDto[] = [];
 
   DATE_FORMAT = 'MM/DD/YYYY hh:MM A';
 
@@ -53,14 +57,15 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
     this.route.params.subscribe(params => {
       const id = params['id'];
       this.complaintService.get(id).subscribe((complaint: ComplaintDto) => {
-        console.log(complaint);
+        abp.log.info(complaint);
         this.complaint = complaint;
+        this.victims = complaint.victims;
+        this.suspects = complaint.suspects;
+        this.witnesses = complaint.witnesses;
         this.dateCreated = complaint.creationTime.format(this.DATE_FORMAT);
         this.receivedOn = complaint.receivedOn.toDate();
         this.dateOfIncident = complaint.dateIncident.toDate();
         this.previouslyReportedOn = complaint.previouslyReportedWhen.toDate();
-        this.lastModifiedDate = moment(complaint.lastModificationTime).format(this.DATE_FORMAT);
-        this.victims = complaint.victims;
       });
     });
   }
@@ -74,6 +79,8 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
 
     this.updateComplaintDto.complaint = this.complaint;
     this.updateComplaintDto.victims = this.victims;
+    this.updateComplaintDto.suspects = this.suspects;
+    this.updateComplaintDto.witnesses = this.witnesses;
 
     this.complaintService.updateComplaint(this.updateComplaintDto)
       .pipe(finalize(() => { this.saving = false; }))
@@ -120,6 +127,69 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
     abp.message.confirm('Are you sure to delete the victim?', 'Confirm', (confirm) => {
       if (confirm) {
         _.remove(this.victims, (item) => {
+          return item === person;
+        });
+      }
+    });
+  }
+
+  addSuspect(): void {
+    let createSuspect: BsModalRef;
+    createSuspect = this._modalService.show(
+      CreatePersonDialogComponent,
+      {
+        class: 'modal-lg'
+      }
+    );
+    createSuspect.content.onSave.subscribe(() => {
+      const person = createSuspect.content.person;
+      const suspect: SuspectDto = new SuspectDto();
+      suspect.address = person.address;
+      suspect.age = person.age;
+      suspect.firstName = person.firstName;
+      suspect.middleName = person.middleName;
+      suspect.lastName = person.lastName;
+      suspect.gender = person.gender;
+      suspect.mobileNumber = person.mobileNumber;
+      suspect.alias = person.alias;
+      this.suspects.push(suspect);
+    });
+  }
+
+  removeSuspect(person: SuspectDto): void {
+    abp.message.confirm('Are you sure to delete the suspect?', 'Confirm', (confirm) => {
+      if (confirm) {
+        _.remove(this.suspects, (item) => {
+          return item === person;
+        });
+      }
+    });
+  }
+
+  addWitness(): void {
+    let createWitnessDlg: BsModalRef;
+    createWitnessDlg = this._modalService.show(
+      CreatePersonDialogComponent,
+      {
+        class: 'modal-lg'
+      }
+    );
+    createWitnessDlg.content.onSave.subscribe(() => {
+      const person = createWitnessDlg.content.person;
+      const witness: WitnessDto = new WitnessDto();
+      witness.address = person.address;
+      witness.firstName = person.firstName;
+      witness.middleName = person.middleName;
+      witness.lastName = person.lastName;
+      witness.mobileNumber = person.mobileNumber;
+      this.witnesses.push(witness);
+    });
+  }
+
+  removeWitness(person: WitnessDto): void {
+    abp.message.confirm('Are you sure to delete the witness?', 'Confirm', (confirm) => {
+      if (confirm) {
+        _.remove(this.witnesses, (item) => {
           return item === person;
         });
       }

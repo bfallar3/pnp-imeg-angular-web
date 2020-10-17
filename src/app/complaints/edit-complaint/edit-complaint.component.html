@@ -37,12 +37,6 @@
               <input readonly type="datetime" class="form-control" [value]="dateCreated">
             </div>
           </div>
-          <div class="col">
-            <div class="form-group">
-              <label class="col-form-label">Last Modified</label>
-              <input readonly type="datetime" class="form-control" [value]="lastModifiedDate">
-            </div>
-          </div>
         </div>
         <div class="row">
           <div class="col">
@@ -194,6 +188,86 @@
                       <td>{{ victim.mobileNumber }}</td>
                       <td>
                         <button type="button" class="btn btn-sm bg-danger mx-2" (click)="removeVictim(victim)">
+                          <i class="fas fa-trash"></i>
+                          {{ "Delete" | localize }}
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <a class="btn bg-blue" (click)="addSuspect()">
+                  <i class="fa fa-plus-square"></i>
+                  Add Suspect
+                </a>
+              </div>
+              <div class="panel-body">
+                <table class="table table-hover text-nowrap">
+                  <thead class="bg-light">
+                    <tr>
+                      <th>NAME</th>
+                      <th>AGE</th>
+                      <th>GENDER</th>
+                      <th>ADDRESS</th>
+                      <th>CONTACT NUMBER</th>
+                      <th>ALIAS</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let suspect of suspects">
+                      <td>{{ fullName(suspect) }}</td>
+                      <td> {{ suspect.age }}</td>
+                      <td>{{ suspect.gender }}</td>
+                      <td>{{ suspect.address }}</td>
+                      <td>{{ suspect.mobileNumber }}</td>
+                      <td>{{ suspect.alias }}</td>
+                      <td>
+                        <button type="button" class="btn btn-sm bg-danger mx-2" (click)="removeSuspect(suspect)">
+                          <i class="fas fa-trash"></i>
+                          {{ "Delete" | localize }}
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <a class="btn bg-blue" (click)="addWitness()">
+                  <i class="fa fa-plus-square"></i>
+                  Add Witness
+                </a>
+              </div>
+              <div class="panel-body">
+                <table class="table table-hover text-nowrap">
+                  <thead class="bg-light">
+                    <tr>
+                      <th>NAME</th>
+                      <th>ADDRESS</th>
+                      <th>CONTACT NUMBER</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let witness of witnesses">
+                      <td>{{  fullName(witness) }}</td>
+                      <td>{{ witness.address }}</td>
+                      <td>{{ witness.mobileNumber }}</td>
+                      <td>
+                        <button type="button" class="btn btn-sm bg-danger mx-2" (click)="removeWitness(witness)">
                           <i class="fas fa-trash"></i>
                           {{ "Delete" | localize }}
                         </button>
