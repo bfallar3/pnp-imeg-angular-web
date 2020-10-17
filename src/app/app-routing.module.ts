@@ -12,7 +12,6 @@ import { ChangePasswordComponent } from './users/change-password/change-password
 import { ComplaintsComponent } from './complaints/complaints.component';
 import { CreateComplaintComponent } from './complaints/create-complaint/create-complaint.component';
 import { EditComplaintComponent } from './complaints/edit-complaint/edit-complaint.component';
-import { ComplainantsComponent } from './complainants/complainants.component';
 import { VictimsComponent } from './victims/victims.component';
 import { WitnessesComponent } from './witnesses/witnesses.component';
 import { SuspectsComponent } from './suspects/suspects.component';
@@ -40,9 +39,6 @@ import { SuspectsComponent } from './suspects/suspects.component';
                     },
                     {
                         path: 'dosiers', component: DosiersComponent, canActivate: [AppRouteGuard]
-                    },
-                    {
-                        path: 'complainants', component: ComplainantsComponent, canActivate: [AppRouteGuard]
                     },
                     {
                         path: 'victims', component: VictimsComponent, canActivate: [AppRouteGuard]

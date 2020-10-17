@@ -1,6 +1,6 @@
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
-import { ComplainantDto, ComplaintDto, ComplaintServiceProxy, CreateComplaintDto } from './../../../shared/service-proxies/service-proxies';
+import { ComplaintServiceProxy, CreateComplaintDto, CreateSuspectDto, CreateVictimDto, CreateWitnessDto } from './../../../shared/service-proxies/service-proxies';
 import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { AppComponentBase } from '@shared/app-component-base';
@@ -9,6 +9,7 @@ import { CreatePersonDialogComponent } from '@app/persons/create-person-dialog/c
 import { EditPersonDialogComponent } from '@app/persons/edit-person-dialog/edit-person-dialog.component';
 import { PersonDto } from '@shared/service-proxies/PersonDto';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-create-complaint',
@@ -19,12 +20,18 @@ import * as moment from 'moment';
 export class CreateComplaintComponent extends AppComponentBase implements OnInit {
 
   saving = false;
-  currentDate = new Date();
+  currentDate: string;
   dateIncident = new Date();
   receivedOn = new Date();
   previouslyReportedOn = new Date();
   complaint = new CreateComplaintDto();
   person: PersonDto;
+
+  victims: CreateVictimDto[] = [];
+  suspects: CreateSuspectDto[] = [];
+  witnesses: CreateWitnessDto[] = [];
+
+  DATE_FORMAT = 'MM/DD/YYYY';
 
   constructor(
     injector: Injector,
@@ -38,14 +45,17 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
     this.complaint.status = 'NEW';
     this.complaint.reportedThru = 'IN PERSON';
     this.complaint.previouslyReported = false;
+    this.currentDate = moment(abp.clock.now()).format(this.DATE_FORMAT);
   }
 
   save(): void {
     this.saving = true;
-
     this.complaint.dateIncident = moment(this.dateIncident);
     this.complaint.receivedOn = moment(this.receivedOn);
     this.complaint.previouslyReportedWhen = moment(this.previouslyReportedOn);
+    this.complaint.victims = this.victims;
+    this.complaint.suspects = this.suspects;
+    this.complaint.witnesses = this.witnesses;
     this.complaintService.create(this.complaint)
       .pipe(
         finalize(() => {
@@ -53,57 +63,9 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
         })
       )
       .subscribe(() => {
-        abp.notify.success(this.l('SavedSuccessfully'));
+        abp.message.success(this.l('SavedSuccessfully'));
         this.router.navigate(['/app/complaints']);
       });
-  }
-
-  createInformer(): void {
-    let createInformerDlg: BsModalRef;
-    createInformerDlg = this._modalService.show(
-      CreatePersonDialogComponent,
-      {
-        class: 'modal-lg'
-      }
-    );
-
-    createInformerDlg.content.onSave.subscribe(() => {
-      this.person = new PersonDto();
-      this.person = createInformerDlg.content.person;
-      this.complaint.complainant = new ComplainantDto();
-      this.complaint.complainant.firstName = this.person.firstName;
-      this.complaint.complainant.middleName = this.person.middleName;
-      this.complaint.complainant.lastName = this.person.lastName;
-      this.complaint.complainant.qualifier = this.person.qualifier;
-      this.complaint.complainant.address = this.person.address;
-      this.complaint.complainant.mobileNumber = this.person.mobileNumber;
-    });
-  }
-
-  updateInformer(): void {
-    if (this.person) {
-      let editInformerDlg: BsModalRef;
-      editInformerDlg = this._modalService.show(
-        EditPersonDialogComponent,
-        {
-          class: 'modal-lg',
-          initialState: {
-            data: this.person,
-          },
-        }
-      );
-
-      editInformerDlg.content.onSave.subscribe(() => {
-        this.person = new PersonDto();
-        this.person = editInformerDlg.content.data;
-        this.complaint.complainant.firstName = this.person.firstName;
-        this.complaint.complainant.middleName = this.person.middleName;
-        this.complaint.complainant.lastName = this.person.lastName;
-        this.complaint.complainant.qualifier = this.person.qualifier;
-        this.complaint.complainant.address = this.person.address;
-        this.complaint.complainant.mobileNumber = this.person.mobileNumber;
-      });
-    }
   }
 
   dateIncidentValueChanged(value: Date): void {
@@ -116,6 +78,111 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
 
   previouslyReportedOnValueChanged(value: Date): void {
     this.previouslyReportedOn = value;
+  }
+
+  addVictim(): void {
+    let dialog: BsModalRef;
+    dialog = this._modalService.show(
+      CreatePersonDialogComponent,
+      {
+        class: 'modal-lg'
+      }
+    );
+    dialog.content.onSave.subscribe(() => {
+      const person = dialog.content.person;
+      const victim: CreateVictimDto = new CreateVictimDto();
+      victim.address = person.address;
+      victim.age = person.age;
+      victim.firstName = person.firstName;
+      victim.middleName = person.middleName;
+      victim.lastName = person.lastName;
+      victim.gender = person.gender;
+      victim.mobileNumber = person.mobileNumber;
+      this.victims.push(victim);
+    });
+  }
+
+  removeVictim(person: CreateVictimDto): void {
+    abp.message.confirm('Are you sure to delete the victim?', 'Confirm', (confirm) => {
+      if (confirm) {
+        _.remove(this.victims, (item) => {
+          return item === person;
+        });
+      }
+    });
+  }
+
+  addSuspect(): void {
+    let createSuspect: BsModalRef;
+    createSuspect = this._modalService.show(
+      CreatePersonDialogComponent,
+      {
+        class: 'modal-lg'
+      }
+    );
+    createSuspect.content.onSave.subscribe(() => {
+      const person = createSuspect.content.person;
+      const suspect: CreateSuspectDto = new CreateSuspectDto();
+      suspect.address = person.address;
+      suspect.age = person.age;
+      suspect.firstName = person.firstName;
+      suspect.middleName = person.middleName;
+      suspect.lastName = person.lastName;
+      suspect.gender = person.gender;
+      suspect.mobileNumber = person.mobileNumber;
+      suspect.alias = person.alias;
+      this.suspects.push(suspect);
+    });
+  }
+
+  removeSuspect(person: CreateSuspectDto): void {
+    abp.message.confirm('Are you sure to delete the suspect?', 'Confirm', (confirm) => {
+      if (confirm) {
+        _.remove(this.suspects, (item) => {
+          return item === person;
+        });
+      }
+    });
+  }
+
+  addWitness(): void {
+    let createWitnessDlg: BsModalRef;
+    createWitnessDlg = this._modalService.show(
+      CreatePersonDialogComponent,
+      {
+        class: 'modal-lg'
+      }
+    );
+    createWitnessDlg.content.onSave.subscribe(() => {
+      const person = createWitnessDlg.content.person;
+      const witness: CreateWitnessDto = new CreateWitnessDto();
+      witness.address = person.address;
+      witness.firstName = person.firstName;
+      witness.middleName = person.middleName;
+      witness.lastName = person.lastName;
+      witness.mobileNumber = person.mobileNumber;
+      this.witnesses.push(witness);
+    });
+  }
+
+  removeWitness(person: CreateWitnessDto): void {
+    abp.message.confirm('Are you sure to delete the witness?', 'Confirm', (confirm) => {
+      if (confirm) {
+        _.remove(this.witnesses, (item) => {
+          return item === person;
+        });
+      }
+    });
+  }
+
+  public fullName(item: PersonDto): string {
+    const names = {
+      firstName: item.firstName,
+      middleName: item.middleName,
+      lastName: item.lastName,
+      qualifier: item.qualifier,
+    };
+    return Object.values(names).filter(val => val).join(' ');
   }
 
 }
