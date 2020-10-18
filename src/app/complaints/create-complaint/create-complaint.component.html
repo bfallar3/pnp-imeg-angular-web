@@ -10,7 +10,7 @@
   </section>
   <section class="content px-2">
     <div class="container-fluid">
-      <form class="form-horizontal" autocomplete="off" (ngSubmit)="save()">
+      <form class="form-horizontal" autocomplete="off" (ngSubmit)="save()" [busy]="saving">
         <div class="row">
           <div class="col">
             <div class="form-group required">
