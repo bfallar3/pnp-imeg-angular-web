@@ -54,19 +54,16 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const id = params['id'];
-      this.complaintService.get(id).subscribe((complaint: ComplaintDto) => {
-        abp.log.info(complaint);
-        this.complaint = complaint;
-        this.victims = complaint.victims;
-        this.suspects = complaint.suspects;
-        this.witnesses = complaint.witnesses;
-        this.dateCreated = complaint.creationTime.format(this.DATE_FORMAT);
-        this.receivedOn = complaint.receivedOn.toDate();
-        this.dateOfIncident = complaint.dateIncident.toDate();
-        this.previouslyReportedOn = complaint.previouslyReportedWhen.toDate();
-      });
+    this.route.data.subscribe(data => {
+      abp.log.info(data);
+      this.complaint = data.dto;
+      this.victims = this.complaint.victims;
+      this.suspects = this.complaint.suspects;
+      this.witnesses = this.complaint.witnesses;
+      this.dateCreated = this.complaint.creationTime.format(this.DATE_FORMAT);
+      this.receivedOn = this.complaint.receivedOn.toDate();
+      this.dateOfIncident = this.complaint.dateIncident.toDate();
+      this.previouslyReportedOn = this.complaint.previouslyReportedWhen.toDate();
     });
   }
 

@@ -14,8 +14,7 @@ class PagedUsersRequestDto extends PagedRequestDto {
   selector: 'app-suspects',
   templateUrl: './suspects.component.html',
   styleUrls: ['./suspects.component.css'],
-  animations: [appModuleAnimation()],
-  providers: [SuspectServiceProxy]
+  animations: [appModuleAnimation()]
 })
 export class SuspectsComponent extends PagedListingComponentBase<SuspectDto> {
 

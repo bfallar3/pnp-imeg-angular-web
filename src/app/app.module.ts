@@ -51,6 +51,8 @@ import { EditPersonDialogComponent } from './persons/edit-person-dialog/edit-per
 import { VictimsComponent } from './victims/victims.component';
 import { SuspectsComponent } from './suspects/suspects.component';
 import { WitnessesComponent } from './witnesses/witnesses.component';
+import { SuspectServiceProxy, VictimServiceProxy, WitnessServiceProxy } from '@shared/service-proxies/service-proxies';
+import { ComplaintDtoResolver } from './complaints/edit-complaint/edit-complaint-resolver';
 
 @NgModule({
   declarations: [
@@ -111,7 +113,11 @@ import { WitnessesComponent } from './witnesses/witnesses.component';
     BsDatepickerModule.forRoot(),
     TimepickerModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    SuspectServiceProxy,
+    WitnessServiceProxy,
+    VictimServiceProxy,
+    ComplaintDtoResolver],
   entryComponents: [
     // tenants
     CreateTenantDialogComponent,

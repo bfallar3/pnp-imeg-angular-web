@@ -161,6 +161,14 @@
             ],
             "exclude": []
           }
+        },
+        "deploy": {
+          "builder": "@netlify-builder/deploy:deploy",
+          "options": {
+            "outputPath": "dist",
+            "netlifyToken": "SIRsPjs_jBT7YloXS67MFof3Cz5Mr4D3oUQraRtfm1U",
+            "siteId": "fe6f0437-dee9-43fa-8285-9de569ef3ae9"
+          }
         }
       }
     },

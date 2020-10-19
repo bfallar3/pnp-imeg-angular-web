@@ -14,8 +14,7 @@ class PagedUsersRequestDto extends PagedRequestDto {
   selector: 'app-witnesses',
   templateUrl: './witnesses.component.html',
   styleUrls: ['./witnesses.component.css'],
-  animations: [appModuleAnimation()],
-  providers: [WitnessServiceProxy]
+  animations: [appModuleAnimation()]
 })
 export class WitnessesComponent extends PagedListingComponentBase<WitnessDto> {
 

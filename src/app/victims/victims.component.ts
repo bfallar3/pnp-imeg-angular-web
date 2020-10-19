@@ -14,8 +14,7 @@ class PagedUsersRequestDto extends PagedRequestDto {
   selector: 'app-victims',
   templateUrl: './victims.component.html',
   styleUrls: ['./victims.component.css'],
-  animations: [appModuleAnimation()],
-  providers: [VictimServiceProxy]
+  animations: [appModuleAnimation()]
 })
 export class VictimsComponent extends PagedListingComponentBase<VictimDto> {
 
