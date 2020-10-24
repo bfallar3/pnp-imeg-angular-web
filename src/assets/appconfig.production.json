@@ -1,6 +1,6 @@
 {
-  "remoteServiceBaseUrl": "http://ismanager-001-site2.ctempurl.com",
-  "appBaseUrl": "http://ismanager-001-site1.ctempurl.com",
+  "remoteServiceBaseUrl": "https://pnpimegis.net/netcore31",
+  "appBaseUrl": "https://pnpimegis.net",
   "localeMappings": [
     {
       "from": "pt-BR",
