@@ -4,6 +4,13 @@
         <form class="form-horizontal" autocomplete="off" (ngSubmit)="save()">
             <div class="row">
                 <div class="col">
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label class="col-form-label">Rank/Title</label>
+                            <input type="text" class="form-control" [(ngModel)]="data.title"
+                                (ngModelChange)="data.title = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+                        </div>
+                    </div>
                     <div class="form-group required">
                         <label class="col-form-label">First Name</label>
                         <input type="text" class="form-control" [(ngModel)]="data.firstName"
@@ -27,12 +34,28 @@
                             [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-1">
                     <div class="form-group">
                         <label class="col-form-label">Qualifier</label>
                         <input type="text" class="form-control" [(ngModel)]="data.qualifier"
                             (ngModelChange)="data.qualifier = $event.toUpperCase()"
                             [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label class="col-form-label">Unit</label>
+                        <input type="text" class="form-control" [(ngModel)]="data.unit"
+                            (ngModelChange)="data.unit = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label class="col-form-label">Office</label>
+                        <input type="text" class="form-control" [(ngModel)]="data.office"
+                            (ngModelChange)="data.office = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
             </div>

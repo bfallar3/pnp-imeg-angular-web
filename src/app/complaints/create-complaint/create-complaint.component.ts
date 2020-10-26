@@ -1,12 +1,11 @@
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ComplaintServiceProxy, CreateComplaintDto, CreateSuspectDto, CreateVictimDto, CreateWitnessDto } from './../../../shared/service-proxies/service-proxies';
-import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { AppComponentBase } from '@shared/app-component-base';
 import { Router } from '@angular/router';
 import { CreatePersonDialogComponent } from '@app/persons/create-person-dialog/create-person-dialog.component';
-import { EditPersonDialogComponent } from '@app/persons/edit-person-dialog/edit-person-dialog.component';
 import { PersonDto } from '@shared/service-proxies/PersonDto';
 import * as moment from 'moment';
 import * as _ from 'lodash';
@@ -31,7 +30,7 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
   suspects: CreateSuspectDto[] = [];
   witnesses: CreateWitnessDto[] = [];
 
-  DATE_FORMAT = 'MM/DD/YYYY';
+  DATE_FORMAT = 'MM/DD/YYYY hh:mm A';
 
   constructor(
     injector: Injector,
@@ -50,6 +49,7 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
 
   save(): void {
     this.saving = true;
+    this.complaint.timeIncident = this.complaint.timeIncident || moment(abp.clock.now());
     this.complaint.dateIncident = moment(this.dateIncident);
     this.complaint.receivedOn = moment(this.receivedOn);
     this.complaint.previouslyReportedWhen = moment(this.previouslyReportedOn);
@@ -93,6 +93,8 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
       const victim: CreateVictimDto = new CreateVictimDto();
       victim.address = person.address;
       victim.age = person.age;
+      victim.title = person.title;
+      victim.qualifier = person.qualifier;
       victim.firstName = person.firstName;
       victim.middleName = person.middleName;
       victim.lastName = person.lastName;
@@ -125,6 +127,8 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
       const suspect: CreateSuspectDto = new CreateSuspectDto();
       suspect.address = person.address;
       suspect.age = person.age;
+      suspect.title = person.title;
+      suspect.qualifier = person.qualifier;
       suspect.firstName = person.firstName;
       suspect.middleName = person.middleName;
       suspect.lastName = person.lastName;
@@ -161,6 +165,8 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
       witness.middleName = person.middleName;
       witness.lastName = person.lastName;
       witness.mobileNumber = person.mobileNumber;
+      witness.title = person.title;
+      witness.qualifier = person.qualifier;
       this.witnesses.push(witness);
     });
   }
@@ -177,6 +183,7 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
 
   public fullName(item: PersonDto): string {
     const names = {
+      title: item.title,
       firstName: item.firstName,
       middleName: item.middleName,
       lastName: item.lastName,

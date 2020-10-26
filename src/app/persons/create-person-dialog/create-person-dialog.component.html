@@ -3,6 +3,13 @@
     <div class="modal-body">
         <form class="form-horizontal" autocomplete="off" (ngSubmit)="save()">
             <div class="row">
+                <div class="col-2">
+                    <div class="form-group">
+                        <label class="col-form-label">Rank/Title</label>
+                        <input type="text" class="form-control" [(ngModel)]="person.title"
+                            (ngModelChange)="person.title = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
                 <div class="col">
                     <div class="form-group required">
                         <label class="col-form-label">First Name</label>
@@ -27,12 +34,28 @@
                             [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-1">
                     <div class="form-group">
                         <label class="col-form-label">Qualifier</label>
                         <input type="text" class="form-control" [(ngModel)]="person.qualifier"
                             (ngModelChange)="person.qualifier = $event.toUpperCase()"
                             [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label class="col-form-label">Unit</label>
+                        <input type="text" class="form-control" [(ngModel)]="person.unit"
+                            (ngModelChange)="person.unit = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label class="col-form-label">Office</label>
+                        <input type="text" class="form-control" [(ngModel)]="person.office"
+                            (ngModelChange)="person.office = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
             </div>

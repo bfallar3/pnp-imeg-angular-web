@@ -92,8 +92,21 @@
           <div class="col">
             <div class="form-group required">
               <label class="col-form-label">Nature of complaint</label>
-              <input type="text" class="form-control" [(ngModel)]="complaint.nature"
-                (ngModelChange)="complaint.nature = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+              <select class="form-control" [(ngModel)]="complaint.nature" (ngModelChange)="complaint.nature = $event.toUpperCase()"
+                [ngModelOptions]="{standalone: true}">
+                <option value="EXTORTION">EXTORTION</option>
+                <option value="SMUGGLING">SMUGGLING</option>
+                <option value="DRUGS">DRUGS</option>
+                <option value="KIDNAPPING">KIDNAPPING</option>
+                <option value="HULIDAP">HULIDAP</option>
+                <option value="ILLEGAL GAMBLING">ILLEGAL GAMBLING</option>
+                <option value="PHYSICAL INJURIES">PHYSICAL INJURIES</option>
+                <option value="GUN RUNNING">GUN RUNNING</option>
+                <option value="ILLEGAL LOGGING">ILLEGAL LOGGING</option>
+                <option value="ACT AS PROTECTOR">ACT AS PROTECTOR</option>
+                <option value="UNEXPLAINED WEALTH">UNEXPLAINED WEALTH</option>
+                <option value="OTHER ANALOGOUS ANOMALIES">OTHER ANALOGOUS ANOMALIES</option>
+              </select>
             </div>
           </div>
           <div class="col">
@@ -108,6 +121,12 @@
               <label class="col-form-label">Date of incident</label>
               <input type="text" class="form-control" bsDatepicker [bsValue]="dateOfIncident"
                 (bsValueChange)="dateIncidentValueChanged($event)">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group required">
+              <label class="col-form-label">Time of incident</label>
+              <timepicker [showSpinners]="false" [(ngModel)]="timeIncident" [ngModelOptions]="{standalone: true}"></timepicker>
             </div>
           </div>
         </div>

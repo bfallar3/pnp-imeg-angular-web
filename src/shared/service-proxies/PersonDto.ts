@@ -9,4 +9,7 @@ export class PersonDto {
     gender: string;
     alias: string;
     age: number;
+    title: string;
+    unit: string;
+    office: string;
 }

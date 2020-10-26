@@ -32,6 +32,7 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
   saving = false;
   complaint = new ComplaintDto();
   updateComplaintDto = new UpdateComplaintDto();
+  timeIncident = new Date();
   person: PersonDto;
   dateOfIncident: Date;
   receivedOn: Date;
@@ -63,6 +64,7 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
       this.dateCreated = this.complaint.creationTime.format(this.DATE_FORMAT);
       this.receivedOn = this.complaint.receivedOn.toDate();
       this.dateOfIncident = this.complaint.dateIncident.toDate();
+      this.timeIncident = this.complaint.timeIncident.toDate();
       this.previouslyReportedOn = this.complaint.previouslyReportedWhen.toDate();
     });
   }
@@ -73,7 +75,7 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
     this.complaint.dateIncident = moment(this.dateOfIncident);
     this.complaint.receivedOn = moment(this.receivedOn);
     this.complaint.previouslyReportedWhen = moment(this.previouslyReportedOn);
-
+    this.complaint.timeIncident = moment(this.timeIncident);
     this.updateComplaintDto.complaint = this.complaint;
     this.updateComplaintDto.victims = this.victims;
     this.updateComplaintDto.suspects = this.suspects;
@@ -116,6 +118,8 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
       victim.lastName = person.lastName;
       victim.gender = person.gender;
       victim.mobileNumber = person.mobileNumber;
+      victim.title = person.title;
+      victim.qualifier = person.qualifier;
       this.victims.push(victim);
     });
   }
@@ -149,6 +153,8 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
       suspect.gender = person.gender;
       suspect.mobileNumber = person.mobileNumber;
       suspect.alias = person.alias;
+      suspect.title = person.title;
+      suspect.qualifier = person.qualifier;
       this.suspects.push(suspect);
     });
   }
@@ -179,6 +185,8 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
       witness.middleName = person.middleName;
       witness.lastName = person.lastName;
       witness.mobileNumber = person.mobileNumber;
+      witness.title = person.title;
+      witness.qualifier = person.qualifier;
       this.witnesses.push(witness);
     });
   }
@@ -195,6 +203,7 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
 
   public fullName(item: PersonDto): string {
     const names = {
+      title: item.title,
       firstName: item.firstName,
       middleName: item.middleName,
       lastName: item.lastName,

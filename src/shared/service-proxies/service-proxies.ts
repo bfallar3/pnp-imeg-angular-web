@@ -3232,6 +3232,9 @@ export class Victim implements IVictim {
     qualifier: string | undefined;
     mobileNumber: string | undefined;
     address: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -3259,6 +3262,9 @@ export class Victim implements IVictim {
             this.qualifier = _data["qualifier"];
             this.mobileNumber = _data["mobileNumber"];
             this.address = _data["address"];
+            this.title = _data["title"];
+            this.unit = _data["unit"];
+            this.office = _data["office"];
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
             this.lastModifierUserId = _data["lastModifierUserId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
@@ -3286,6 +3292,9 @@ export class Victim implements IVictim {
         data["qualifier"] = this.qualifier;
         data["mobileNumber"] = this.mobileNumber;
         data["address"] = this.address;
+        data["title"] = this.title;
+        data["unit"] = this.unit;
+        data["office"] = this.office;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         data["lastModifierUserId"] = this.lastModifierUserId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
@@ -3313,6 +3322,9 @@ export interface IVictim {
     qualifier: string | undefined;
     mobileNumber: string | undefined;
     address: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -3332,6 +3344,9 @@ export class Suspect implements ISuspect {
     qualifier: string | undefined;
     mobileNumber: string | undefined;
     address: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -3360,6 +3375,9 @@ export class Suspect implements ISuspect {
             this.qualifier = _data["qualifier"];
             this.mobileNumber = _data["mobileNumber"];
             this.address = _data["address"];
+            this.title = _data["title"];
+            this.unit = _data["unit"];
+            this.office = _data["office"];
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
             this.lastModifierUserId = _data["lastModifierUserId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
@@ -3388,6 +3406,9 @@ export class Suspect implements ISuspect {
         data["qualifier"] = this.qualifier;
         data["mobileNumber"] = this.mobileNumber;
         data["address"] = this.address;
+        data["title"] = this.title;
+        data["unit"] = this.unit;
+        data["office"] = this.office;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         data["lastModifierUserId"] = this.lastModifierUserId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
@@ -3416,6 +3437,9 @@ export interface ISuspect {
     qualifier: string | undefined;
     mobileNumber: string | undefined;
     address: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -3432,6 +3456,9 @@ export class Witness implements IWitness {
     qualifier: string | undefined;
     mobileNumber: string | undefined;
     address: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -3457,6 +3484,9 @@ export class Witness implements IWitness {
             this.qualifier = _data["qualifier"];
             this.mobileNumber = _data["mobileNumber"];
             this.address = _data["address"];
+            this.title = _data["title"];
+            this.unit = _data["unit"];
+            this.office = _data["office"];
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
             this.lastModifierUserId = _data["lastModifierUserId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
@@ -3482,6 +3512,9 @@ export class Witness implements IWitness {
         data["qualifier"] = this.qualifier;
         data["mobileNumber"] = this.mobileNumber;
         data["address"] = this.address;
+        data["title"] = this.title;
+        data["unit"] = this.unit;
+        data["office"] = this.office;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         data["lastModifierUserId"] = this.lastModifierUserId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
@@ -3507,6 +3540,9 @@ export interface IWitness {
     qualifier: string | undefined;
     mobileNumber: string | undefined;
     address: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -3524,6 +3560,7 @@ export class Complaint implements IComplaint {
     nature: string | undefined;
     placeIncident: string | undefined;
     dateIncident: moment.Moment;
+    timeIncident: moment.Moment;
     statement: string | undefined;
     referredBy: string | undefined;
     referralNumber: string | undefined;
@@ -3564,6 +3601,7 @@ export class Complaint implements IComplaint {
             this.nature = _data["nature"];
             this.placeIncident = _data["placeIncident"];
             this.dateIncident = _data["dateIncident"] ? moment(_data["dateIncident"].toString()) : <any>undefined;
+            this.timeIncident = _data["timeIncident"] ? moment(_data["timeIncident"].toString()) : <any>undefined;
             this.statement = _data["statement"];
             this.referredBy = _data["referredBy"];
             this.referralNumber = _data["referralNumber"];
@@ -3616,6 +3654,7 @@ export class Complaint implements IComplaint {
         data["nature"] = this.nature;
         data["placeIncident"] = this.placeIncident;
         data["dateIncident"] = this.dateIncident ? this.dateIncident.toISOString() : <any>undefined;
+        data["timeIncident"] = this.timeIncident ? this.timeIncident.toISOString() : <any>undefined;
         data["statement"] = this.statement;
         data["referredBy"] = this.referredBy;
         data["referralNumber"] = this.referralNumber;
@@ -3668,6 +3707,7 @@ export interface IComplaint {
     nature: string | undefined;
     placeIncident: string | undefined;
     dateIncident: moment.Moment;
+    timeIncident: moment.Moment;
     statement: string | undefined;
     referredBy: string | undefined;
     referralNumber: string | undefined;
@@ -3698,6 +3738,9 @@ export class VictimDto implements IVictimDto {
     address: string | undefined;
     age: number;
     gender: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
     complaintId: number | undefined;
     complaint: Complaint;
     lastModificationTime: moment.Moment | undefined;
@@ -3725,6 +3768,9 @@ export class VictimDto implements IVictimDto {
             this.address = _data["address"];
             this.age = _data["age"];
             this.gender = _data["gender"];
+            this.title = _data["title"];
+            this.unit = _data["unit"];
+            this.office = _data["office"];
             this.complaintId = _data["complaintId"];
             this.complaint = _data["complaint"] ? Complaint.fromJS(_data["complaint"]) : <any>undefined;
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
@@ -3752,6 +3798,9 @@ export class VictimDto implements IVictimDto {
         data["address"] = this.address;
         data["age"] = this.age;
         data["gender"] = this.gender;
+        data["title"] = this.title;
+        data["unit"] = this.unit;
+        data["office"] = this.office;
         data["complaintId"] = this.complaintId;
         data["complaint"] = this.complaint ? this.complaint.toJSON() : <any>undefined;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
@@ -3779,6 +3828,9 @@ export interface IVictimDto {
     address: string | undefined;
     age: number;
     gender: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
     complaintId: number | undefined;
     complaint: Complaint;
     lastModificationTime: moment.Moment | undefined;
@@ -3798,6 +3850,11 @@ export class SuspectDto implements ISuspectDto {
     alias: string | undefined;
     age: number;
     gender: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
+    complaintId: number | undefined;
+    complaint: Complaint;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -3824,6 +3881,11 @@ export class SuspectDto implements ISuspectDto {
             this.alias = _data["alias"];
             this.age = _data["age"];
             this.gender = _data["gender"];
+            this.title = _data["title"];
+            this.unit = _data["unit"];
+            this.office = _data["office"];
+            this.complaintId = _data["complaintId"];
+            this.complaint = _data["complaint"] ? Complaint.fromJS(_data["complaint"]) : <any>undefined;
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
             this.lastModifierUserId = _data["lastModifierUserId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
@@ -3850,6 +3912,11 @@ export class SuspectDto implements ISuspectDto {
         data["alias"] = this.alias;
         data["age"] = this.age;
         data["gender"] = this.gender;
+        data["title"] = this.title;
+        data["unit"] = this.unit;
+        data["office"] = this.office;
+        data["complaintId"] = this.complaintId;
+        data["complaint"] = this.complaint ? this.complaint.toJSON() : <any>undefined;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         data["lastModifierUserId"] = this.lastModifierUserId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
@@ -3876,6 +3943,11 @@ export interface ISuspectDto {
     alias: string | undefined;
     age: number;
     gender: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
+    complaintId: number | undefined;
+    complaint: Complaint;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -3890,6 +3962,9 @@ export class WitnessDto implements IWitnessDto {
     qualifier: string | undefined;
     mobileNumber: string | undefined;
     address: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
     complaintId: number | undefined;
     complaint: Complaint;
     lastModificationTime: moment.Moment | undefined;
@@ -3915,6 +3990,9 @@ export class WitnessDto implements IWitnessDto {
             this.qualifier = _data["qualifier"];
             this.mobileNumber = _data["mobileNumber"];
             this.address = _data["address"];
+            this.title = _data["title"];
+            this.unit = _data["unit"];
+            this.office = _data["office"];
             this.complaintId = _data["complaintId"];
             this.complaint = _data["complaint"] ? Complaint.fromJS(_data["complaint"]) : <any>undefined;
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
@@ -3940,6 +4018,9 @@ export class WitnessDto implements IWitnessDto {
         data["qualifier"] = this.qualifier;
         data["mobileNumber"] = this.mobileNumber;
         data["address"] = this.address;
+        data["title"] = this.title;
+        data["unit"] = this.unit;
+        data["office"] = this.office;
         data["complaintId"] = this.complaintId;
         data["complaint"] = this.complaint ? this.complaint.toJSON() : <any>undefined;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
@@ -3965,6 +4046,9 @@ export interface IWitnessDto {
     qualifier: string | undefined;
     mobileNumber: string | undefined;
     address: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
     complaintId: number | undefined;
     complaint: Complaint;
     lastModificationTime: moment.Moment | undefined;
@@ -3984,6 +4068,7 @@ export class ComplaintDto implements IComplaintDto {
     nature: string | undefined;
     placeIncident: string | undefined;
     dateIncident: moment.Moment;
+    timeIncident: moment.Moment;
     statement: string | undefined;
     referredBy: string | undefined;
     referralNumber: string | undefined;
@@ -4025,6 +4110,7 @@ export class ComplaintDto implements IComplaintDto {
             this.nature = _data["nature"];
             this.placeIncident = _data["placeIncident"];
             this.dateIncident = _data["dateIncident"] ? moment(_data["dateIncident"].toString()) : <any>undefined;
+            this.timeIncident = _data["timeIncident"] ? moment(_data["timeIncident"].toString()) : <any>undefined;
             this.statement = _data["statement"];
             this.referredBy = _data["referredBy"];
             this.referralNumber = _data["referralNumber"];
@@ -4078,6 +4164,7 @@ export class ComplaintDto implements IComplaintDto {
         data["nature"] = this.nature;
         data["placeIncident"] = this.placeIncident;
         data["dateIncident"] = this.dateIncident ? this.dateIncident.toISOString() : <any>undefined;
+        data["timeIncident"] = this.timeIncident ? this.timeIncident.toISOString() : <any>undefined;
         data["statement"] = this.statement;
         data["referredBy"] = this.referredBy;
         data["referralNumber"] = this.referralNumber;
@@ -4131,6 +4218,7 @@ export interface IComplaintDto {
     nature: string | undefined;
     placeIncident: string | undefined;
     dateIncident: moment.Moment;
+    timeIncident: moment.Moment;
     statement: string | undefined;
     referredBy: string | undefined;
     referralNumber: string | undefined;
@@ -4296,6 +4384,9 @@ export class CreateVictimDto implements ICreateVictimDto {
     address: string | undefined;
     age: number;
     gender: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
 
     constructor(data?: ICreateVictimDto) {
         if (data) {
@@ -4316,6 +4407,9 @@ export class CreateVictimDto implements ICreateVictimDto {
             this.address = _data["address"];
             this.age = _data["age"];
             this.gender = _data["gender"];
+            this.title = _data["title"];
+            this.unit = _data["unit"];
+            this.office = _data["office"];
         }
     }
 
@@ -4336,6 +4430,9 @@ export class CreateVictimDto implements ICreateVictimDto {
         data["address"] = this.address;
         data["age"] = this.age;
         data["gender"] = this.gender;
+        data["title"] = this.title;
+        data["unit"] = this.unit;
+        data["office"] = this.office;
         return data; 
     }
 
@@ -4356,6 +4453,9 @@ export interface ICreateVictimDto {
     address: string | undefined;
     age: number;
     gender: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
 }
 
 export class CreateSuspectDto implements ICreateSuspectDto {
@@ -4368,6 +4468,9 @@ export class CreateSuspectDto implements ICreateSuspectDto {
     alias: string | undefined;
     age: number;
     gender: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
 
     constructor(data?: ICreateSuspectDto) {
         if (data) {
@@ -4389,6 +4492,9 @@ export class CreateSuspectDto implements ICreateSuspectDto {
             this.alias = _data["alias"];
             this.age = _data["age"];
             this.gender = _data["gender"];
+            this.title = _data["title"];
+            this.unit = _data["unit"];
+            this.office = _data["office"];
         }
     }
 
@@ -4410,6 +4516,9 @@ export class CreateSuspectDto implements ICreateSuspectDto {
         data["alias"] = this.alias;
         data["age"] = this.age;
         data["gender"] = this.gender;
+        data["title"] = this.title;
+        data["unit"] = this.unit;
+        data["office"] = this.office;
         return data; 
     }
 
@@ -4431,6 +4540,9 @@ export interface ICreateSuspectDto {
     alias: string | undefined;
     age: number;
     gender: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
 }
 
 export class CreateWitnessDto implements ICreateWitnessDto {
@@ -4440,6 +4552,9 @@ export class CreateWitnessDto implements ICreateWitnessDto {
     qualifier: string | undefined;
     mobileNumber: string | undefined;
     address: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
 
     constructor(data?: ICreateWitnessDto) {
         if (data) {
@@ -4458,6 +4573,9 @@ export class CreateWitnessDto implements ICreateWitnessDto {
             this.qualifier = _data["qualifier"];
             this.mobileNumber = _data["mobileNumber"];
             this.address = _data["address"];
+            this.title = _data["title"];
+            this.unit = _data["unit"];
+            this.office = _data["office"];
         }
     }
 
@@ -4476,6 +4594,9 @@ export class CreateWitnessDto implements ICreateWitnessDto {
         data["qualifier"] = this.qualifier;
         data["mobileNumber"] = this.mobileNumber;
         data["address"] = this.address;
+        data["title"] = this.title;
+        data["unit"] = this.unit;
+        data["office"] = this.office;
         return data; 
     }
 
@@ -4494,6 +4615,9 @@ export interface ICreateWitnessDto {
     qualifier: string | undefined;
     mobileNumber: string | undefined;
     address: string | undefined;
+    title: string | undefined;
+    unit: string | undefined;
+    office: string | undefined;
 }
 
 export class CreateComplaintDto implements ICreateComplaintDto {
@@ -4506,6 +4630,7 @@ export class CreateComplaintDto implements ICreateComplaintDto {
     nature: string | undefined;
     placeIncident: string | undefined;
     dateIncident: moment.Moment;
+    timeIncident: moment.Moment;
     statement: string | undefined;
     referredBy: string | undefined;
     referralNumber: string | undefined;
@@ -4542,6 +4667,7 @@ export class CreateComplaintDto implements ICreateComplaintDto {
             this.nature = _data["nature"];
             this.placeIncident = _data["placeIncident"];
             this.dateIncident = _data["dateIncident"] ? moment(_data["dateIncident"].toString()) : <any>undefined;
+            this.timeIncident = _data["timeIncident"] ? moment(_data["timeIncident"].toString()) : <any>undefined;
             this.statement = _data["statement"];
             this.referredBy = _data["referredBy"];
             this.referralNumber = _data["referralNumber"];
@@ -4590,6 +4716,7 @@ export class CreateComplaintDto implements ICreateComplaintDto {
         data["nature"] = this.nature;
         data["placeIncident"] = this.placeIncident;
         data["dateIncident"] = this.dateIncident ? this.dateIncident.toISOString() : <any>undefined;
+        data["timeIncident"] = this.timeIncident ? this.timeIncident.toISOString() : <any>undefined;
         data["statement"] = this.statement;
         data["referredBy"] = this.referredBy;
         data["referralNumber"] = this.referralNumber;
@@ -4638,6 +4765,7 @@ export interface ICreateComplaintDto {
     nature: string | undefined;
     placeIncident: string | undefined;
     dateIncident: moment.Moment;
+    timeIncident: moment.Moment;
     statement: string | undefined;
     referredBy: string | undefined;
     referralNumber: string | undefined;
