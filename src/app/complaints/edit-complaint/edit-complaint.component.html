@@ -10,13 +10,16 @@
   </section>
   <section class="content px-2">
     <div class="container-fluid">
-      <form class="form-horizontal" autocomplete="off" (ngSubmit)="save()" [busy]="saving">
+      <form class="form-horizontal" autocomplete="off" (ngSubmit)="save()" [busy]="saving" #editSheetForm="ngForm">
         <div class="row">
           <div class="col">
             <div class="form-group required">
               <label class="col-form-label">Sheet Number</label>
-              <input type="text" class="form-control" [(ngModel)]="complaint.sheetNumber"
-                (ngModelChange)="complaint.sheetNumber = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+              <input type="text" class="form-control" [(ngModel)]="complaint.sheetNumber" autofocus readonly
+                (ngModelChange)="complaint.sheetNumber = $event.toUpperCase()" required maxlength="256"
+                name="complaintSheetNumber" #complaintSheetNumberModel="ngModel" #complaintSheetNumberEl>
+              <abp-validation-summary [control]="complaintSheetNumberModel" [controlEl]="complaintSheetNumberEl">
+              </abp-validation-summary>
             </div>
           </div>
           <div class="col">
@@ -92,8 +95,9 @@
           <div class="col">
             <div class="form-group required">
               <label class="col-form-label">Nature of complaint</label>
-              <select class="form-control" [(ngModel)]="complaint.nature" (ngModelChange)="complaint.nature = $event.toUpperCase()"
-                [ngModelOptions]="{standalone: true}">
+              <select class="form-control" [(ngModel)]="complaint.nature"
+                (ngModelChange)="complaint.nature = $event.toUpperCase()" required name="complaintNature"
+                #complaintNatureModel="ngModel" #complaintNatureEl>
                 <option value="EXTORTION">EXTORTION</option>
                 <option value="SMUGGLING">SMUGGLING</option>
                 <option value="DRUGS">DRUGS</option>
@@ -107,6 +111,8 @@
                 <option value="UNEXPLAINED WEALTH">UNEXPLAINED WEALTH</option>
                 <option value="OTHER ANALOGOUS ANOMALIES">OTHER ANALOGOUS ANOMALIES</option>
               </select>
+              <abp-validation-summary [control]="complaintNatureModel" [controlEl]="complaintNatureEl">
+              </abp-validation-summary>
             </div>
           </div>
           <div class="col">
@@ -126,7 +132,8 @@
           <div class="col">
             <div class="form-group required">
               <label class="col-form-label">Time of incident</label>
-              <timepicker [showSpinners]="false" [(ngModel)]="timeIncident" [ngModelOptions]="{standalone: true}"></timepicker>
+              <timepicker [showSpinners]="false" [(ngModel)]="timeIncident" [ngModelOptions]="{standalone: true}">
+              </timepicker>
             </div>
           </div>
         </div>
@@ -141,15 +148,23 @@
                   <div class="form-group required">
                     <label class="col-form-label">Informer Name</label>
                     <input type="text" class="form-control" [(ngModel)]="complaint.informerName"
-                    (ngModelChange)="complaint.informerName = $event.toUpperCase()"
-                      [ngModelOptions]="{standalone: true}">
+                      (ngModelChange)="complaint.informerName = $event.toUpperCase()" required
+                      name="complaintInformerName" #complaintInformerNameModel="ngModel" #complaintInformerNameEl>
+                    <abp-validation-summary [control]="complaintInformerNameModel"
+                      [controlEl]="complaintInformerNameEl">
+                    </abp-validation-summary>
                   </div>
                 </div>
                 <div class="col">
                   <div class="form-group required">
                     <label class="col-form-label">Informer Contact Number</label>
                     <input type="text" class="form-control" [(ngModel)]="complaint.informerContactNumber"
-                      (ngModelChange)="complaint.informerContactNumber = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+                      (ngModelChange)="complaint.informerContactNumber = $event.toUpperCase()" required
+                      name="complaintInformerContact" #complaintInformerContactModel="ngModel"
+                      #complaintInformerContactEl>
+                    <abp-validation-summary [control]="complaintInformerContactModel"
+                      [controlEl]="complaintInformerContactEl">
+                    </abp-validation-summary>
                   </div>
                 </div>
               </div>
@@ -158,7 +173,7 @@
                   <div class="form-group">
                     <label class="col-form-label">Informer Address</label>
                     <input type="text" class="form-control" [(ngModel)]="complaint.informerAddress"
-                    (ngModelChange)="complaint.informerAddress = $event.toUpperCase()"
+                      (ngModelChange)="complaint.informerAddress = $event.toUpperCase()"
                       [ngModelOptions]="{standalone: true}">
                   </div>
                 </div>
@@ -171,8 +186,10 @@
             <div class="form-group required">
               <label class="col-form-label">Statement or Brief Narrate</label>
               <textarea class="form-control" rows="10" [(ngModel)]="complaint.statement"
-                (ngModelChange)="complaint.statement = $event.toUpperCase()"
-                [ngModelOptions]="{standalone: true}"></textarea>
+                (ngModelChange)="complaint.statement = $event.toUpperCase()" required name="complaintStatement"
+                #complaintStatementModel="ngModel" #complaintStatementEl></textarea>
+              <abp-validation-summary [control]="complaintStatementModel" [controlEl]="complaintStatementEl">
+              </abp-validation-summary>
             </div>
           </div>
         </div>
@@ -181,7 +198,7 @@
           <div class="col">
             <div class="panel panel-primary">
               <div class="panel-heading">
-                <a class="btn bg-blue" (click)="addVictim()">
+                <a class="btn btn-sm btn-info" (click)="addVictim()">
                   <i class="fa fa-plus-square"></i>
                   Add Victim
                 </a>
@@ -190,27 +207,26 @@
                 <table class="table table-hover text-nowrap">
                   <thead class="bg-light">
                     <tr>
+                      <th>&nbsp;</th>
                       <th>NAME</th>
                       <th>AGE</th>
                       <th>GENDER</th>
                       <th>ADDRESS</th>
                       <th>CONTACT NUMBER</th>
-                      <th>&nbsp;</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let victim of victims">
+                      <td>
+                        <button type="button" class="btn btn-sm bg-danger" (click)="removeVictim(victim)">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
                       <td>{{ fullName(victim) }}</td>
                       <td>{{ victim.age }}</td>
                       <td>{{ victim.gender }}</td>
                       <td>{{ victim.address }}</td>
                       <td>{{ victim.mobileNumber }}</td>
-                      <td>
-                        <button type="button" class="btn btn-sm bg-danger mx-2" (click)="removeVictim(victim)">
-                          <i class="fas fa-trash"></i>
-                          {{ "Delete" | localize }}
-                        </button>
-                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -222,7 +238,7 @@
           <div class="col">
             <div class="panel panel-primary">
               <div class="panel-heading">
-                <a class="btn bg-blue" (click)="addSuspect()">
+                <a class="btn btn-sm btn-info" (click)="addSuspect()">
                   <i class="fa fa-plus-square"></i>
                   Add Suspect
                 </a>
@@ -231,29 +247,28 @@
                 <table class="table table-hover text-nowrap">
                   <thead class="bg-light">
                     <tr>
+                      <th>&nbsp;</th>
                       <th>NAME</th>
                       <th>AGE</th>
                       <th>GENDER</th>
                       <th>ADDRESS</th>
                       <th>CONTACT NUMBER</th>
                       <th>ALIAS</th>
-                      <th>&nbsp;</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let suspect of suspects">
+                      <td>
+                        <button type="button" class="btn btn-sm bg-danger" (click)="removeSuspect(suspect)">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
                       <td>{{ fullName(suspect) }}</td>
                       <td> {{ suspect.age }}</td>
                       <td>{{ suspect.gender }}</td>
                       <td>{{ suspect.address }}</td>
                       <td>{{ suspect.mobileNumber }}</td>
                       <td>{{ suspect.alias }}</td>
-                      <td>
-                        <button type="button" class="btn btn-sm bg-danger mx-2" (click)="removeSuspect(suspect)">
-                          <i class="fas fa-trash"></i>
-                          {{ "Delete" | localize }}
-                        </button>
-                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -265,7 +280,7 @@
           <div class="col">
             <div class="panel panel-primary">
               <div class="panel-heading">
-                <a class="btn bg-blue" (click)="addWitness()">
+                <a class="btn btn-sm btn-info" (click)="addWitness()">
                   <i class="fa fa-plus-square"></i>
                   Add Witness
                 </a>
@@ -274,23 +289,22 @@
                 <table class="table table-hover text-nowrap">
                   <thead class="bg-light">
                     <tr>
+                      <th>&nbsp;</th>
                       <th>NAME</th>
                       <th>ADDRESS</th>
                       <th>CONTACT NUMBER</th>
-                      <th>&nbsp;</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let witness of witnesses">
+                      <td>
+                        <button type="button" class="btn btn-sm bg-danger" (click)="removeWitness(witness)">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
                       <td>{{  fullName(witness) }}</td>
                       <td>{{ witness.address }}</td>
                       <td>{{ witness.mobileNumber }}</td>
-                      <td>
-                        <button type="button" class="btn btn-sm bg-danger mx-2" (click)="removeWitness(witness)">
-                          <i class="fas fa-trash"></i>
-                          {{ "Delete" | localize }}
-                        </button>
-                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -311,8 +325,11 @@
             <div class="form-group required">
               <label class="col-form-label">Receiving officer</label>
               <input type="text" class="form-control" [(ngModel)]="complaint.receivingOffice"
-                (ngModelChange)="complaint.receivingOffice = $event.toUpperCase()"
-                [ngModelOptions]="{standalone: true}">
+                (ngModelChange)="complaint.receivingOffice = $event.toUpperCase()" required
+                name="complaintReceivingOfficer" #complaintReceivingOfficerModel="ngModel" #complaintReceivingOfficerEl>
+              <abp-validation-summary [control]="complaintReceivingOfficerModel"
+                [controlEl]="complaintReceivingOfficerEl">
+              </abp-validation-summary>
             </div>
           </div>
           <div class="col">
@@ -349,7 +366,9 @@
         </div>
         <div class="row">
           <div class="col">
-            <input type="submit" class="btn btn-primary" value="Submit">
+            <button type="submit" class="btn btn-primary" [disabled]="!editSheetForm.form.valid || saving">
+              Submit
+            </button>
           </div>
         </div>
         <br />

@@ -1,3 +1,4 @@
+import { DosierDto, DosierDtoPagedResultDto, DosierServiceProxy } from './../../shared/service-proxies/service-proxies';
 import { Component, Injector } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -11,11 +12,9 @@ import {
   UserDto,
   UserDtoPagedResultDto
 } from '@shared/service-proxies/service-proxies';
-//import { CreateUserDialogComponent } from './create-user/create-user-dialog.component';
-//import { EditUserDialogComponent } from './edit-user/edit-user-dialog.component';
-//import { ResetPasswordDialogComponent } from './reset-password/reset-password.component';
+import { Router } from '@angular/router';
 
-class PagedUsersRequestDto extends PagedRequestDto {
+class PagedDosierRequestDto extends PagedRequestDto {
   keyword: string;
   isActive: boolean | null;
 }
@@ -24,26 +23,27 @@ class PagedUsersRequestDto extends PagedRequestDto {
   templateUrl: './dosiers.component.html',
   animations: [appModuleAnimation()]
 })
-export class DosiersComponent extends PagedListingComponentBase<UserDto> {
-  complaints: UserDto[] = [];
+export class DosiersComponent extends PagedListingComponentBase<DosierDto> {
+  dosiers: DosierDto[] = [];
   keyword = '';
   isActive: boolean | null;
   advancedFiltersVisible = false;
 
   constructor(
     injector: Injector,
-    private _userService: UserServiceProxy,
+    private router: Router,
+    private _dosierService: DosierServiceProxy,
     private _modalService: BsModalService
   ) {
     super(injector);
   }
 
   create(): void {
-    this.showCreateOrEditUserDialog();
+    this.router.navigate(['/app/create-dosier']);
   }
 
-  edit(user: UserDto): void {
-    this.showCreateOrEditUserDialog(user.id);
+  edit(dosier: DosierDto): void {
+    this.router.navigate(['/app/edit-dosier', dosier.id]);
   }
 
   clearFilters(): void {
@@ -53,17 +53,16 @@ export class DosiersComponent extends PagedListingComponentBase<UserDto> {
   }
 
   protected list(
-    request: PagedUsersRequestDto,
+    request: PagedDosierRequestDto,
     pageNumber: number,
     finishedCallback: Function
   ): void {
     request.keyword = this.keyword;
     request.isActive = this.isActive;
 
-    this._userService
+    this._dosierService
       .getAll(
         request.keyword,
-        request.isActive,
         request.skipCount,
         request.maxResultCount
       )
@@ -72,28 +71,24 @@ export class DosiersComponent extends PagedListingComponentBase<UserDto> {
           finishedCallback();
         })
       )
-      .subscribe((result: UserDtoPagedResultDto) => {
-        this.complaints = result.items;
+      .subscribe((result: DosierDtoPagedResultDto) => {
+        this.dosiers = result.items;
         this.showPaging(result, pageNumber);
       });
   }
 
-  protected delete(user: UserDto): void {
+  protected delete(dosier: DosierDto): void {
     abp.message.confirm(
-      this.l('UserDeleteWarningMessage', user.fullName),
-      undefined,
+      'Are you sure to delete the selected dosier and its related items?',
+      'Confirmation',
       (result: boolean) => {
         if (result) {
-          this._userService.delete(user.id).subscribe(() => {
+          this._dosierService.delete(dosier.id).subscribe(() => {
             abp.notify.success(this.l('SuccessfullyDeleted'));
             this.refresh();
           });
         }
       }
     );
-  }
-
-  private showCreateOrEditUserDialog(id?: number): void {
-
   }
 }

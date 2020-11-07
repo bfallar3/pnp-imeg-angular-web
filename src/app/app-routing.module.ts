@@ -1,3 +1,4 @@
+import { CreateDosierComponent } from './dosiers/create-dosier/create-dosier.component';
 import { DosiersComponent } from './dosiers/dosiers.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -16,6 +17,7 @@ import { VictimsComponent } from './victims/victims.component';
 import { WitnessesComponent } from './witnesses/witnesses.component';
 import { SuspectsComponent } from './suspects/suspects.component';
 import { ComplaintDtoResolver } from './complaints/edit-complaint/edit-complaint-resolver';
+import { EditDosierComponent } from './dosiers/edit-dosier/edit-dosier.component';
 
 @NgModule({
     imports: [
@@ -48,6 +50,16 @@ import { ComplaintDtoResolver } from './complaints/edit-complaint/edit-complaint
                     {
                         path: 'dosiers',
                         component: DosiersComponent,
+                        canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'create-dosier',
+                        component: CreateDosierComponent,
+                        canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'edit-dosier/:id',
+                        component: EditDosierComponent,
                         canActivate: [AppRouteGuard]
                     },
                     {

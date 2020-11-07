@@ -1,0 +1,50 @@
+<form class="form-horizontal" autocomplete="off" #createDosierItemDlg="ngForm" (ngSubmit)="save()"
+    enctype="multipart/form-data">
+    <abp-modal-header [title]="'Create Dosier Item'" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col">
+                <div class="form-group required">
+                    <label class="col-form-label">Item</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.item"
+                        (ngModelChange)="item.item = $event.toUpperCase()" maxlength="256" name="itemItem" required
+                        #itemItemModel="ngModel" #itemItemEl>
+                    <abp-validation-summary [control]="itemItemModel" [controlEl]="itemItemEl">
+                    </abp-validation-summary>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group required">
+                    <label class="col-form-label">Particular</label>
+                    <input type="text" class="form-control" [(ngModel)]="item.particular"
+                        (ngModelChange)="item.particular = $event.toUpperCase()" maxlength="256" name="itemParticular"
+                        required #itemParticularModel="ngModel" #itemParticularEl>
+                    <abp-validation-summary [control]="itemParticularModel" [controlEl]="itemParticularEl">
+                    </abp-validation-summary>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group required">
+                    <label class="col-form-label">Information</label>
+                    <textarea type="text" class="form-control" [(ngModel)]="item.information" rows="5"
+                        (ngModelChange)="item.information = $event.toUpperCase()" maxlength="256" name="itemInformation"
+                        required #itemInformationModel="ngModel" #itemInformationEl></textarea>
+                    <abp-validation-summary [control]="itemInformationModel" [controlEl]="itemInformationEl">
+                    </abp-validation-summary>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <input type="file" [(ngModel)]="item.attachment" name="itemAttachment"
+                        #itemAttachmentModel="ngModel" #itemAttachmentEl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createDosierItemDlg.form.valid || saving"
+        (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>

@@ -48,6 +48,16 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
   }
 
   save(): void {
+    if (this.victims.length === 0) {
+      abp.message.warn('No victim added in the complaint.');
+      return;
+    }
+
+    if (this.suspects.length === 0) {
+      abp.message.warn('No suspect added in the complaint.');
+      return;
+    }
+
     this.saving = true;
     this.complaint.timeIncident = this.complaint.timeIncident || moment(abp.clock.now());
     this.complaint.dateIncident = moment(this.dateIncident);

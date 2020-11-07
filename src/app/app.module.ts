@@ -1,3 +1,4 @@
+import { DosierItemServiceProxy } from './../shared/service-proxies/service-proxies';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -51,8 +52,11 @@ import { EditPersonDialogComponent } from './persons/edit-person-dialog/edit-per
 import { VictimsComponent } from './victims/victims.component';
 import { SuspectsComponent } from './suspects/suspects.component';
 import { WitnessesComponent } from './witnesses/witnesses.component';
-import { SuspectServiceProxy, VictimServiceProxy, WitnessServiceProxy } from '@shared/service-proxies/service-proxies';
+import { DosierServiceProxy, SuspectServiceProxy, VictimServiceProxy, WitnessServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ComplaintDtoResolver } from './complaints/edit-complaint/edit-complaint-resolver';
+import { CreateDosierComponent } from './dosiers/create-dosier/create-dosier.component';
+import { EditDosierComponent } from './dosiers/edit-dosier/edit-dosier.component';
+import { CreateDosierItemDialogComponent } from './dosiers/create-dosier-item-dialog/create-dosier-item-dialog.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +98,10 @@ import { ComplaintDtoResolver } from './complaints/edit-complaint/edit-complaint
     EditPersonDialogComponent,
     VictimsComponent,
     SuspectsComponent,
-    WitnessesComponent
+    WitnessesComponent,
+    CreateDosierComponent,
+    EditDosierComponent,
+    CreateDosierItemDialogComponent
   ],
   imports: [
     CommonModule,
@@ -117,7 +124,9 @@ import { ComplaintDtoResolver } from './complaints/edit-complaint/edit-complaint
     SuspectServiceProxy,
     WitnessServiceProxy,
     VictimServiceProxy,
-    ComplaintDtoResolver],
+    ComplaintDtoResolver,
+    DosierServiceProxy,
+    DosierItemServiceProxy],
   entryComponents: [
     // tenants
     CreateTenantDialogComponent,

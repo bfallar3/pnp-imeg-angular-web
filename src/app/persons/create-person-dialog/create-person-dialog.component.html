@@ -1,110 +1,111 @@
 <form class="form-horizontal" autocomplete="off" #createPersonModal="ngForm" (ngSubmit)="save()">
     <abp-modal-header [title]="'Create New Person' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body">
-        <form class="form-horizontal" autocomplete="off" (ngSubmit)="save()">
-            <div class="row">
-                <div class="col-2">
-                    <div class="form-group">
-                        <label class="col-form-label">Rank/Title</label>
-                        <input type="text" class="form-control" [(ngModel)]="person.title"
-                            (ngModelChange)="person.title = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group required">
-                        <label class="col-form-label">First Name</label>
-                        <input type="text" class="form-control" [(ngModel)]="person.firstName"
-                            (ngModelChange)="person.firstName = $event.toUpperCase()"
-                            [ngModelOptions]="{standalone: true}">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label class="col-form-label">Middle Name</label>
-                        <input type="text" class="form-control" [(ngModel)]="person.middleName"
-                            (ngModelChange)="person.middleName = $event.toUpperCase()"
-                            [ngModelOptions]="{standalone: true}">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group required">
-                        <label class="col-form-label">Last Name</label>
-                        <input type="text" class="form-control" [(ngModel)]="person.lastName"
-                            (ngModelChange)="person.lastName = $event.toUpperCase()"
-                            [ngModelOptions]="{standalone: true}">
-                    </div>
-                </div>
-                <div class="col-1">
-                    <div class="form-group">
-                        <label class="col-form-label">Qualifier</label>
-                        <input type="text" class="form-control" [(ngModel)]="person.qualifier"
-                            (ngModelChange)="person.qualifier = $event.toUpperCase()"
-                            [ngModelOptions]="{standalone: true}">
-                    </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group required">
+                    <label class="col-form-label">First Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="person.firstName"
+                        (ngModelChange)="person.firstName = $event.toUpperCase()" required maxlength="256"
+                        name="personFirstname" #personFirstnameModel="ngModel" #personFirstnameEl>
+                    <abp-validation-summary [control]="personFirstnameModel" [controlEl]="personFirstnameEl">
+                    </abp-validation-summary>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <label class="col-form-label">Unit</label>
-                        <input type="text" class="form-control" [(ngModel)]="person.unit"
-                            (ngModelChange)="person.unit = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label class="col-form-label">Office</label>
-                        <input type="text" class="form-control" [(ngModel)]="person.office"
-                            (ngModelChange)="person.office = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
-                    </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="col-form-label">Middle Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="person.middleName"
+                        (ngModelChange)="person.middleName = $event.toUpperCase()"
+                        [ngModelOptions]="{standalone: true}">
                 </div>
             </div>
-            <div class="row">
-                <div class="col-10">
-                    <div class="form-group">
-                        <label class="col-form-label">Address</label>
-                        <input type="text" class="form-control" [(ngModel)]="person.address"
-                            (ngModelChange)="person.address = $event.toUpperCase()"
-                            [ngModelOptions]="{standalone: true}">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label class="col-form-label">Age</label>
-                        <input type="number" class="form-control" [(ngModel)]="person.age"
-                            [ngModelOptions]="{standalone: true}">
-                    </div>
+            <div class="col">
+                <div class="form-group required">
+                    <label class="col-form-label">Last Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="person.lastName"
+                        (ngModelChange)="person.lastName = $event.toUpperCase()" required maxlength="256"
+                        name="personLastname" #personLastnameModel="ngModel" #personLastnameEl>
+                    <abp-validation-summary [control]="personLastnameModel" [controlEl]="personLastnameEl">
+                    </abp-validation-summary>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group required">
-                        <label class="col-form-label">Contact Number</label>
-                        <input type="text" class="form-control" [(ngModel)]="person.mobileNumber"
-                            (ngModelChange)="person.mobileNumber = $event.toUpperCase()"
-                            [ngModelOptions]="{standalone: true}">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label class="col-form-label">Gender</label>
-                        <select class="form-control" [(ngModel)]="person.gender" [ngModelOptions]="{standalone: true}">
-                            <option value="MALE">MALE</option>
-                            <option value="FEMALE">FEMALE</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label class="col-form-label">Alias</label>
-                        <input type="text" class="form-control" [(ngModel)]="person.alias"
-                            (ngModelChange)="person.alias = $event.toUpperCase()"
-                            [ngModelOptions]="{standalone: true}">
-                        <i class="small">Provide alias name if the person is suspect</i>
-                    </div>
+            <div class="col-1">
+                <div class="form-group">
+                    <label class="col-form-label">Qualifier</label>
+                    <input type="text" class="form-control" [(ngModel)]="person.qualifier"
+                        (ngModelChange)="person.qualifier = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
                 </div>
             </div>
-        </form>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <div class="form-group">
+                    <label class="col-form-label">Rank/Title</label>
+                    <input type="text" class="form-control" [(ngModel)]="person.title" autofocus
+                        (ngModelChange)="person.title = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="col-form-label">Unit</label>
+                    <input type="text" class="form-control" [(ngModel)]="person.unit"
+                        (ngModelChange)="person.unit = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="col-form-label">Office</label>
+                    <input type="text" class="form-control" [(ngModel)]="person.office"
+                        (ngModelChange)="person.office = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-10">
+                <div class="form-group">
+                    <label class="col-form-label">Address</label>
+                    <input type="text" class="form-control" [(ngModel)]="person.address"
+                        (ngModelChange)="person.address = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="col-form-label">Age</label>
+                    <input type="number" class="form-control" [(ngModel)]="person.age"
+                        [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group required">
+                    <label class="col-form-label">Contact Number</label>
+                    <input type="text" class="form-control" [(ngModel)]="person.mobileNumber"
+                        (ngModelChange)="person.mobileNumber = $event.toUpperCase()" required maxlength="256"
+                        name="personContact" #personContactModel="ngModel" #personContactEl>
+                    <abp-validation-summary [control]="personContactModel" [controlEl]="personContactEl">
+                    </abp-validation-summary>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="col-form-label">Gender</label>
+                    <select class="form-control" [(ngModel)]="person.gender" [ngModelOptions]="{standalone: true}">
+                        <option value="MALE">MALE</option>
+                        <option value="FEMALE">FEMALE</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="col-form-label">Alias</label>
+                    <input type="text" class="form-control" [(ngModel)]="person.alias"
+                        (ngModelChange)="person.alias = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+                    <i class="small">Provide alias name if the person is suspect</i>
+                </div>
+            </div>
+        </div>
     </div>
     <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createPersonModal.form.valid || saving"
         (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
