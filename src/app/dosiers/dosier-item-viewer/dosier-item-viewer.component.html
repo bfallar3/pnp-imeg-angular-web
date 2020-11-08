@@ -1,0 +1,12 @@
+<div *ngIf="isPDF" class="pdf-viewer">
+    <div>
+        <pdf-viewer [src]="pdfSrc" [render-text]="true" [show-borders]="true"
+        ></pdf-viewer>
+    </div>
+</div>
+
+<div *ngIf="isImage">
+    <div>
+        <img [src]="imageSrc" />
+    </div>
+</div>

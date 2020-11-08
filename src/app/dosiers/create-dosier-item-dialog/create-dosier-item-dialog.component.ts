@@ -31,7 +31,14 @@ export class CreateDosierItemDialogComponent extends AppComponentBase implements
   }
 
   handleAttachment(event) {
-    const file = event.target.files[0];
+    const validExtensions = ['pdf', 'jpg', 'gif', 'bmp', 'tiff', 'png', 'jpeg', 'txt', 'avi', 'mp4', '3gp', 'mov'];
+    const file = <File>event.target.files[0];
+    const extension = file.name.split('.').pop();
+    if (!validExtensions.includes(extension)) {
+      this.item.attachment = null;
+      abp.message.warn(`File extension (${extension}) is not supported as attachment`, 'Upload');
+      return;
+    }
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {

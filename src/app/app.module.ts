@@ -59,6 +59,8 @@ import { EditDosierComponent } from './dosiers/edit-dosier/edit-dosier.component
 import { CreateDosierItemDialogComponent } from './dosiers/create-dosier-item-dialog/create-dosier-item-dialog.component';
 import { DosierDtoResolver } from './dosiers/edit-dosier/edit-dosier-resolver';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-item-viewer.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +105,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     WitnessesComponent,
     CreateDosierComponent,
     EditDosierComponent,
-    CreateDosierItemDialogComponent
+    CreateDosierItemDialogComponent,
+    DosierItemViewerComponent
   ],
   imports: [
     CommonModule,
@@ -121,7 +124,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     NgxPaginationModule,
     BsDatepickerModule.forRoot(),
     TimepickerModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    PdfViewerModule
   ],
   providers: [
     SuspectServiceProxy,

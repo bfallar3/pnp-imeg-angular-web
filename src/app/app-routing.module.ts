@@ -1,3 +1,4 @@
+import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-item-viewer.component';
 import { DosierDtoResolver } from './dosiers/edit-dosier/edit-dosier-resolver';
 import { CreateDosierComponent } from './dosiers/create-dosier/create-dosier.component';
 import { DosiersComponent } from './dosiers/dosiers.component';
@@ -64,6 +65,11 @@ import { EditDosierComponent } from './dosiers/edit-dosier/edit-dosier.component
                         resolve: {
                             dto: DosierDtoResolver
                         },
+                        canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'dosier-item-viewer/:id',
+                        component: DosierItemViewerComponent,
                         canActivate: [AppRouteGuard]
                     },
                     {

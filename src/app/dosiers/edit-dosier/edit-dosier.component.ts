@@ -1,12 +1,13 @@
 import { UUID } from 'angular2-uuid';
 import { AppComponentBase } from '@shared/app-component-base';
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Inject, Injectable, InjectionToken, Injector, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DosierItemDto, DosierDto, DosierServiceProxy, DosierItemServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { CreateDosierItemDialogComponent } from '../create-dosier-item-dialog/create-dosier-item-dialog.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-dosier',
@@ -39,7 +40,17 @@ export class EditDosierComponent extends AppComponentBase implements OnInit {
   }
 
   save(): void {
-
+    this.saving = true;
+    this.dosier.items = this.dosierItems;
+    this.dosierService.update(this.dosier)
+      .pipe(
+        finalize(() => {
+          this.saving = false;
+        })
+      )
+      .subscribe(() => {
+        abp.message.success(this.l('SavedSuccessfully'));
+      });
   }
 
   addDosierItem(): void {
@@ -70,7 +81,12 @@ export class EditDosierComponent extends AppComponentBase implements OnInit {
     });
   }
 
-  remove(index) {
+  view(index): void {
+    const item = this.dosierItems[index];
+    this.router.navigate(['/app/dosier-item-viewer', item.id]);
+  }
+
+  remove(index): void {
     abp.message.confirm(
       'Are you sure to delete the selected attachment?',
       'Confirmation',

@@ -78,7 +78,7 @@
                                     <i>{{item.information}}</i>
                                 </div>
                                 <div class="icon" *ngIf="item.attachment">
-                                    <i class="fas fa-paperclip" tooltip="{{item.attachment}}"></i>
+                                    <i class="fas fa-paperclip" tooltip="{{item.attachment}}" (click)="view(i)"></i>
                                 </div>
                                 <a href="javascript:void(0)" class="small-box-footer" (click)="remove(i)">
                                     Remove
