@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AppComponentBase } from '@shared/app-component-base';
+import { AppConsts } from '@shared/AppConsts';
 import { DosierItemServiceProxy } from '@shared/service-proxies/service-proxies';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
@@ -17,11 +19,13 @@ export class DosierItemViewerComponent implements OnInit, OnDestroy {
   imageSrc: string;
   baseUrl: string;
 
-  constructor(private route: ActivatedRoute,
-    private dosierItemService: DosierItemServiceProxy) { }
+  constructor(
+    private route: ActivatedRoute,
+    private dosierItemService: DosierItemServiceProxy) {
+  }
 
   ngOnInit(): void {
-    this.baseUrl = 'http://localhost:21021/uploads/';
+    this.baseUrl = AppConsts.remoteServiceBaseUrl + '/uploads/';
     this.sub = this.route.params.subscribe(params => {
       const id = params.id;
       const imagesExtensions = ['jpg', 'gif', 'bmp', 'png', 'jpeg'];
