@@ -15,7 +15,6 @@ import { finalize } from 'rxjs/operators';
 import { AppComponentBase } from '@shared/app-component-base';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CreatePersonDialogComponent } from '@app/persons/create-person-dialog/create-person-dialog.component';
-import { EditPersonDialogComponent } from '@app/persons/edit-person-dialog/edit-person-dialog.component';
 import { PersonDto } from '@shared/service-proxies/PersonDto';
 import * as moment from 'moment';
 import * as _ from 'lodash';

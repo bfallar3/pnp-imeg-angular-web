@@ -57,6 +57,8 @@ import { ComplaintDtoResolver } from './complaints/edit-complaint/edit-complaint
 import { CreateDosierComponent } from './dosiers/create-dosier/create-dosier.component';
 import { EditDosierComponent } from './dosiers/edit-dosier/edit-dosier.component';
 import { CreateDosierItemDialogComponent } from './dosiers/create-dosier-item-dialog/create-dosier-item-dialog.component';
+import { DosierDtoResolver } from './dosiers/edit-dosier/edit-dosier-resolver';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   declarations: [
@@ -118,13 +120,15 @@ import { CreateDosierItemDialogComponent } from './dosiers/create-dosier-item-di
     SharedModule,
     NgxPaginationModule,
     BsDatepickerModule.forRoot(),
-    TimepickerModule.forRoot()
+    TimepickerModule.forRoot(),
+    TooltipModule.forRoot()
   ],
   providers: [
     SuspectServiceProxy,
     WitnessServiceProxy,
     VictimServiceProxy,
     ComplaintDtoResolver,
+    DosierDtoResolver,
     DosierServiceProxy,
     DosierItemServiceProxy],
   entryComponents: [

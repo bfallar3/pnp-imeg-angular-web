@@ -1,1 +1,104 @@
-<p>edit-dosier works!</p>
+<div [@routerTransition]>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <h1>Edit Dosier Form</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content px-2">
+        <div class="container-fluid">
+            <form novalidate class="form-horizontal" autocomplete="off" (ngSubmit)="save()" #createDosierForm="ngForm"
+                [busy]="saving">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label class="col-form-label">Rank</label>
+                            <input type="text" class="form-control" [(ngModel)]="dosier.rank" autofocus
+                                (ngModelChange)="dosier.rank = $event.toUpperCase()" maxlength="256" name="dosierRank"
+                                #dosierRankModel="ngModel" #dosierRankEl>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group required">
+                            <label class="col-form-label">Firstname</label>
+                            <input type="text" class="form-control" [(ngModel)]="dosier.firstname"
+                                (ngModelChange)="dosier.firstname = $event.toUpperCase()" required maxlength="256"
+                                name="dosierFirstname" #dosierFirstnameModel="ngModel" #dosierFirstnameEl>
+                            <abp-validation-summary [control]="dosierFirstnameModel" [controlEl]="dosierFirstnameEl">
+                            </abp-validation-summary>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="col-form-label">Middlename</label>
+                            <input type="text" class="form-control" [(ngModel)]="dosier.middlename"
+                                (ngModelChange)="dosier.middlename = $event.toUpperCase()" maxlength="256"
+                                name="dosierMiddlename" #dosierMiddlenameModel="ngModel" #dosierMiddlenameEl>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group required">
+                            <label class="col-form-label">Lastname</label>
+                            <input type="text" class="form-control" [(ngModel)]="dosier.lastname"
+                                (ngModelChange)="dosier.lastname = $event.toUpperCase()" maxlength="256"
+                                name="dosierLastname" required #dosierLastnameModel="ngModel" #dosierLastnameEl>
+                            <abp-validation-summary [control]="dosierLastnameModel" [controlEl]="dosierLastnameEl">
+                            </abp-validation-summary>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label class="col-form-label">Qualifier</label>
+                            <input type="text" class="form-control" [(ngModel)]="dosier.qualifier"
+                                (ngModelChange)="dosier.qualifier = $event.toUpperCase()" maxlength="256"
+                                name="dosierQualifier" #dosierQualifierModel="ngModel" #dosierQualifierEl>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-sm btn-info" (click)="addDosierItem()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>ADD PARTICULAR</button>
+                    </div>
+                </div>
+                <br />
+                <!-- show dosier items here -->
+                <div class="cardlist">
+                    <ng-container *ngFor="let item of dosierItems; index as i">
+                        <div class="col-lg-3 col-6 cardListItem">
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h5>{{item.item}}</h5>
+                                    <p>{{item.particular}}</p>
+                                    <i>{{item.information}}</i>
+                                </div>
+                                <div class="icon" *ngIf="item.attachment">
+                                    <i class="fas fa-paperclip" tooltip="{{item.attachment}}"></i>
+                                </div>
+                                <a href="javascript:void(0)" class="small-box-footer" (click)="remove(i)">
+                                    Remove
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary"
+                            [disabled]="!createDosierForm.form.valid || saving">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </section>
+</div>

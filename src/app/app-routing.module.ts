@@ -1,3 +1,4 @@
+import { DosierDtoResolver } from './dosiers/edit-dosier/edit-dosier-resolver';
 import { CreateDosierComponent } from './dosiers/create-dosier/create-dosier.component';
 import { DosiersComponent } from './dosiers/dosiers.component';
 import { NgModule } from '@angular/core';
@@ -60,6 +61,9 @@ import { EditDosierComponent } from './dosiers/edit-dosier/edit-dosier.component
                     {
                         path: 'edit-dosier/:id',
                         component: EditDosierComponent,
+                        resolve: {
+                            dto: DosierDtoResolver
+                        },
                         canActivate: [AppRouteGuard]
                     },
                     {

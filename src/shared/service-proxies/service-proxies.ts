@@ -631,6 +631,114 @@ export class DosierServiceProxy {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    create(body: CreateDosierDto | undefined): Observable<DosierDto> {
+        let url_ = this.baseUrl + "/api/services/app/Dosier/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<DosierDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DosierDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<DosierDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = DosierDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DosierDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Dosier/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -754,62 +862,6 @@ export class DosierServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    create(body: CreateDosierDto | undefined): Observable<DosierDto> {
-        let url_ = this.baseUrl + "/api/services/app/Dosier/Create";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreate(<any>response_);
-                } catch (e) {
-                    return <Observable<DosierDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<DosierDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processCreate(response: HttpResponseBase): Observable<DosierDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = DosierDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<DosierDto>(<any>null);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
     update(body: DosierDto | undefined): Observable<DosierDto> {
         let url_ = this.baseUrl + "/api/services/app/Dosier/Update";
         url_ = url_.replace(/[?&]$/, "");
@@ -861,13 +913,25 @@ export class DosierServiceProxy {
         }
         return _observableOf<DosierDto>(<any>null);
     }
+}
+
+@Injectable()
+export class DosierItemServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
 
     /**
      * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Dosier/Delete?";
+        let url_ = this.baseUrl + "/api/services/app/DosierItem/Delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -912,18 +976,6 @@ export class DosierServiceProxy {
             }));
         }
         return _observableOf<void>(<any>null);
-    }
-}
-
-@Injectable()
-export class DosierItemServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
     /**
@@ -1156,58 +1208,6 @@ export class DosierItemServiceProxy {
             }));
         }
         return _observableOf<DosierItemDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/DosierItem/Delete?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
     }
 }
 
@@ -5418,89 +5418,6 @@ export interface IChangeUiThemeInput {
     theme: string;
 }
 
-export class DosierItemDto implements IDosierItemDto {
-    item: string | undefined;
-    particular: string | undefined;
-    information: string | undefined;
-    attachment: string | undefined;
-    dosierId: number | undefined;
-    dosier: DosierDto;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    id: number;
-
-    constructor(data?: IDosierItemDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.item = _data["item"];
-            this.particular = _data["particular"];
-            this.information = _data["information"];
-            this.attachment = _data["attachment"];
-            this.dosierId = _data["dosierId"];
-            this.dosier = _data["dosier"] ? DosierDto.fromJS(_data["dosier"]) : <any>undefined;
-            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = _data["lastModifierUserId"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = _data["creatorUserId"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): DosierItemDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new DosierItemDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["item"] = this.item;
-        data["particular"] = this.particular;
-        data["information"] = this.information;
-        data["attachment"] = this.attachment;
-        data["dosierId"] = this.dosierId;
-        data["dosier"] = this.dosier ? this.dosier.toJSON() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): DosierItemDto {
-        const json = this.toJSON();
-        let result = new DosierItemDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IDosierItemDto {
-    item: string | undefined;
-    particular: string | undefined;
-    information: string | undefined;
-    attachment: string | undefined;
-    dosierId: number | undefined;
-    dosier: DosierDto;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    id: number;
-}
-
 export class DosierDto implements IDosierDto {
     rank: string | undefined;
     firstname: string | undefined;
@@ -5592,11 +5509,23 @@ export interface IDosierDto {
     id: number;
 }
 
-export class DosierDtoPagedResultDto implements IDosierDtoPagedResultDto {
-    totalCount: number;
-    items: DosierDto[] | undefined;
+export class DosierItemDto implements IDosierItemDto {
+    item: string | undefined;
+    particular: string | undefined;
+    information: string | undefined;
+    attachment: string | undefined;
+    extension: string | undefined;
+    content: string | undefined;
+    contentType: string | undefined;
+    dosierId: number | undefined;
+    dosier: DosierDto;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: number;
 
-    constructor(data?: IDosierDtoPagedResultDto) {
+    constructor(data?: IDosierItemDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -5607,44 +5536,72 @@ export class DosierDtoPagedResultDto implements IDosierDtoPagedResultDto {
 
     init(_data?: any) {
         if (_data) {
-            this.totalCount = _data["totalCount"];
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items.push(DosierDto.fromJS(item));
-            }
+            this.item = _data["item"];
+            this.particular = _data["particular"];
+            this.information = _data["information"];
+            this.attachment = _data["attachment"];
+            this.extension = _data["extension"];
+            this.content = _data["content"];
+            this.contentType = _data["contentType"];
+            this.dosierId = _data["dosierId"];
+            this.dosier = _data["dosier"] ? DosierDto.fromJS(_data["dosier"]) : <any>undefined;
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.id = _data["id"];
         }
     }
 
-    static fromJS(data: any): DosierDtoPagedResultDto {
+    static fromJS(data: any): DosierItemDto {
         data = typeof data === 'object' ? data : {};
-        let result = new DosierDtoPagedResultDto();
+        let result = new DosierItemDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
+        data["item"] = this.item;
+        data["particular"] = this.particular;
+        data["information"] = this.information;
+        data["attachment"] = this.attachment;
+        data["extension"] = this.extension;
+        data["content"] = this.content;
+        data["contentType"] = this.contentType;
+        data["dosierId"] = this.dosierId;
+        data["dosier"] = this.dosier ? this.dosier.toJSON() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
         return data; 
     }
 
-    clone(): DosierDtoPagedResultDto {
+    clone(): DosierItemDto {
         const json = this.toJSON();
-        let result = new DosierDtoPagedResultDto();
+        let result = new DosierItemDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IDosierDtoPagedResultDto {
-    totalCount: number;
-    items: DosierDto[] | undefined;
+export interface IDosierItemDto {
+    item: string | undefined;
+    particular: string | undefined;
+    information: string | undefined;
+    attachment: string | undefined;
+    extension: string | undefined;
+    content: string | undefined;
+    contentType: string | undefined;
+    dosierId: number | undefined;
+    dosier: DosierDto;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: number;
 }
 
 export class CreateDosierDto implements ICreateDosierDto {
@@ -5716,6 +5673,61 @@ export interface ICreateDosierDto {
     lastname: string | undefined;
     qualifier: string | undefined;
     items: DosierItemDto[] | undefined;
+}
+
+export class DosierDtoPagedResultDto implements IDosierDtoPagedResultDto {
+    totalCount: number;
+    items: DosierDto[] | undefined;
+
+    constructor(data?: IDosierDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(DosierDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): DosierDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DosierDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): DosierDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new DosierDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IDosierDtoPagedResultDto {
+    totalCount: number;
+    items: DosierDto[] | undefined;
 }
 
 export class DosierItemDtoPagedResultDto implements IDosierItemDtoPagedResultDto {

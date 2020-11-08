@@ -12,6 +12,7 @@ export class CreateDosierItemDialogComponent extends AppComponentBase implements
 
   saving = false;
   item = new DosierItemDto();
+  base64content: string;
   @Output() onSave = new EventEmitter<any>();
 
   constructor(injector: Injector,
@@ -25,7 +26,17 @@ export class CreateDosierItemDialogComponent extends AppComponentBase implements
   save(): void {
     this.saving = true;
     this.bsModalRef.hide();
-    this.onSave.emit();
+    this.onSave.
+      emit();
+  }
+
+  handleAttachment(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.base64content = reader.result.toString();
+    };
   }
 
 }

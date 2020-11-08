@@ -1,3 +1,4 @@
+import { DosierDtoPagedResultDto } from './../../../shared/service-proxies/service-proxies';
 import { Component, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
@@ -7,6 +8,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 import { CreateDosierItemDialogComponent } from '../create-dosier-item-dialog/create-dosier-item-dialog.component';
 import { UUID } from 'angular2-uuid';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @Component({
   selector: 'app-create-dosier',
@@ -18,7 +20,7 @@ export class CreateDosierComponent extends AppComponentBase implements OnInit {
 
   saving = false;
   dosier = new DosierDto();
-  createDosierItemDto: DosierItemDto;
+  dosierItem: DosierItemDto;
   dosierItems: DosierItemDto[] = [];
 
   constructor(injector: Injector,
@@ -34,6 +36,7 @@ export class CreateDosierComponent extends AppComponentBase implements OnInit {
 
   save(): void {
     this.saving = true;
+    this.dosier.items = this.dosierItems;
     this.dosierService.create(this.dosier)
       .pipe(
         finalize(() => {
@@ -56,21 +59,33 @@ export class CreateDosierComponent extends AppComponentBase implements OnInit {
     );
     dialog.content.onSave.subscribe(() => {
       const guid = UUID.UUID();
-      this.createDosierItemDto = dialog.content.item;
-      const filename = this.createDosierItemDto.attachment;
-      const extension = filename.split('.').pop();
-      this.createDosierItemDto.attachment = guid + '.' + extension;
-      this.saving = true;
-      this.dosierItemService.create(this.createDosierItemDto)
-        .pipe(
-          finalize(() => {
-            this.saving = false;
-          })
-        )
-        .subscribe(() => {
-          this.dosierItems.push(this.createDosierItemDto);
-        });
+      this.dosierItem = dialog.content.item;
+      const filename = this.dosierItem.attachment;
+      if (filename) {
+        const extension = filename.split('.').pop();
+        if (dialog.content.base64content) {
+          const content = dialog.content.base64content;
+          const contentType = content.split(',')[0];
+          const base64content = content.split(',')[1];
+          this.dosierItem.attachment = guid + '.' + extension;
+          this.dosierItem.content = base64content;
+          this.dosierItem.contentType = contentType;
+          this.dosierItem.extension = extension;
+        }
+      }
+      this.dosierItems.push(this.dosierItem);
     });
   }
 
+  remove(index) {
+    abp.message.confirm(
+      'Are you sure to delete the selected attachment?',
+      'Confirmation',
+      (result: boolean) => {
+        if (result) {
+          this.dosierItems.splice(index, 1);
+        }
+      }
+    );
+  }
 }
