@@ -21,6 +21,16 @@
                                 #dosierRankModel="ngModel" #dosierRankEl>
                         </div>
                     </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="col-form-label">Unit</label>
+                            <input type="text" class="form-control" [(ngModel)]="dosier.unit"
+                                (ngModelChange)="dosier.unit = $event.toUpperCase()" maxlength="256" name="dosierUnit"
+                                #dosierUnitModel="ngModel" #dosierUnitEl>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col">
                         <div class="form-group required">
                             <label class="col-form-label">Firstname</label>
@@ -39,8 +49,6 @@
                                 name="dosierMiddlename" #dosierMiddlenameModel="ngModel" #dosierMiddlenameEl>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col">
                         <div class="form-group required">
                             <label class="col-form-label">Lastname</label>
@@ -62,32 +70,56 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <button type="button" class="btn btn-sm btn-info" (click)="addDosierItem()">
-                            <i class="fa fa-plus" aria-hidden="true"></i>ADD PARTICULAR</button>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn bg-blue" (click)="search()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <input type="text" class="form-control" name="keyword" [(ngModel)]="keyword"
+                                (ngModelChange)="keyword = $event.toUpperCase()" (keyup)="search()"
+                                [placeholder]="'SearchWithThreeDot' | localize" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-sm bg-info" (click)="addDosierItem()">
+                            <i class="fa fa-plus" aria-hidden="true">&nbsp;&nbsp;</i>ADD PARTICULAR</button>
                     </div>
                 </div>
                 <br />
                 <!-- show dosier items here -->
-                <div class="cardlist">
-                    <ng-container *ngFor="let item of dosierItems; index as i">
-                        <div class="col-lg-3 col-6 cardListItem">
-                            <div class="small-box bg-success">
-                                <div class="inner">
-                                    <h5>{{item.item}}</h5>
-                                    <p>{{item.particular}}</p>
-                                    <i>{{item.information}}</i>
-                                </div>
-                                <div class="icon" *ngIf="item.attachment">
-                                    <i class="fas fa-paperclip" tooltip="{{item.attachment}}" (click)="view(i)"></i>
-                                </div>
-                                <a href="javascript:void(0)" class="small-box-footer" (click)="remove(i)">
-                                    Remove
-                                    <i class="fas fa-trash"></i>
+                <table class="table table-hover text-nowrap">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Item</th>
+                            <th>Particular</th>
+                            <th>Information</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of filterDosierItems; index as i">
+                            <td>
+                                <i *ngIf="item.attachment" class="fas fa-paperclip">&nbsp;</i>
+                                {{ item.item }}
+                            </td>
+                            <td>{{ item.particular }}</td>
+                            <td>{{ item.information }}</td>
+                            <td>
+                                <a href="javascript:void(0);" class="btn btn-sm bg-danger" (click)="remove(i)">
+                                    <i class="fas fa-trash">&nbsp;</i>
                                 </a>
-                            </div>
-                        </div>
-                    </ng-container>
-                </div>
+                                <a *ngIf="item.attachment" href="javascript:void(0);"
+                                    class="btn btn-sm bg-secondary mx-2" (click)="view(i)">
+                                    <i class="fas fa-eye">&nbsp;</i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
                 <br />
                 <div class="row">
                     <div class="col">

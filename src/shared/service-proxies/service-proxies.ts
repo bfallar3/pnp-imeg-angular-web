@@ -687,6 +687,62 @@ export class DosierServiceProxy {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    update(body: DosierDto | undefined): Observable<DosierDto> {
+        let url_ = this.baseUrl + "/api/services/app/Dosier/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<DosierDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DosierDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<DosierDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = DosierDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DosierDto>(<any>null);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -856,62 +912,6 @@ export class DosierServiceProxy {
             }));
         }
         return _observableOf<DosierDtoPagedResultDto>(<any>null);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    update(body: DosierDto | undefined): Observable<DosierDto> {
-        let url_ = this.baseUrl + "/api/services/app/Dosier/Update";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processUpdate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processUpdate(<any>response_);
-                } catch (e) {
-                    return <Observable<DosierDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<DosierDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processUpdate(response: HttpResponseBase): Observable<DosierDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = DosierDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<DosierDto>(<any>null);
     }
 }
 
@@ -5424,6 +5424,7 @@ export class DosierDto implements IDosierDto {
     middlename: string | undefined;
     lastname: string | undefined;
     qualifier: string | undefined;
+    unit: string | undefined;
     items: DosierItemDto[] | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
@@ -5447,6 +5448,7 @@ export class DosierDto implements IDosierDto {
             this.middlename = _data["middlename"];
             this.lastname = _data["lastname"];
             this.qualifier = _data["qualifier"];
+            this.unit = _data["unit"];
             if (Array.isArray(_data["items"])) {
                 this.items = [] as any;
                 for (let item of _data["items"])
@@ -5474,6 +5476,7 @@ export class DosierDto implements IDosierDto {
         data["middlename"] = this.middlename;
         data["lastname"] = this.lastname;
         data["qualifier"] = this.qualifier;
+        data["unit"] = this.unit;
         if (Array.isArray(this.items)) {
             data["items"] = [];
             for (let item of this.items)
@@ -5501,6 +5504,7 @@ export interface IDosierDto {
     middlename: string | undefined;
     lastname: string | undefined;
     qualifier: string | undefined;
+    unit: string | undefined;
     items: DosierItemDto[] | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
@@ -5610,6 +5614,7 @@ export class CreateDosierDto implements ICreateDosierDto {
     middlename: string | undefined;
     lastname: string | undefined;
     qualifier: string | undefined;
+    unit: string | undefined;
     items: DosierItemDto[] | undefined;
 
     constructor(data?: ICreateDosierDto) {
@@ -5628,6 +5633,7 @@ export class CreateDosierDto implements ICreateDosierDto {
             this.middlename = _data["middlename"];
             this.lastname = _data["lastname"];
             this.qualifier = _data["qualifier"];
+            this.unit = _data["unit"];
             if (Array.isArray(_data["items"])) {
                 this.items = [] as any;
                 for (let item of _data["items"])
@@ -5650,6 +5656,7 @@ export class CreateDosierDto implements ICreateDosierDto {
         data["middlename"] = this.middlename;
         data["lastname"] = this.lastname;
         data["qualifier"] = this.qualifier;
+        data["unit"] = this.unit;
         if (Array.isArray(this.items)) {
             data["items"] = [];
             for (let item of this.items)
@@ -5672,6 +5679,7 @@ export interface ICreateDosierDto {
     middlename: string | undefined;
     lastname: string | undefined;
     qualifier: string | undefined;
+    unit: string | undefined;
     items: DosierItemDto[] | undefined;
 }
 

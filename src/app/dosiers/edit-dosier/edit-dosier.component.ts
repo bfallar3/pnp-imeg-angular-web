@@ -19,8 +19,10 @@ export class EditDosierComponent extends AppComponentBase implements OnInit {
 
   dosier: DosierDto;
   dosierItems: DosierItemDto[] = [];
+  filterDosierItems: DosierItemDto[] = [];
   dosierItem: DosierItemDto;
   saving = false;
+  keyword = '';
 
   constructor(injector: Injector,
     private router: Router,
@@ -36,6 +38,7 @@ export class EditDosierComponent extends AppComponentBase implements OnInit {
       abp.log.info(data.dto);
       this.dosier = data.dto;
       this.dosierItems = this.dosier.items;
+      this.filterDosierItems = this.dosierItems;
     });
   }
 
@@ -99,6 +102,16 @@ export class EditDosierComponent extends AppComponentBase implements OnInit {
         }
       }
     );
+  }
+
+  search(): void {
+    if (this.keyword === '') {
+      this.filterDosierItems = this.dosierItems;
+    } else {
+      this.filterDosierItems = this.dosierItems.filter(s => s.item.startsWith(this.keyword)
+        || s.particular.startsWith(this.keyword)
+        || s.information.startsWith(this.keyword));
+    }
   }
 
 }
