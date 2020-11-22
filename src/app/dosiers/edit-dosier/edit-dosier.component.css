@@ -16,3 +16,7 @@
  .cardListItem {
    flex: 0 1 calc(33.3% - 32px);
  }
+
+ .wrap {
+   white-space: normal;
+ }

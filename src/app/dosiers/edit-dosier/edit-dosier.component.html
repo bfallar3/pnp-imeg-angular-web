@@ -70,6 +70,13 @@
                 </div>
                 <div class="row">
                     <div class="col">
+                        <button type="button" class="btn btn-sm bg-info" (click)="addDosierItem()">
+                            <i class="fa fa-plus" aria-hidden="true">&nbsp;&nbsp;</i>ADD PARTICULAR</button>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <button type="button" class="btn bg-blue" (click)="search()">
@@ -83,13 +90,7 @@
                     </div>
                 </div>
                 <br />
-                <div class="row">
-                    <div class="col">
-                        <button type="button" class="btn btn-sm bg-info" (click)="addDosierItem()">
-                            <i class="fa fa-plus" aria-hidden="true">&nbsp;&nbsp;</i>ADD PARTICULAR</button>
-                    </div>
-                </div>
-                <br />
+
                 <!-- show dosier items here -->
                 <table class="table table-hover text-nowrap">
                     <thead class="bg-light">
@@ -107,7 +108,7 @@
                                 {{ item.item }}
                             </td>
                             <td>{{ item.particular }}</td>
-                            <td>{{ item.information }}</td>
+                            <td class="wrap">{{ item.information }}</td>
                             <td>
                                 <a href="javascript:void(0);" class="btn btn-sm bg-danger" (click)="remove(i)">
                                     <i class="fas fa-trash">&nbsp;</i>

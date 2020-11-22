@@ -1,3 +1,4 @@
+import { ComplaintDashboardDtoResolver } from './home/home-resolver';
 import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-item-viewer.component';
 import { DosierDtoResolver } from './dosiers/edit-dosier/edit-dosier-resolver';
 import { CreateDosierComponent } from './dosiers/create-dosier/create-dosier.component';
@@ -31,6 +32,9 @@ import { EditDosierComponent } from './dosiers/edit-dosier/edit-dosier.component
                     {
                         path: 'home',
                         component: HomeComponent,
+                        resolve: {
+                            dto: ComplaintDashboardDtoResolver
+                        },
                         canActivate: [AppRouteGuard]
                     },
                     {

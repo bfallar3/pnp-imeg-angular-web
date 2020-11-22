@@ -108,9 +108,9 @@ export class EditDosierComponent extends AppComponentBase implements OnInit {
     if (this.keyword === '') {
       this.filterDosierItems = this.dosierItems;
     } else {
-      this.filterDosierItems = this.dosierItems.filter(s => s.item.startsWith(this.keyword)
-        || s.particular.startsWith(this.keyword)
-        || s.information.startsWith(this.keyword));
+      this.filterDosierItems = this.dosierItems.filter(s => s.item.includes(this.keyword)
+        || s.particular.includes(this.keyword)
+        || s.information.includes(this.keyword));
     }
   }
 

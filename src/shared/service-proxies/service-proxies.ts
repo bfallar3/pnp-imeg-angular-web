@@ -204,6 +204,57 @@ export class ComplaintServiceProxy {
     }
 
     /**
+     * @return Success
+     */
+    getComplaintDashboard(): Observable<ComplaintDashboardDto> {
+        let url_ = this.baseUrl + "/api/services/app/Complaint/GetComplaintDashboard";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetComplaintDashboard(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetComplaintDashboard(<any>response_);
+                } catch (e) {
+                    return <Observable<ComplaintDashboardDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ComplaintDashboardDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetComplaintDashboard(response: HttpResponseBase): Observable<ComplaintDashboardDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ComplaintDashboardDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ComplaintDashboardDto>(<any>null);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -4910,6 +4961,61 @@ export interface IUpdateComplaintDto {
     victims: VictimDto[] | undefined;
     suspects: SuspectDto[] | undefined;
     witnesses: WitnessDto[] | undefined;
+}
+
+export class ComplaintDashboardDto implements IComplaintDashboardDto {
+    totalActiveComplaints: number;
+    totalCloseComplaints: number;
+    topNatureComplaint: string | undefined;
+    mostAssigned: string | undefined;
+
+    constructor(data?: IComplaintDashboardDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalActiveComplaints = _data["totalActiveComplaints"];
+            this.totalCloseComplaints = _data["totalCloseComplaints"];
+            this.topNatureComplaint = _data["topNatureComplaint"];
+            this.mostAssigned = _data["mostAssigned"];
+        }
+    }
+
+    static fromJS(data: any): ComplaintDashboardDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ComplaintDashboardDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalActiveComplaints"] = this.totalActiveComplaints;
+        data["totalCloseComplaints"] = this.totalCloseComplaints;
+        data["topNatureComplaint"] = this.topNatureComplaint;
+        data["mostAssigned"] = this.mostAssigned;
+        return data; 
+    }
+
+    clone(): ComplaintDashboardDto {
+        const json = this.toJSON();
+        let result = new ComplaintDashboardDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IComplaintDashboardDto {
+    totalActiveComplaints: number;
+    totalCloseComplaints: number;
+    topNatureComplaint: string | undefined;
+    mostAssigned: string | undefined;
 }
 
 export class ComplaintDtoPagedResultDto implements IComplaintDtoPagedResultDto {

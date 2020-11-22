@@ -1,3 +1,4 @@
+import { ComplaintDashboardDtoResolver } from './home/home-resolver';
 import { DosierItemServiceProxy } from './../shared/service-proxies/service-proxies';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -91,8 +92,6 @@ import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-i
     SidebarLogoComponent,
     SidebarUserPanelComponent,
     SidebarMenuComponent,
-    // Dosiers
-    DosiersComponent,
     // Complaints
     ComplaintsComponent,
     CreateComplaintComponent,
@@ -103,6 +102,8 @@ import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-i
     VictimsComponent,
     SuspectsComponent,
     WitnessesComponent,
+    // Dosiers
+    DosiersComponent,
     CreateDosierComponent,
     EditDosierComponent,
     CreateDosierItemDialogComponent,
@@ -131,10 +132,13 @@ import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-i
     SuspectServiceProxy,
     WitnessServiceProxy,
     VictimServiceProxy,
-    ComplaintDtoResolver,
-    DosierDtoResolver,
     DosierServiceProxy,
-    DosierItemServiceProxy],
+    DosierItemServiceProxy,
+    // resolvers
+    ComplaintDtoResolver,
+    ComplaintDashboardDtoResolver,
+    DosierDtoResolver
+    ],
   entryComponents: [
     // tenants
     CreateTenantDialogComponent,

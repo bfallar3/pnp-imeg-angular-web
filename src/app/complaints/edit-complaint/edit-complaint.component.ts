@@ -55,7 +55,6 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
-      abp.log.info(data);
       this.complaint = data.dto;
       this.victims = this.complaint.victims;
       this.suspects = this.complaint.suspects;
