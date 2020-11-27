@@ -34,6 +34,7 @@
               name="keyword"
               [placeholder]="'SearchWithThreeDot' | localize"
               [(ngModel)]="keyword"
+              (ngModelChange)="keyword = $event.toUpperCase()" autocomplete="off"
               (keyup.enter)="getDataPage(1)"
             />
           </div>

@@ -24,8 +24,9 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control" name="keyword"
+                        <input type="text" class="form-control" name="keyword" autocomplete="off"
                             [placeholder]="'SearchWithThreeDot' | localize" [(ngModel)]="keyword"
+                            (ngModelChange)="keyword = $event.toUpperCase()"
                             (keyup.enter)="getDataPage(1)" />
                         <div class="input-group-append">
                             <button type="button" class="btn btn-default"

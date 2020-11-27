@@ -26,6 +26,7 @@
                         </div>
                         <input type="text" class="form-control" name="keyword"
                             [placeholder]="'SearchWithThreeDot' | localize" [(ngModel)]="keyword"
+                            (ngModelChange)="keyword = $event.toUpperCase()" autocomplete="off"
                             (keyup.enter)="getDataPage(1)" />
                         <div class="input-group-append">
                             <button type="button" class="btn btn-default"

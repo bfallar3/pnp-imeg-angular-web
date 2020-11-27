@@ -113,7 +113,7 @@
                                 <a href="javascript:void(0);" class="btn btn-sm bg-danger" (click)="remove(i)">
                                     <i class="fas fa-trash">&nbsp;</i>
                                 </a>
-                                <a *ngIf="item.attachment" href="javascript:void(0);"
+                                <a *ngIf="item.attachment && item.id" href="javascript:void(0);"
                                     class="btn btn-sm bg-secondary mx-2" (click)="view(i)">
                                     <i class="fas fa-eye">&nbsp;</i>
                                 </a>
