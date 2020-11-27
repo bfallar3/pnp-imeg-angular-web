@@ -4,29 +4,37 @@ import { Component, Injector, ChangeDetectionStrategy, OnInit } from '@angular/c
 import { AppComponentBase } from '@shared/app-component-base';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { finalize } from 'rxjs/operators';
+import { AfterViewInit } from '@angular/core';
+import { interval } from 'rxjs';
 
 @Component({
   templateUrl: './home.component.html',
-  animations: [appModuleAnimation()],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  animations: [appModuleAnimation()]
 })
-export class HomeComponent extends AppComponentBase implements OnInit {
+export class HomeComponent implements OnInit {
 
   totalActiveComplaints = 0;
   totalCloseComplaints = 0;
   topNature = '';
   mostAssigned = '';
 
+  interval = interval(3600000);
+
   constructor(
-    private complaintService: ComplaintServiceProxy,
-    private route: ActivatedRoute,
-    injector: Injector) {
-    super(injector);
+    private service: ComplaintServiceProxy) {
   }
 
   ngOnInit(): void {
-    this.route.data.subscribe(data => {
-      const result = data.dto;
+    this.updateDashboard();
+    this.interval.subscribe(n => {
+      this.updateDashboard();
+    });
+  }
+
+  updateDashboard(): void {
+    this.service.getComplaintDashboard().subscribe(data => {
+      const result = data;
+      console.log(result);
       this.totalActiveComplaints = result.totalActiveComplaints;
       this.totalCloseComplaints = result.totalCloseComplaints;
       this.topNature = result.topNatureComplaint;

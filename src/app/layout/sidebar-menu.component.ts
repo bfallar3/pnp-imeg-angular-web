@@ -59,9 +59,9 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
       new MenuItem(
         'Persons', '', 'fas fa-user', 'Pages.Complaints',
         [
-          new MenuItem('Victims', '/app/victims', 'fas fa-user-circle', null),
-          new MenuItem('Witnesses', '/app/witnesses', 'fas fa-user-circle', null),
-          new MenuItem('Suspects', '/app/suspects', 'fas fa-user-circle', null)
+          new MenuItem('Victims', '/app/victims', 'fas fa-user-circle', 'Pages.Complaints'),
+          new MenuItem('Witnesses', '/app/witnesses', 'fas fa-user-circle', 'Pages.Complaints'),
+          new MenuItem('Suspects', '/app/suspects', 'fas fa-user-circle', 'Pages.Complaints')
         ]
       ),
       new MenuItem(

@@ -32,9 +32,9 @@ import { EditDosierComponent } from './dosiers/edit-dosier/edit-dosier.component
                     {
                         path: 'home',
                         component: HomeComponent,
-                        resolve: {
-                            dto: ComplaintDashboardDtoResolver
-                        },
+                        //resolve: {
+                        //    dto: ComplaintDashboardDtoResolver
+                        //},
                         canActivate: [AppRouteGuard]
                     },
                     {
