@@ -62,7 +62,6 @@ import { DosierDtoResolver } from './dosiers/edit-dosier/edit-dosier-resolver';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-item-viewer.component';
-
 @NgModule({
   declarations: [
     AppComponent,

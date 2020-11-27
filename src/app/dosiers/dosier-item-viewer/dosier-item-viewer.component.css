@@ -2,3 +2,11 @@ pdf-viewer {
   display: block;
   height: 100vh;
 }
+
+.border {
+  padding: 10px;
+}
+
+.zoom {
+  padding-bottom: 5px;
+}
