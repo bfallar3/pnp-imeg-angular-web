@@ -1,4 +1,3 @@
-import { ComplaintDashboardDtoResolver } from './home/home-resolver';
 import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-item-viewer.component';
 import { DosierDtoResolver } from './dosiers/edit-dosier/edit-dosier-resolver';
 import { CreateDosierComponent } from './dosiers/create-dosier/create-dosier.component';
@@ -10,7 +9,6 @@ import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { UsersComponent } from './users/users.component';
-import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from 'app/roles/roles.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { ComplaintsComponent } from './complaints/complaints.component';
@@ -32,9 +30,6 @@ import { EditDosierComponent } from './dosiers/edit-dosier/edit-dosier.component
                     {
                         path: 'home',
                         component: HomeComponent,
-                        //resolve: {
-                        //    dto: ComplaintDashboardDtoResolver
-                        //},
                         canActivate: [AppRouteGuard]
                     },
                     {
@@ -109,7 +104,12 @@ import { EditDosierComponent } from './dosiers/edit-dosier/edit-dosier.component
                     {
                         path: 'update-password',
                         component: ChangePasswordComponent
-                    }
+                    },
+                    {
+                        path: '**',
+                        component: HomeComponent,
+                        canActivate: [AppRouteGuard]
+                    },
                 ]
             }
         ])

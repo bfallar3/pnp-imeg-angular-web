@@ -1,7 +1,7 @@
 import { ComplaintDashboardDtoResolver } from './home/home-resolver';
 import { DosierItemServiceProxy } from './../shared/service-proxies/service-proxies';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientJsonpModule } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -149,6 +149,6 @@ import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-i
     CreateUserDialogComponent,
     EditUserDialogComponent,
     ResetPasswordDialogComponent
-  ],
+  ]
 })
 export class AppModule { }

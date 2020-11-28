@@ -1,10 +1,6 @@
-import { ActivatedRoute } from '@angular/router';
-import { ComplaintDtoPagedResultDto, ComplaintServiceProxy, ComplaintDashboardDto } from './../../shared/service-proxies/service-proxies';
-import { Component, Injector, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { AppComponentBase } from '@shared/app-component-base';
+import { ComplaintServiceProxy } from './../../shared/service-proxies/service-proxies';
+import { Component, OnInit } from '@angular/core';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { finalize } from 'rxjs/operators';
-import { AfterViewInit } from '@angular/core';
 import { interval } from 'rxjs';
 
 @Component({
