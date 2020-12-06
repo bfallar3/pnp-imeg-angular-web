@@ -16,28 +16,38 @@
                     <div class="col-2">
                         <div class="form-group">
                             <label class="col-form-label">Rank</label>
-                            <select class="form-control" [(ngModel)]="dosier.rank" autofocus name="dosierRank" #dosierRankModel="ngModel"
-                                #dosierRankEl>
+                            <select class="form-control" [(ngModel)]="dosier.rank" autofocus name="dosierRank"
+                                #dosierRankModel="ngModel" #dosierRankEl>
                                 <option></option>
-                                <option *ngFor="let record of ranks" [selected]="record === dosier.rank">{{ record }}</option>
+                                <option *ngFor="let record of ranks" [selected]="record === dosier.rank">{{ record }}
+                                </option>
                             </select>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label class="col-form-label">Unit</label>
-                            <select class="form-control" [(ngModel)]="dosier.unit" name="dosierUnit" #dosierUnitModel="ngModel" #dosierUnitEl>
+                            <select class="form-control" [(ngModel)]="dosier.unit" name="dosierUnit"
+                                #dosierUnitModel="ngModel" #dosierUnitEl>
                                 <option></option>
-                                <option *ngFor="let record of units" [selected]="record === dosier.unit">{{ record }}</option>
+                                <option *ngFor="let record of units" [selected]="record === dosier.unit">{{ record }}
+                                </option>
                             </select>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label class="col-form-label">Associate Complaint</label>
-                            <input type="text" class="form-control" [(ngModel)]="dosier.complaintNumber"
-                                (ngModelChange)="dosier.complaintNumber = $event.toUpperCase()" maxlength="256" name="dosierComplaintNumber"
-                                #dosierComplaintNumberModel="ngModel" #dosierComplaintNumberEl>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn bg-blue" (click)="getComplaint()" *ngIf="dosier.complaintNumber">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control" [(ngModel)]="dosier.complaintNumber"
+                                    (ngModelChange)="dosier.complaintNumber = $event.toUpperCase()" maxlength="256" name="dosierComplaintNumber"
+                                    #dosierComplaintNumberModel="ngModel" #dosierComplaintNumberEl>
+                            </div>
                         </div>
                     </div>
                 </div>

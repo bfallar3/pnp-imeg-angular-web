@@ -1,4 +1,4 @@
-import { ReferenceDtoPagedResultDto, ReferenceServiceProxy } from './../../../shared/service-proxies/service-proxies';
+import { ReferenceDtoPagedResultDto, ReferenceServiceProxy, ComplaintServiceProxy, ComplaintDto } from './../../../shared/service-proxies/service-proxies';
 import { UUID } from 'angular2-uuid';
 import { AppComponentBase } from '@shared/app-component-base';
 import { Component, Inject, Injectable, InjectionToken, Injector, OnInit } from '@angular/core';
@@ -35,6 +35,7 @@ export class EditDosierComponent extends AppComponentBase implements OnInit {
     private route: ActivatedRoute,
     private _modalService: BsModalService,
     public dosierService: DosierServiceProxy,
+    private complaintService: ComplaintServiceProxy,
     public dosierItemService: DosierItemServiceProxy) {
     super(injector);
   }
@@ -140,6 +141,20 @@ export class EditDosierComponent extends AppComponentBase implements OnInit {
         }
       }
     );
+  }
+
+  getComplaint() {
+    const number = this.dosier.complaintNumber;
+    if (number) {
+      this.complaintService.getByNumber(number)
+        .subscribe((result: ComplaintDto) => {
+          if (result && result.id > 0) {
+            this.router.navigate(['/app/edit-complaint', result.id]);
+          } else {
+            abp.notify.error('The Complaint Number is not existing.', 'Error');
+          }
+        });
+    }
   }
 
 }
