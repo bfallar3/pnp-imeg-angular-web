@@ -1,3 +1,4 @@
+import { ReferenceDtoPagedResultDto, ReferenceServiceProxy } from './../../../shared/service-proxies/service-proxies';
 import { UUID } from 'angular2-uuid';
 import { AppComponentBase } from '@shared/app-component-base';
 import { Component, Inject, Injectable, InjectionToken, Injector, OnInit } from '@angular/core';
@@ -8,6 +9,7 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { CreateDosierItemDialogComponent } from '../create-dosier-item-dialog/create-dosier-item-dialog.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { finalize } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-edit-dosier',
@@ -24,7 +26,11 @@ export class EditDosierComponent extends AppComponentBase implements OnInit {
   saving = false;
   keyword = '';
 
+  ranks: string[] = [];
+  units: string[] = [];
+
   constructor(injector: Injector,
+    private service: ReferenceServiceProxy,
     private router: Router,
     private route: ActivatedRoute,
     private _modalService: BsModalService,
@@ -40,6 +46,13 @@ export class EditDosierComponent extends AppComponentBase implements OnInit {
       this.dosierItems = this.dosier.items;
       this.filterDosierItems = this.dosierItems;
     });
+
+    this.service.getAll('', '', 0, 9999)
+      .subscribe((result: ReferenceDtoPagedResultDto) => {
+        const records = result.items;
+        this.ranks = _.map(_.filter(records, { 'type': 'RANK' }), 'name');
+        this.units = _.map(_.filter(records, { 'type': 'UNIT' }), 'name');
+      });
   }
 
   save(): void {

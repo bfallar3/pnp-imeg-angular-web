@@ -1,1 +1,68 @@
-<p>maintenance works!</p>
+<div [@routerTransition]>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <h1>{{ "Maintenance" | localize }}</h1>
+                </div>
+                <div class="col-6 text-right">
+                    <a class="btn bg-blue" (click)="create()">
+                        <i class="fa fa-plus-square"></i>
+                        {{ "Create" | localize }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content px-2">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-2">
+                            <select class="form-control" [(ngModel)]="type" (change)="changeType()">
+                                <option value="RANK">RANK</option>
+                                <option value="UNIT">UNIT</option>
+                                <option value="OFFICE">OFFICE</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="keyword" [placeholder]="'SearchWithThreeDot' | localize"
+                                    [(ngModel)]="keyword" (ngModelChange)="keyword = $event.toUpperCase()" autocomplete="off" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-default">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap" [busy]="isTableLoading">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Type</th>
+                                <th>Name</th>
+                                <th>{{ "Actions" | localize }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let record of filtered">
+                                <td>{{ record.type }}</td>
+                                <td>{{ record.name }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm bg-secondary">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        {{ "Open" | localize }}
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -41,23 +41,29 @@
         <div class="row">
             <div class="col-2">
                 <div class="form-group">
-                    <label class="col-form-label">Rank/Title</label>
-                    <input type="text" class="form-control" [(ngModel)]="person.title" autofocus
-                        (ngModelChange)="person.title = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+                    <label class="col-form-label">Rank</label>
+                    <select class="form-control" [(ngModel)]="person.title" [ngModelOptions]="{standalone: true}">
+                        <option></option>
+                        <option *ngFor="let record of ranks">{{ record }}</option>
+                    </select>
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
                     <label class="col-form-label">Unit</label>
-                    <input type="text" class="form-control" [(ngModel)]="person.unit"
-                        (ngModelChange)="person.unit = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+                    <select class="form-control" [(ngModel)]="person.unit" [ngModelOptions]="{standalone: true}">
+                        <option></option>
+                        <option *ngFor="let record of units">{{ record }}</option>
+                    </select>
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
                     <label class="col-form-label">Office</label>
-                    <input type="text" class="form-control" [(ngModel)]="person.office"
-                        (ngModelChange)="person.office = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
+                    <select class="form-control" [(ngModel)]="person.office" [ngModelOptions]="{standalone: true}">
+                        <option></option>
+                        <option *ngFor="let record of offices">{{ record }}</option>
+                    </select>
                 </div>
             </div>
         </div>

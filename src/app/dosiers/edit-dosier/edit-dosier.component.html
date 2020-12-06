@@ -16,17 +16,20 @@
                     <div class="col-2">
                         <div class="form-group">
                             <label class="col-form-label">Rank</label>
-                            <input type="text" class="form-control" [(ngModel)]="dosier.rank" autofocus
-                                (ngModelChange)="dosier.rank = $event.toUpperCase()" maxlength="256" name="dosierRank"
-                                #dosierRankModel="ngModel" #dosierRankEl>
+                            <select class="form-control" [(ngModel)]="dosier.rank" autofocus name="dosierRank" #dosierRankModel="ngModel"
+                                #dosierRankEl>
+                                <option></option>
+                                <option *ngFor="let record of ranks" [selected]="record === dosier.rank">{{ record }}</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label class="col-form-label">Unit</label>
-                            <input type="text" class="form-control" [(ngModel)]="dosier.unit"
-                                (ngModelChange)="dosier.unit = $event.toUpperCase()" maxlength="256" name="dosierUnit"
-                                #dosierUnitModel="ngModel" #dosierUnitEl>
+                            <select class="form-control" [(ngModel)]="dosier.unit" name="dosierUnit" #dosierUnitModel="ngModel" #dosierUnitEl>
+                                <option></option>
+                                <option *ngFor="let record of units" [selected]="record === dosier.unit">{{ record }}</option>
+                            </select>
                         </div>
                     </div>
                 </div>

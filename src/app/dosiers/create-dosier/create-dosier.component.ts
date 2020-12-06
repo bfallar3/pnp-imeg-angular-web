@@ -1,4 +1,4 @@
-import { DosierDtoPagedResultDto } from './../../../shared/service-proxies/service-proxies';
+import { DosierDtoPagedResultDto, ReferenceDtoPagedResultDto, ReferenceServiceProxy } from './../../../shared/service-proxies/service-proxies';
 import { Component, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
@@ -8,7 +8,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 import { CreateDosierItemDialogComponent } from '../create-dosier-item-dialog/create-dosier-item-dialog.component';
 import { UUID } from 'angular2-uuid';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-create-dosier',
@@ -22,9 +22,12 @@ export class CreateDosierComponent extends AppComponentBase implements OnInit {
   dosier = new DosierDto();
   dosierItem: DosierItemDto;
   dosierItems: DosierItemDto[] = [];
+  ranks: string[] = [];
+  units: string[] = [];
 
   constructor(injector: Injector,
     private router: Router,
+    private service: ReferenceServiceProxy,
     private _modalService: BsModalService,
     public dosierService: DosierServiceProxy,
     public dosierItemService: DosierItemServiceProxy) {
@@ -32,6 +35,12 @@ export class CreateDosierComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
+    this.service.getAll('', '', 0, 9999)
+      .subscribe((result: ReferenceDtoPagedResultDto) => {
+        const records = result.items;
+        this.ranks = _.map(_.filter(records, { 'type': 'RANK' }), 'name');
+        this.units = _.map(_.filter(records, { 'type': 'UNIT' }), 'name');
+      });
   }
 
   save(): void {

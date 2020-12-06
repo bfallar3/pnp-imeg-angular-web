@@ -39,6 +39,7 @@ export class SuspectsComponent extends PagedListingComponentBase<SuspectDto> {
 
   fullName(item: SuspectDto): string {
     const names = {
+      title: item.title,
       firstName: item.firstName,
       middleName: item.middleName,
       lastName: item.lastName,

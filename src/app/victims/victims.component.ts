@@ -39,6 +39,7 @@ export class VictimsComponent extends PagedListingComponentBase<VictimDto> {
 
   fullName(item: VictimDto): string {
     const names = {
+      title: item.title,
       firstName: item.firstName,
       middleName: item.middleName,
       lastName: item.lastName,
