@@ -205,17 +205,15 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
   informerAddressBlur(): void {
     const name = this.complaint.informerName;
     const names = parseFullName(name);
+    console.log(names);
     if (this.victims.length === 0) {
       const victim: CreateVictimDto = new CreateVictimDto();
-      victim.address = this.complaint.informerAddress;
-      victim.age = 0;
-      victim.title = '';
-      victim.qualifier = names.suffix;
-      victim.firstName = names.first;
-      victim.middleName = names.middle;
-      victim.lastName = names.last;
-      victim.gender = '';
-      victim.mobileNumber = this.complaint.informerContactNumber;
+      victim.address = this.complaint.informerAddress.toUpperCase();
+      victim.qualifier = names.suffix.toUpperCase();
+      victim.firstName = names.first.toUpperCase();
+      victim.middleName = names.middle.toUpperCase();
+      victim.lastName = names.last.toUpperCase();
+      victim.mobileNumber = this.complaint.informerContactNumber.toUpperCase();
       this.victims.push(victim);
     }
   }
