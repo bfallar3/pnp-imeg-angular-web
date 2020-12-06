@@ -114,4 +114,19 @@ export class EditDosierComponent extends AppComponentBase implements OnInit {
     }
   }
 
+  delete(): void {
+    abp.message.confirm(
+      'Are you sure to delete the selected dosier and its related items?',
+      'Confirmation',
+      (result: boolean) => {
+        if (result) {
+          this.dosierService.delete(this.dosier.id).subscribe(() => {
+            abp.notify.success(this.l('SuccessfullyDeleted'));
+            window.setTimeout(() => { this.router.navigate(['/app/dosiers']); }, 2000);
+          });
+        }
+      }
+    );
+  }
+
 }

@@ -1,5 +1,5 @@
 import { ComplaintDashboardDtoResolver } from './home/home-resolver';
-import { DosierItemServiceProxy } from './../shared/service-proxies/service-proxies';
+import { DosierItemServiceProxy, ReferenceServiceProxy } from './../shared/service-proxies/service-proxies';
 import { NgModule } from '@angular/core';
 import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -62,6 +62,7 @@ import { DosierDtoResolver } from './dosiers/edit-dosier/edit-dosier-resolver';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-item-viewer.component';
+import { MaintenanceComponent } from './maintenance/maintenance.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -106,7 +107,8 @@ import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-i
     CreateDosierComponent,
     EditDosierComponent,
     CreateDosierItemDialogComponent,
-    DosierItemViewerComponent
+    DosierItemViewerComponent,
+    MaintenanceComponent
   ],
   imports: [
     CommonModule,
@@ -133,6 +135,7 @@ import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-i
     VictimServiceProxy,
     DosierServiceProxy,
     DosierItemServiceProxy,
+    ReferenceServiceProxy,
     // resolvers
     ComplaintDtoResolver,
     ComplaintDashboardDtoResolver,

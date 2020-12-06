@@ -128,6 +128,10 @@
                             [disabled]="!createDosierForm.form.valid || saving">
                             Submit
                         </button>
+                        <button type="button" class="btn bg-danger mx-2" (click)="delete()">
+                            <i class="fas fa-trash"></i>
+                            {{ "Delete" | localize }}
+                        </button>
                     </div>
                 </div>
                 <br />

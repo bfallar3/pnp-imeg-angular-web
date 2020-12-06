@@ -95,7 +95,7 @@
                                 <th>Nature</th>
                                 <th>Status</th>
                                 <th>Assigned to</th>
-                                <th style="width: 310px;">{{ "Actions" | localize }}</th>
+                                <th>{{ "Actions" | localize }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -116,11 +116,7 @@
                                 <td>
                                     <button type="button" class="btn btn-sm bg-secondary" (click)="edit(complaint)">
                                         <i class="fas fa-pencil-alt"></i>
-                                        {{ "Edit" | localize }}
-                                    </button>
-                                    <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(complaint)">
-                                        <i class="fas fa-trash"></i>
-                                        {{ "Delete" | localize }}
+                                        {{ "Open" | localize }}
                                     </button>
                                 </td>
                             </tr>

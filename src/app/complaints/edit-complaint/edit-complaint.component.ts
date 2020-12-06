@@ -210,4 +210,18 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
     return Object.values(names).filter(val => val).join(' ');
   }
 
+  delete(): void {
+    abp.message.confirm(
+      this.l('ComplaintDeleteWarningMessage', this.complaint.sheetNumber), undefined,
+      (result: boolean) => {
+        if (result) {
+          this.complaintService.delete(this.complaint.id).subscribe(() => {
+            abp.notify.success(this.l('SuccessfullyDeleted'));
+            window.setTimeout(() => { this.router.navigate(['/app/complaints']); }, 2000);
+          });
+        }
+      }
+    );
+  }
+
 }

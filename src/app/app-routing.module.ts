@@ -1,3 +1,4 @@
+import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-item-viewer.component';
 import { DosierDtoResolver } from './dosiers/edit-dosier/edit-dosier-resolver';
 import { CreateDosierComponent } from './dosiers/create-dosier/create-dosier.component';
@@ -95,6 +96,11 @@ import { EditDosierComponent } from './dosiers/edit-dosier/edit-dosier.component
                     {
                         path: 'roles', component: RolesComponent,
                         data: { permission: 'Pages.Roles' },
+                        canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'maintenance', component: MaintenanceComponent,
+                        data: { permission: 'Pages.Users' },
                         canActivate: [AppRouteGuard]
                     },
                     {
