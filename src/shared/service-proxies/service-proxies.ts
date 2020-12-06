@@ -5321,6 +5321,8 @@ export class ComplaintDashboardDto implements IComplaintDashboardDto {
     totalCloseComplaints: number;
     topNatureComplaint: string | undefined;
     mostAssigned: string | undefined;
+    topSuspectUnit: string | undefined;
+    topSuspectRank: string | undefined;
 
     constructor(data?: IComplaintDashboardDto) {
         if (data) {
@@ -5337,6 +5339,8 @@ export class ComplaintDashboardDto implements IComplaintDashboardDto {
             this.totalCloseComplaints = _data["totalCloseComplaints"];
             this.topNatureComplaint = _data["topNatureComplaint"];
             this.mostAssigned = _data["mostAssigned"];
+            this.topSuspectUnit = _data["topSuspectUnit"];
+            this.topSuspectRank = _data["topSuspectRank"];
         }
     }
 
@@ -5353,6 +5357,8 @@ export class ComplaintDashboardDto implements IComplaintDashboardDto {
         data["totalCloseComplaints"] = this.totalCloseComplaints;
         data["topNatureComplaint"] = this.topNatureComplaint;
         data["mostAssigned"] = this.mostAssigned;
+        data["topSuspectUnit"] = this.topSuspectUnit;
+        data["topSuspectRank"] = this.topSuspectRank;
         return data; 
     }
 
@@ -5369,6 +5375,8 @@ export interface IComplaintDashboardDto {
     totalCloseComplaints: number;
     topNatureComplaint: string | undefined;
     mostAssigned: string | undefined;
+    topSuspectUnit: string | undefined;
+    topSuspectRank: string | undefined;
 }
 
 export class ComplaintDtoPagedResultDto implements IComplaintDtoPagedResultDto {

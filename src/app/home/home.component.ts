@@ -13,6 +13,8 @@ export class HomeComponent implements OnInit {
   totalCloseComplaints = 0;
   topNature = '';
   mostAssigned = '';
+  topRank = '';
+  topUnit = '';
 
   interval = interval(3600000);
 
@@ -35,6 +37,8 @@ export class HomeComponent implements OnInit {
       this.totalCloseComplaints = result.totalCloseComplaints;
       this.topNature = result.topNatureComplaint;
       this.mostAssigned = result.mostAssigned;
+      this.topRank = result.topSuspectRank;
+      this.topUnit = result.topSuspectUnit;
     });
   }
 }
