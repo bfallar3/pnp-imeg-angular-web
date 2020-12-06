@@ -164,7 +164,8 @@
               <label class="col-form-label">Complainant/Informer Address</label>
               <input type="text" class="form-control" [(ngModel)]="complaint.informerAddress"
                 (ngModelChange)="complaint.informerAddress = $event.toUpperCase()"
-                [ngModelOptions]="{standalone: true}">
+                [ngModelOptions]="{standalone: true}"
+                (blur)="informerAddressBlur()">
             </div>
           </div>
         </div>

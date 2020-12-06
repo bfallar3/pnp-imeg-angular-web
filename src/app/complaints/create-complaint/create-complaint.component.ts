@@ -9,7 +9,7 @@ import { CreatePersonDialogComponent } from '@app/persons/create-person-dialog/c
 import { PersonDto } from '@shared/service-proxies/PersonDto';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-
+declare var parseFullName: any;
 @Component({
   selector: 'app-create-complaint',
   templateUrl: './create-complaint.component.html',
@@ -200,6 +200,24 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
       qualifier: item.qualifier,
     };
     return Object.values(names).filter(val => val).join(' ');
+  }
+
+  informerAddressBlur(): void {
+    const name = this.complaint.informerName;
+    const names = parseFullName(name);
+    if (this.victims.length === 0) {
+      const victim: CreateVictimDto = new CreateVictimDto();
+      victim.address = this.complaint.informerAddress;
+      victim.age = 0;
+      victim.title = '';
+      victim.qualifier = names.suffix;
+      victim.firstName = names.first;
+      victim.middleName = names.middle;
+      victim.lastName = names.last;
+      victim.gender = '';
+      victim.mobileNumber = this.complaint.informerContactNumber;
+      this.victims.push(victim);
+    }
   }
 
 }
