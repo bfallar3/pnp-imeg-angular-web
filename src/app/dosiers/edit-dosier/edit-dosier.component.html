@@ -32,6 +32,14 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="col-form-label">Associate Complaint</label>
+                            <input type="text" class="form-control" [(ngModel)]="dosier.complaintNumber"
+                                (ngModelChange)="dosier.complaintNumber = $event.toUpperCase()" maxlength="256" name="dosierComplaintNumber"
+                                #dosierComplaintNumberModel="ngModel" #dosierComplaintNumberEl>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col">

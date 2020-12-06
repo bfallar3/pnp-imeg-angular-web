@@ -5825,6 +5825,7 @@ export interface IChangeUiThemeInput {
 
 export class DosierDto implements IDosierDto {
     rank: string | undefined;
+    complaintNumber: string | undefined;
     firstname: string | undefined;
     middlename: string | undefined;
     lastname: string | undefined;
@@ -5849,6 +5850,7 @@ export class DosierDto implements IDosierDto {
     init(_data?: any) {
         if (_data) {
             this.rank = _data["rank"];
+            this.complaintNumber = _data["complaintNumber"];
             this.firstname = _data["firstname"];
             this.middlename = _data["middlename"];
             this.lastname = _data["lastname"];
@@ -5877,6 +5879,7 @@ export class DosierDto implements IDosierDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["rank"] = this.rank;
+        data["complaintNumber"] = this.complaintNumber;
         data["firstname"] = this.firstname;
         data["middlename"] = this.middlename;
         data["lastname"] = this.lastname;
@@ -5905,6 +5908,7 @@ export class DosierDto implements IDosierDto {
 
 export interface IDosierDto {
     rank: string | undefined;
+    complaintNumber: string | undefined;
     firstname: string | undefined;
     middlename: string | undefined;
     lastname: string | undefined;
@@ -6019,6 +6023,7 @@ export interface IDosierItemDto {
 
 export class CreateDosierDto implements ICreateDosierDto {
     rank: string | undefined;
+    complaintNumber: string | undefined;
     firstname: string | undefined;
     middlename: string | undefined;
     lastname: string | undefined;
@@ -6038,6 +6043,7 @@ export class CreateDosierDto implements ICreateDosierDto {
     init(_data?: any) {
         if (_data) {
             this.rank = _data["rank"];
+            this.complaintNumber = _data["complaintNumber"];
             this.firstname = _data["firstname"];
             this.middlename = _data["middlename"];
             this.lastname = _data["lastname"];
@@ -6061,6 +6067,7 @@ export class CreateDosierDto implements ICreateDosierDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["rank"] = this.rank;
+        data["complaintNumber"] = this.complaintNumber;
         data["firstname"] = this.firstname;
         data["middlename"] = this.middlename;
         data["lastname"] = this.lastname;
@@ -6084,6 +6091,7 @@ export class CreateDosierDto implements ICreateDosierDto {
 
 export interface ICreateDosierDto {
     rank: string | undefined;
+    complaintNumber: string | undefined;
     firstname: string | undefined;
     middlename: string | undefined;
     lastname: string | undefined;
