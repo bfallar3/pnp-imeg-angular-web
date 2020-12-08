@@ -4,10 +4,8 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
-import { CreatePersonDialogComponent } from '@app/persons/create-person-dialog/create-person-dialog.component';
 @Component({
   selector: 'app-maintenance',
   templateUrl: './maintenance.component.html',
@@ -81,10 +79,18 @@ export class MaintenanceComponent implements OnInit {
       const dto: ReferenceDto = new ReferenceDto();
       dto.name = data.typeValue;
       dto.type = data.typeName;
-      this.service.create(dto).subscribe(resp => {
-        abp.message.success(`New ${dto.type} (${dto.name}) has been added successfully`, 'Maintenance');
-        this.refresh();
-      }, (err) => console.error(err));
+
+      this.service.isTypeNameExists(dto.type, dto.name)
+        .subscribe(exists => {
+          if (exists) {
+            abp.message.warn(`${dto.type} (${dto.name}) already exists!`, 'Maintenance');
+          } else {
+            this.service.create(dto).subscribe(resp => {
+              abp.message.success(`New ${dto.type} (${dto.name}) has been added successfully`, 'Maintenance');
+              this.refresh();
+            }, (err) => console.error(err));
+          }
+        });
     });
   }
 
