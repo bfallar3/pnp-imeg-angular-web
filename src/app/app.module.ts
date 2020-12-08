@@ -64,7 +64,6 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-item-viewer.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { AddMaintenanceComponent } from './maintenance/add-maintenance/add-maintenance.component';
-import { EditMaintenanceComponent } from './maintenance/edit-maintenance/edit-maintenance.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -157,8 +156,7 @@ import { EditMaintenanceComponent } from './maintenance/edit-maintenance/edit-ma
     EditUserDialogComponent,
     ResetPasswordDialogComponent,
     // maintenance
-    AddMaintenanceComponent,
-    EditMaintenanceComponent
+    AddMaintenanceComponent
   ]
 })
 export class AppModule { }
