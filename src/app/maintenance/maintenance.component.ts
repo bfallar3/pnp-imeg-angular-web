@@ -45,7 +45,18 @@ export class MaintenanceComponent implements OnInit {
 
   filterTypes(type: string): void {
     this.filtered = _.filter(this.records, { 'type': this.type });
-    console.log(this.filtered);
+  }
+
+  search(): void {
+    const keyword = this.keyword;
+    const type = this.type;
+    if (keyword === '' || keyword === null) {
+      this.filterTypes(type);
+    } else {
+      this.filtered = _.filter(this.records, function (o) {
+        return o.name.includes(keyword) && o.type === type;
+      });
+    }
   }
 
   changeType() {
