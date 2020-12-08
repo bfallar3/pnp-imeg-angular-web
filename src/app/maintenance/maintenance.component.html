@@ -54,9 +54,9 @@
                                 <td>{{ record.type }}</td>
                                 <td>{{ record.name }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-sm bg-secondary">
-                                        <i class="fas fa-pencil-alt"></i>
-                                        {{ "Open" | localize }}
+                                    <button type="button" class="btn btn-sm bg-danger" (click)="remove(record)">
+                                        <i class="fas fa-trash"></i>
+                                        {{ "Remove" | localize }}
                                     </button>
                                 </td>
                             </tr>

@@ -1,11 +1,13 @@
-import { ReferenceServiceProxy, ReferenceDto, ReferenceDtoPagedResultDto } from './../../shared/service-proxies/service-proxies';
+import { AddMaintenanceComponent } from './add-maintenance/add-maintenance.component';
+import { ReferenceServiceProxy, ReferenceDto, ReferenceDtoPagedResultDto, CreateVictimDto } from './../../shared/service-proxies/service-proxies';
 import { Component, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { CreatePersonDialogComponent } from '@app/persons/create-person-dialog/create-person-dialog.component';
 @Component({
   selector: 'app-maintenance',
   templateUrl: './maintenance.component.html',
@@ -30,7 +32,10 @@ export class MaintenanceComponent implements OnInit {
   ngOnInit(): void {
     this.isTableLoading = true;
     this.type = 'RANK';
+    this.refresh();
+  }
 
+  refresh(): void {
     this.service.getAll('', '', 0, 99999)
       .pipe(
         finalize(() => {
@@ -64,6 +69,34 @@ export class MaintenanceComponent implements OnInit {
   }
 
   create(): void {
+    let dialog: BsModalRef;
+    dialog = this.modalService.show(
+      AddMaintenanceComponent,
+      {
+        class: 'modal-lg'
+      }
+    );
+    dialog.content.onSave.subscribe(() => {
+      const data = dialog.content;
+      const dto: ReferenceDto = new ReferenceDto();
+      dto.name = data.typeValue;
+      dto.type = data.typeName;
+      this.service.create(dto).subscribe(resp => {
+        abp.message.success(`New ${dto.type} (${dto.name}) has been added successfully`, 'Maintenance');
+        this.refresh();
+      }, (err) => console.error(err));
+    });
+  }
 
+  remove(dto: ReferenceDto): void {
+    abp.message.confirm(`Are you sure to delete the type ${dto.type} (${dto.name})?`, 'Confirm',
+      (result) => {
+        if (result) {
+          this.service.delete(dto.id).subscribe(() => {
+            abp.message.success(`Record ${dto.type} (${dto.name}) has been deleted successfully`, 'Maintenance');
+            this.refresh();
+          });
+        }
+    });
   }
 }

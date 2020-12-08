@@ -1,0 +1,31 @@
+<form class="form-horizontal" autocomplete="off" #createMaintenanceModal="ngForm" (ngSubmit)="save()">
+    <abp-modal-header [title]="'Create New Person' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col">
+                <div class="form-group required">
+                    <label class="col-form-label">Type</label>
+                    <select class="form-control" [(ngModel)]="typeName" name="typeName" #typeNameModel="ngModel" #typeNameEl>
+                        <option>RANK</option>
+                        <option>UNIT</option>
+                        <option>OFFICE</option>
+                    </select>
+                    <abp-validation-summary [control]="typeNameModel" [controlEl]="typeNameEl">
+                    </abp-validation-summary>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group required">
+                    <label class="col-form-label">Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="typeValue"
+                        (ngModelChange)="typeValue = $event.toUpperCase()" required maxlength="256"
+                        name="typeValue" #typeValueModel="ngModel" #typeValueEl>
+                    <abp-validation-summary [control]="typeValueModel" [controlEl]="typeValueEl">
+                    </abp-validation-summary>
+                </div>
+            </div>
+        </div>
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createMaintenanceModal.form.valid || saving"
+        (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>
