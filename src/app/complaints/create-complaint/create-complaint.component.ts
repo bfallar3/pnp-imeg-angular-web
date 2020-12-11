@@ -30,6 +30,8 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
   suspects: CreateSuspectDto[] = [];
   witnesses: CreateWitnessDto[] = [];
 
+  informerIsVictim: boolean;
+
   DATE_FORMAT = 'MM/DD/YYYY hh:mm A';
 
   constructor(
@@ -203,18 +205,21 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
   }
 
   informerAddressBlur(): void {
-    const name = this.complaint.informerName;
-    const names = parseFullName(name);
-    console.log(names);
     if (this.victims.length === 0) {
-      const victim: CreateVictimDto = new CreateVictimDto();
-      victim.address = this.complaint.informerAddress.toUpperCase();
-      victim.qualifier = names.suffix.toUpperCase();
-      victim.firstName = names.first.toUpperCase();
-      victim.middleName = names.middle.toUpperCase();
-      victim.lastName = names.last.toUpperCase();
-      victim.mobileNumber = this.complaint.informerContactNumber.toUpperCase();
-      this.victims.push(victim);
+      abp.message.confirm('Is the informer also a victim?', 'Confirm', (confirm) => {
+        if (confirm) {
+          const name = this.complaint.informerName;
+          const names = parseFullName(name);
+          const victim: CreateVictimDto = new CreateVictimDto();
+          victim.address = this.complaint.informerAddress.toUpperCase();
+          victim.qualifier = names.suffix.toUpperCase();
+          victim.firstName = names.first.toUpperCase();
+          victim.middleName = names.middle.toUpperCase();
+          victim.lastName = names.last.toUpperCase();
+          victim.mobileNumber = this.complaint.informerContactNumber.toUpperCase();
+          this.victims.push(victim);
+        }
+      });
     }
   }
 

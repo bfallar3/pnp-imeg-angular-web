@@ -158,17 +158,19 @@
                     <th>Id</th>
                     <th class="w-25">Nature</th>
                     <th>Incident Date</th>
-                    <th>Status</th>
+                    <th>Channel</th>
                     <th>Assigned To</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
+                  <tr *ngFor="let complaint of newComplaints">
+                    <td>
+                      <a [routerLink]="['/app/edit-complaint', complaint.id]">{{ complaint.sheetNumber }}</a>
+                    </td>
+                    <td>{{ complaint.nature }}</td>
+                    <td>{{ complaint.dateIncident | date:'MM/dd/yyyy' }}</td>
+                    <td>{{ complaint.reportedThru }}</td>
+                    <td>{{ complaint.assignedTo }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -189,17 +191,19 @@
                     <th>Id</th>
                     <th class="w-25">Nature</th>
                     <th>Incident Date</th>
-                    <th>Status</th>
+                    <th>Channel</th>
                     <th>Assigned To</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
+                  <tr *ngFor="let complaint of closedComplaints">
+                    <td>
+                      <a [routerLink]="['/app/edit-complaint', complaint.id]">{{ complaint.sheetNumber }}</a>
+                    </td>
+                    <td>{{ complaint.nature }}</td>
+                    <td>{{ complaint.dateIncident | date:'MM/dd/yyyy' }}</td>
+                    <td>{{ complaint.reportedThru }}</td>
+                    <td>{{ complaint.assignedTo }}</td>
                   </tr>
                 </tbody>
               </table>
