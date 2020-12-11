@@ -60,10 +60,8 @@
             <div class="col">
                 <div class="form-group">
                     <label class="col-form-label">Office</label>
-                    <select class="form-control" [(ngModel)]="person.office" [ngModelOptions]="{standalone: true}">
-                        <option></option>
-                        <option *ngFor="let record of offices">{{ record }}</option>
-                    </select>
+                    <input type="text" class="form-control" [(ngModel)]="person.office"
+                        (ngModelChange)="person.office = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
                 </div>
             </div>
         </div>

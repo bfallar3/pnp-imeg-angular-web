@@ -110,8 +110,7 @@ import { AddMaintenanceComponent } from './maintenance/add-maintenance/add-maint
     CreateDosierItemDialogComponent,
     DosierItemViewerComponent,
     MaintenanceComponent,
-    AddMaintenanceComponent,
-    EditMaintenanceComponent
+    AddMaintenanceComponent
   ],
   imports: [
     CommonModule,

@@ -32,8 +32,8 @@ export class CreatePersonDialogComponent extends AppComponentBase implements OnI
     this.service.getAll('', '', 0, 9999)
       .subscribe((result: ReferenceDtoPagedResultDto) => {
         const records = result.items;
-        this.ranks = _.map(_.filter(records, { 'type': 'RANK' }), 'name');
-        this.units = _.map(_.filter(records, { 'type': 'UNIT' }), 'name');
+        this.ranks = _.sortBy(_.map(_.filter(records, { 'type': 'RANK' }), 'name'), [function (data) { return data; }]);
+        this.units = _.sortBy(_.map(_.filter(records, { 'type': 'UNIT' }), 'name'), [function (data) { return data; }]);
         this.offices = _.map(_.filter(records, { 'type': 'OFFICE' }), 'name');
       });
   }
