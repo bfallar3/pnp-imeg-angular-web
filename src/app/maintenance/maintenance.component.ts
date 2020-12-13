@@ -1,5 +1,5 @@
 import { AddMaintenanceComponent } from './add-maintenance/add-maintenance.component';
-import { ReferenceServiceProxy, ReferenceDto, ReferenceDtoPagedResultDto, CreateVictimDto } from './../../shared/service-proxies/service-proxies';
+import { ReferenceServiceProxy, ReferenceDto, ReferenceDtoPagedResultDto } from './../../shared/service-proxies/service-proxies';
 import { Component, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';

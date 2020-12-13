@@ -1,5 +1,5 @@
 import { ComplaintDashboardDtoResolver } from './home/home-resolver';
-import { DosierItemServiceProxy, ReferenceServiceProxy } from './../shared/service-proxies/service-proxies';
+import { DosierItemServiceProxy, ReferenceServiceProxy, PersonServiceProxy } from './../shared/service-proxies/service-proxies';
 import { NgModule } from '@angular/core';
 import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -53,7 +53,7 @@ import { EditPersonDialogComponent } from './persons/edit-person-dialog/edit-per
 import { VictimsComponent } from './victims/victims.component';
 import { SuspectsComponent } from './suspects/suspects.component';
 import { WitnessesComponent } from './witnesses/witnesses.component';
-import { DosierServiceProxy, SuspectServiceProxy, VictimServiceProxy, WitnessServiceProxy } from '@shared/service-proxies/service-proxies';
+import { DosierServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ComplaintDtoResolver } from './complaints/edit-complaint/edit-complaint-resolver';
 import { CreateDosierComponent } from './dosiers/create-dosier/create-dosier.component';
 import { EditDosierComponent } from './dosiers/edit-dosier/edit-dosier.component';
@@ -132,9 +132,7 @@ import { AddMaintenanceComponent } from './maintenance/add-maintenance/add-maint
     PdfViewerModule
   ],
   providers: [
-    SuspectServiceProxy,
-    WitnessServiceProxy,
-    VictimServiceProxy,
+    PersonServiceProxy,
     DosierServiceProxy,
     DosierItemServiceProxy,
     ReferenceServiceProxy,

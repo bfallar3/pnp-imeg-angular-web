@@ -1,4 +1,4 @@
-<form class="form-horizontal" autocomplete="off" #createPersonModal="ngForm" (ngSubmit)="save()">
+<form class="form-horizontal" autocomplete="off" #editPersonModal="ngForm" (ngSubmit)="save()">
     <abp-modal-header [title]="'Update Person' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body">
         <div class="row">
@@ -60,10 +60,8 @@
             <div class="col">
                 <div class="form-group">
                     <label class="col-form-label">Office</label>
-                    <select class="form-control" [(ngModel)]="person.office" [ngModelOptions]="{standalone: true}">
-                        <option></option>
-                        <option *ngFor="let record of offices">{{ record }}</option>
-                    </select>
+                    <input type="text" class="form-control" [(ngModel)]="person.office"
+                        (ngModelChange)="person.office = $event.toUpperCase()" [ngModelOptions]="{standalone: true}">
                 </div>
             </div>
         </div>
@@ -113,6 +111,6 @@
             </div>
         </div>
     </div>
-    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createPersonModal.form.valid || saving"
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!editPersonModal.form.valid || saving"
         (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
 </form>

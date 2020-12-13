@@ -1,8 +1,7 @@
-import { ReferenceDtoPagedResultDto, ReferenceServiceProxy } from './../../../shared/service-proxies/service-proxies';
+import { PersonDto, ReferenceDtoPagedResultDto, ReferenceServiceProxy } from './../../../shared/service-proxies/service-proxies';
 import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { PersonDto } from '@shared/service-proxies/PersonDto';
 import * as _ from 'lodash';
 
 @Component({

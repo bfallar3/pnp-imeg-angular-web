@@ -1,21 +1,13 @@
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import {
-  ComplaintDto, ComplaintServiceProxy, ComplaintUpdateServiceProxy,
-  CreateComplaintDto,
-  CreateWitnessDto,
-  SuspectDto,
-  UpdateComplaintDto,
-  VictimDto,
-  VictimServiceProxy,
-  WitnessDto
+  ComplaintDto, ComplaintServiceProxy, PersonDto, PersonServiceProxy, UpdateComplaintDto,
 } from './../../../shared/service-proxies/service-proxies';
-import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { AppComponentBase } from '@shared/app-component-base';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CreatePersonDialogComponent } from '@app/persons/create-person-dialog/create-person-dialog.component';
-import { PersonDto } from '@shared/service-proxies/PersonDto';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 
@@ -23,8 +15,7 @@ import * as _ from 'lodash';
   selector: 'app-edit-complaint',
   templateUrl: './edit-complaint.component.html',
   styleUrls: ['./edit-complaint.component.css'],
-  animations: [appModuleAnimation()],
-  providers: [VictimServiceProxy]
+  animations: [appModuleAnimation()]
 })
 export class EditComplaintComponent extends AppComponentBase implements OnInit {
 
@@ -37,9 +28,10 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
   receivedOn: Date;
   dateCreated: string;
   previouslyReportedOn: Date;
-  victims: VictimDto[] = [];
-  suspects: SuspectDto[] = [];
-  witnesses: WitnessDto[] = [];
+  people: PersonDto[] = [];
+  victims: PersonDto[] = [];
+  suspects: PersonDto[] = [];
+  witnesses: PersonDto[] = [];
 
   DATE_FORMAT = 'MM/DD/YYYY hh:MM A';
 
@@ -49,22 +41,26 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
     private route: ActivatedRoute,
     private _modalService: BsModalService,
     public complaintService: ComplaintServiceProxy,
-    public victimService: VictimServiceProxy) {
+    public personService: PersonServiceProxy) {
     super(injector);
   }
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.complaint = data.dto;
-      this.victims = this.complaint.victims;
-      this.suspects = this.complaint.suspects;
-      this.witnesses = this.complaint.witnesses;
+      this.victims = this.filterPersons('VICTIM');
+      this.suspects = this.filterPersons('SUSPECT');
+      this.witnesses = this.filterPersons('WITNESS');
       this.dateCreated = this.complaint.creationTime.format(this.DATE_FORMAT);
       this.receivedOn = this.complaint.receivedOn.toDate();
       this.dateOfIncident = this.complaint.dateIncident.toDate();
       this.timeIncident = this.complaint.timeIncident.toDate();
       this.previouslyReportedOn = this.complaint.previouslyReportedWhen.toDate();
     });
+  }
+
+  filterPersons(type: string) {
+    return _.filter(this.complaint.persons, { 'type': type });
   }
 
   save(): void {
@@ -75,9 +71,8 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
     this.complaint.previouslyReportedWhen = moment(this.previouslyReportedOn);
     this.complaint.timeIncident = moment(this.timeIncident);
     this.updateComplaintDto.complaint = this.complaint;
-    this.updateComplaintDto.victims = this.victims;
-    this.updateComplaintDto.suspects = this.suspects;
-    this.updateComplaintDto.witnesses = this.witnesses;
+    this.people = _.concat(this.victims, this.suspects, this.witnesses);
+    this.updateComplaintDto.persons = this.people;
 
     this.complaintService.updateComplaint(this.updateComplaintDto)
       .pipe(finalize(() => { this.saving = false; }))
@@ -108,7 +103,7 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
     );
     createVictimDlg.content.onSave.subscribe(() => {
       const person = createVictimDlg.content.person;
-      const victim: VictimDto = new VictimDto();
+      const victim: PersonDto = new PersonDto();
       victim.address = person.address;
       victim.age = person.age;
       victim.firstName = person.firstName;
@@ -118,11 +113,12 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
       victim.mobileNumber = person.mobileNumber;
       victim.title = person.title;
       victim.qualifier = person.qualifier;
+      victim.type = 'VICTIM';
       this.victims.push(victim);
     });
   }
 
-  removeVictim(person: VictimDto): void {
+  removeVictim(person: PersonDto): void {
     abp.message.confirm('Are you sure to delete the victim?', 'Confirm', (confirm) => {
       if (confirm) {
         _.remove(this.victims, (item) => {
@@ -142,7 +138,7 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
     );
     createSuspect.content.onSave.subscribe(() => {
       const person = createSuspect.content.person;
-      const suspect: SuspectDto = new SuspectDto();
+      const suspect: PersonDto = new PersonDto();
       suspect.address = person.address;
       suspect.age = person.age;
       suspect.firstName = person.firstName;
@@ -153,11 +149,12 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
       suspect.alias = person.alias;
       suspect.title = person.title;
       suspect.qualifier = person.qualifier;
+      suspect.type = 'SUSPECT';
       this.suspects.push(suspect);
     });
   }
 
-  removeSuspect(person: SuspectDto): void {
+  removeSuspect(person: PersonDto): void {
     abp.message.confirm('Are you sure to delete the suspect?', 'Confirm', (confirm) => {
       if (confirm) {
         _.remove(this.suspects, (item) => {
@@ -177,7 +174,7 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
     );
     createWitnessDlg.content.onSave.subscribe(() => {
       const person = createWitnessDlg.content.person;
-      const witness: WitnessDto = new WitnessDto();
+      const witness: PersonDto = new PersonDto();
       witness.address = person.address;
       witness.firstName = person.firstName;
       witness.middleName = person.middleName;
@@ -185,11 +182,12 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
       witness.mobileNumber = person.mobileNumber;
       witness.title = person.title;
       witness.qualifier = person.qualifier;
+      witness.type = 'WITNESS';
       this.witnesses.push(witness);
     });
   }
 
-  removeWitness(person: WitnessDto): void {
+  removeWitness(person: PersonDto): void {
     abp.message.confirm('Are you sure to delete the witness?', 'Confirm', (confirm) => {
       if (confirm) {
         _.remove(this.witnesses, (item) => {

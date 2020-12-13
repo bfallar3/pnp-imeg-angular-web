@@ -1,13 +1,13 @@
-import { VictimDto, VictimDtoPagedResultDto, VictimServiceProxy } from './../../shared/service-proxies/service-proxies';
+import { PersonServiceProxy, PersonDtoPagedResultDto, PersonDto } from './../../shared/service-proxies/service-proxies';
 import { Component, Injector, OnInit } from '@angular/core';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 
-class PagedUsersRequestDto extends PagedRequestDto {
+class PagedPersonsRequestDto extends PagedRequestDto {
   keyword: string;
-  isActive: boolean | null;
+  type: string;
 }
 
 @Component({
@@ -16,16 +16,16 @@ class PagedUsersRequestDto extends PagedRequestDto {
   styleUrls: ['./victims.component.css'],
   animations: [appModuleAnimation()]
 })
-export class VictimsComponent extends PagedListingComponentBase<VictimDto> {
+export class VictimsComponent extends PagedListingComponentBase<PersonDto> {
 
-  victims: VictimDto[] = [];
+  victims: PersonDto[] = [];
   keyword = '';
   isActive: boolean | null;
   advancedFiltersVisible = false;
 
   constructor(
     injector: Injector,
-    private _service: VictimServiceProxy,
+    private _service: PersonServiceProxy,
     private _modalService: BsModalService
   ) {
     super(injector);
@@ -37,7 +37,7 @@ export class VictimsComponent extends PagedListingComponentBase<VictimDto> {
     this.getDataPage(1);
   }
 
-  fullName(item: VictimDto): string {
+  fullName(item: PersonDto): string {
     const names = {
       title: item.title,
       firstName: item.firstName,
@@ -49,15 +49,16 @@ export class VictimsComponent extends PagedListingComponentBase<VictimDto> {
   }
 
   protected list(
-    request: PagedUsersRequestDto,
+    request: PagedPersonsRequestDto,
     pageNumber: number,
     finishedCallback: Function
   ): void {
     request.keyword = this.keyword;
-    request.isActive = this.isActive;
+    request.type = 'VICTIM';
     this._service
       .getAll(
         request.keyword,
+        request.type,
         request.skipCount,
         request.maxResultCount
       )
@@ -66,13 +67,13 @@ export class VictimsComponent extends PagedListingComponentBase<VictimDto> {
           finishedCallback();
         })
       )
-      .subscribe((result: VictimDtoPagedResultDto) => {
+      .subscribe((result: PersonDtoPagedResultDto) => {
         this.victims = result.items;
         this.showPaging(result, pageNumber);
       });
   }
 
-  protected delete(victim: VictimDto): void {
+  protected delete(victim: PersonDto): void {
     abp.message.confirm(
       'Victim ' + this.fullName(victim) + ' will be deleted',
       undefined,
@@ -86,7 +87,4 @@ export class VictimsComponent extends PagedListingComponentBase<VictimDto> {
       }
     );
   }
-
-
-
 }
