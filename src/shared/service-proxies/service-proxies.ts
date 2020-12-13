@@ -419,6 +419,126 @@ export class ComplaintServiceProxy {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    advanceSearch(body: QueryDto | undefined): Observable<SearchResultDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Complaint/AdvanceSearch";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAdvanceSearch(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAdvanceSearch(<any>response_);
+                } catch (e) {
+                    return <Observable<SearchResultDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<SearchResultDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAdvanceSearch(response: HttpResponseBase): Observable<SearchResultDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(SearchResultDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SearchResultDto[]>(<any>null);
+    }
+
+    /**
+     * @param reportThru (optional) 
+     * @param start (optional) 
+     * @param end (optional) 
+     * @return Success
+     */
+    generateReport(reportThru: string | null | undefined, start: moment.Moment | null | undefined, end: moment.Moment | null | undefined): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/Complaint/GenerateReport?";
+        if (reportThru !== undefined && reportThru !== null)
+            url_ += "reportThru=" + encodeURIComponent("" + reportThru) + "&";
+        if (start !== undefined && start !== null)
+            url_ += "start=" + encodeURIComponent(start ? "" + start.toJSON() : "") + "&";
+        if (end !== undefined && end !== null)
+            url_ += "end=" + encodeURIComponent(end ? "" + end.toJSON() : "") + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGenerateReport(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGenerateReport(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGenerateReport(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -476,17 +596,14 @@ export class ComplaintServiceProxy {
 
     /**
      * @param keyword (optional) 
-     * @param isActive (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | null | undefined, isActive: boolean | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ComplaintDtoPagedResultDto> {
+    getAll(keyword: string | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ComplaintDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Complaint/GetAll?";
         if (keyword !== undefined && keyword !== null)
             url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
-        if (isActive !== undefined && isActive !== null)
-            url_ += "IsActive=" + encodeURIComponent("" + isActive) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -3811,6 +3928,7 @@ export class PersonDto implements IPersonDto {
     type: string | undefined;
     complaintId: number | undefined;
     complaint: ComplaintDto;
+    readonly fullName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -3843,6 +3961,7 @@ export class PersonDto implements IPersonDto {
             this.type = _data["type"];
             this.complaintId = _data["complaintId"];
             this.complaint = _data["complaint"] ? ComplaintDto.fromJS(_data["complaint"]) : <any>undefined;
+            (<any>this).fullName = _data["fullName"];
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
             this.lastModifierUserId = _data["lastModifierUserId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
@@ -3875,6 +3994,7 @@ export class PersonDto implements IPersonDto {
         data["type"] = this.type;
         data["complaintId"] = this.complaintId;
         data["complaint"] = this.complaint ? this.complaint.toJSON() : <any>undefined;
+        data["fullName"] = this.fullName;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         data["lastModifierUserId"] = this.lastModifierUserId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
@@ -3907,6 +4027,7 @@ export interface IPersonDto {
     type: string | undefined;
     complaintId: number | undefined;
     complaint: ComplaintDto;
+    fullName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -4131,6 +4252,7 @@ export interface IUpdateComplaintDto {
 export class ComplaintDashboardDto implements IComplaintDashboardDto {
     totalActiveComplaints: number;
     totalCloseComplaints: number;
+    totalNewComplaints: number;
     topNatureComplaint: string | undefined;
     mostAssigned: string | undefined;
     topSuspectUnit: string | undefined;
@@ -4149,6 +4271,7 @@ export class ComplaintDashboardDto implements IComplaintDashboardDto {
         if (_data) {
             this.totalActiveComplaints = _data["totalActiveComplaints"];
             this.totalCloseComplaints = _data["totalCloseComplaints"];
+            this.totalNewComplaints = _data["totalNewComplaints"];
             this.topNatureComplaint = _data["topNatureComplaint"];
             this.mostAssigned = _data["mostAssigned"];
             this.topSuspectUnit = _data["topSuspectUnit"];
@@ -4167,6 +4290,7 @@ export class ComplaintDashboardDto implements IComplaintDashboardDto {
         data = typeof data === 'object' ? data : {};
         data["totalActiveComplaints"] = this.totalActiveComplaints;
         data["totalCloseComplaints"] = this.totalCloseComplaints;
+        data["totalNewComplaints"] = this.totalNewComplaints;
         data["topNatureComplaint"] = this.topNatureComplaint;
         data["mostAssigned"] = this.mostAssigned;
         data["topSuspectUnit"] = this.topSuspectUnit;
@@ -4185,10 +4309,173 @@ export class ComplaintDashboardDto implements IComplaintDashboardDto {
 export interface IComplaintDashboardDto {
     totalActiveComplaints: number;
     totalCloseComplaints: number;
+    totalNewComplaints: number;
     topNatureComplaint: string | undefined;
     mostAssigned: string | undefined;
     topSuspectUnit: string | undefined;
     topSuspectRank: string | undefined;
+}
+
+export class QueryDto implements IQueryDto {
+    suspectName: string | undefined;
+    victimName: string | undefined;
+    nature: string | undefined;
+    place: string | undefined;
+    incidentDate: moment.Moment | undefined;
+    incidentReported: moment.Moment | undefined;
+    reportedThru: string | undefined;
+    previouslyReported: boolean;
+    skipCount: number;
+    maxResultCount: number;
+
+    constructor(data?: IQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.suspectName = _data["suspectName"];
+            this.victimName = _data["victimName"];
+            this.nature = _data["nature"];
+            this.place = _data["place"];
+            this.incidentDate = _data["incidentDate"] ? moment(_data["incidentDate"].toString()) : <any>undefined;
+            this.incidentReported = _data["incidentReported"] ? moment(_data["incidentReported"].toString()) : <any>undefined;
+            this.reportedThru = _data["reportedThru"];
+            this.previouslyReported = _data["previouslyReported"];
+            this.skipCount = _data["skipCount"];
+            this.maxResultCount = _data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): QueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new QueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["suspectName"] = this.suspectName;
+        data["victimName"] = this.victimName;
+        data["nature"] = this.nature;
+        data["place"] = this.place;
+        data["incidentDate"] = this.incidentDate ? this.incidentDate.toISOString() : <any>undefined;
+        data["incidentReported"] = this.incidentReported ? this.incidentReported.toISOString() : <any>undefined;
+        data["reportedThru"] = this.reportedThru;
+        data["previouslyReported"] = this.previouslyReported;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone(): QueryDto {
+        const json = this.toJSON();
+        let result = new QueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IQueryDto {
+    suspectName: string | undefined;
+    victimName: string | undefined;
+    nature: string | undefined;
+    place: string | undefined;
+    incidentDate: moment.Moment | undefined;
+    incidentReported: moment.Moment | undefined;
+    reportedThru: string | undefined;
+    previouslyReported: boolean;
+    skipCount: number;
+    maxResultCount: number;
+}
+
+export class SearchResultDto implements ISearchResultDto {
+    complaintId: number;
+    sheetNumber: string | undefined;
+    suspect: string | undefined;
+    unit: string | undefined;
+    reportedThru: string | undefined;
+    reportToOtherAgency: boolean;
+    nature: string | undefined;
+    incidentPlace: string | undefined;
+    incidentDate: moment.Moment;
+    incidentReported: moment.Moment;
+    victim: string | undefined;
+
+    constructor(data?: ISearchResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.complaintId = _data["complaintId"];
+            this.sheetNumber = _data["sheetNumber"];
+            this.suspect = _data["suspect"];
+            this.unit = _data["unit"];
+            this.reportedThru = _data["reportedThru"];
+            this.reportToOtherAgency = _data["reportToOtherAgency"];
+            this.nature = _data["nature"];
+            this.incidentPlace = _data["incidentPlace"];
+            this.incidentDate = _data["incidentDate"] ? moment(_data["incidentDate"].toString()) : <any>undefined;
+            this.incidentReported = _data["incidentReported"] ? moment(_data["incidentReported"].toString()) : <any>undefined;
+            this.victim = _data["victim"];
+        }
+    }
+
+    static fromJS(data: any): SearchResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SearchResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["complaintId"] = this.complaintId;
+        data["sheetNumber"] = this.sheetNumber;
+        data["suspect"] = this.suspect;
+        data["unit"] = this.unit;
+        data["reportedThru"] = this.reportedThru;
+        data["reportToOtherAgency"] = this.reportToOtherAgency;
+        data["nature"] = this.nature;
+        data["incidentPlace"] = this.incidentPlace;
+        data["incidentDate"] = this.incidentDate ? this.incidentDate.toISOString() : <any>undefined;
+        data["incidentReported"] = this.incidentReported ? this.incidentReported.toISOString() : <any>undefined;
+        data["victim"] = this.victim;
+        return data; 
+    }
+
+    clone(): SearchResultDto {
+        const json = this.toJSON();
+        let result = new SearchResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISearchResultDto {
+    complaintId: number;
+    sheetNumber: string | undefined;
+    suspect: string | undefined;
+    unit: string | undefined;
+    reportedThru: string | undefined;
+    reportToOtherAgency: boolean;
+    nature: string | undefined;
+    incidentPlace: string | undefined;
+    incidentDate: moment.Moment;
+    incidentReported: moment.Moment;
+    victim: string | undefined;
 }
 
 export class ComplaintDtoPagedResultDto implements IComplaintDtoPagedResultDto {

@@ -63,7 +63,6 @@ export class ComplaintsComponent extends PagedListingComponentBase<ComplaintDto>
     this._complaintService
       .getAll(
         request.keyword,
-        request.isActive,
         request.skipCount,
         request.maxResultCount
       )

@@ -1,0 +1,54 @@
+<div [@routerTransition]>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <h1>Reports</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content px-2">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="col-form-label">Reported Thru</label>
+                                <select class="form-control" [(ngModel)]="reportedThru" name="reportedThru" #reportedThruModel="ngModel"
+                                    #reportedThruEl>
+                                    <option value="">-- ALL --</option>
+                                    <option value="IN PERSON">IN PERSON</option>
+                                    <option value="PHONE CALL">PHONE CALL</option>
+                                    <option value="SMS">SMS</option>
+                                    <option value="WEB">WEB</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="col-form-label">Start Date</label>
+                                <input type="text" class="form-control" bsDatepicker [bsValue]="startDate"
+                                    (bsValueChange)="startDateValueChanged($event)">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="col-form-label">End Date</label>
+                                <input type="text" class="form-control" bsDatepicker [bsValue]="endDate"
+                                    (bsValueChange)="endDateValueChanged($event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <button type="button" class="form-control btn btn-primary" (click)="generate()">
+                                <i class="fas fa-search"></i>&nbsp;GENERATE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -208,10 +208,10 @@
                         <button type="button" class="btn btn-sm bg-danger" (click)="removeVictim(victim)">
                           <i class="fas fa-trash"></i>
                         </button>
-                        <!-- &nbsp;
-                        <button type="button" class="btn btn-sm bg-info" (click)="editVictim(victim)">
+                        &nbsp;
+                        <button type="button" class="btn btn-sm bg-secondary" (click)="editPerson(victim)">
                           <i class="fas fa-pencil-alt"></i>
-                        </button> -->
+                        </button>
                       </td>
                       <td>{{ fullName(victim) }}</td>
                       <td>{{ victim.age }}</td>
@@ -253,10 +253,10 @@
                         <button type="button" class="btn btn-sm bg-danger" (click)="removeSuspect(suspect)">
                           <i class="fas fa-trash"></i>
                         </button>
-                        <!-- &nbsp;
-                        <button type="button" class="btn btn-sm bg-info" (click)="editSuspect(suspect)">
+                        &nbsp;
+                        <button type="button" class="btn btn-sm bg-secondary" (click)="editPerson(suspect)">
                           <i class="fas fa-pencil-alt"></i>
-                        </button> -->
+                        </button>
                       </td>
                       <td>{{ fullName(suspect) }}</td>
                       <td> {{ suspect.age }}</td>
@@ -296,10 +296,10 @@
                         <button type="button" class="btn btn-sm bg-danger" (click)="removeWitness(witness)">
                           <i class="fas fa-trash"></i>
                         </button>
-                        <!-- &nbsp;
-                        <button type="button" class="btn btn-sm bg-info" (click)="editWitness(witness)">
+                        &nbsp;
+                        <button type="button" class="btn btn-sm bg-secondary" (click)="editPerson(witness)">
                           <i class="fas fa-pencil-alt"></i>
-                        </button> -->
+                        </button>
                       </td>
                       <td>{{  fullName(witness) }}</td>
                       <td>{{ witness.address }}</td>

@@ -64,6 +64,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-item-viewer.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { AddMaintenanceComponent } from './maintenance/add-maintenance/add-maintenance.component';
+import { SearchComponent } from './complaints/search/search.component';
+import { ReportComponent } from './report/report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -110,7 +112,9 @@ import { AddMaintenanceComponent } from './maintenance/add-maintenance/add-maint
     CreateDosierItemDialogComponent,
     DosierItemViewerComponent,
     MaintenanceComponent,
-    AddMaintenanceComponent
+    AddMaintenanceComponent,
+    SearchComponent,
+    ReportComponent
   ],
   imports: [
     CommonModule,

@@ -11,6 +11,7 @@ export class HomeComponent implements OnInit {
 
   totalActiveComplaints = 0;
   totalCloseComplaints = 0;
+  totalNewComplaints = 0;
   topNature = '';
   mostAssigned = '';
   topRank = '';
@@ -40,6 +41,7 @@ export class HomeComponent implements OnInit {
       this.mostAssigned = result.mostAssigned;
       this.topRank = result.topSuspectRank;
       this.topUnit = result.topSuspectUnit;
+      this.totalNewComplaints = result.totalNewComplaints;
     });
 
     this.service.getNewComplaints().subscribe(result => {

@@ -28,15 +28,15 @@
                             [placeholder]="'SearchWithThreeDot' | localize" [(ngModel)]="keyword"
                             (ngModelChange)="keyword = $event.toUpperCase()" autocomplete="off"
                             (keyup.enter)="getDataPage(1)" />
-                        <div class="input-group-append">
+                        <!-- <div class="input-group-append">
                             <button type="button" class="btn btn-default"
                                 (click)="advancedFiltersVisible = !advancedFiltersVisible">
                                 <i class="fas" [class.fa-angle-up]="advancedFiltersVisible"
                                     [class.fa-angle-down]="!advancedFiltersVisible"></i>
                             </button>
-                        </div>
+                        </div> -->
                     </div>
-                    <div *ngIf="advancedFiltersVisible" class="card mb-0 mt-1">
+                    <!-- <div *ngIf="advancedFiltersVisible" class="card mb-0 mt-1">
                         <div class="card-body">
                             <form class="form-horizontal">
                                 <div class="row">
@@ -83,7 +83,7 @@
                                 {{ "Clear" | localize }}
                             </button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap" [busy]="isTableLoading">

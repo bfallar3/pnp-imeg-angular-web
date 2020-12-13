@@ -125,19 +125,6 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
     });
   }
 
-  editVictim(person: CreatePersonDto): void {
-    let dialog: BsModalRef;
-    dialog = this._modalService.show(
-      EditPersonDialogComponent,
-      {
-        class: 'modal-lg',
-        initialState: {
-          person: person
-        }
-      }
-    );
-  }
-
   addSuspect(): void {
     let createSuspect: BsModalRef;
     createSuspect = this._modalService.show(
@@ -162,19 +149,6 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
       suspect.type = 'SUSPECT';
       this.suspects.push(suspect);
     });
-  }
-
-  editSuspect(person: CreatePersonDto): void {
-    let dialog: BsModalRef;
-    dialog = this._modalService.show(
-      EditPersonDialogComponent,
-      {
-        class: 'modal-lg',
-        initialState: {
-          person: person
-        }
-      }
-    );
   }
 
   removeSuspect(person: CreatePersonDto): void {
@@ -220,7 +194,7 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
     });
   }
 
-  editWitness(person: CreatePersonDto): void {
+  editPerson(person: CreatePersonDto): void {
     let dialog: BsModalRef;
     dialog = this._modalService.show(
       EditPersonDialogComponent,
@@ -231,6 +205,9 @@ export class CreateComplaintComponent extends AppComponentBase implements OnInit
         }
       }
     );
+    dialog.content.onSave.subscribe(() => {
+      person = dialog.content.person;
+    });
   }
 
   public fullName(item: PersonDto): string {

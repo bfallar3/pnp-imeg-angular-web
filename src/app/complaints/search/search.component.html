@@ -1,0 +1,172 @@
+<div [@routerTransition]>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <h1>Complaints Advance Search</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content px-2">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="col-form-label">Suspect Name</label>
+                                <input type="text" class="form-control" rows="10" [(ngModel)]="suspectName"
+                                    (ngModelChange)="suspectName = $event.toUpperCase()" required name="suspectName"
+                                    #suspectNameModel="ngModel" #suspectNameEl />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="col-form-label">Victim Name</label>
+                                <input type="text" class="form-control" rows="10" [(ngModel)]="victimName"
+                                    (ngModelChange)="victimName = $event.toUpperCase()" required name="victimName" #victimNameModel="ngModel"
+                                    #victimNameEl />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="col-form-label">Nature of Complaint</label>
+                                <select class="form-control" [(ngModel)]="nature" name="complaintNature" #natureModel="ngModel" #natureEl>
+                                    <option></option>
+                                    <option value="EXTORTION">EXTORTION</option>
+                                    <option value="SMUGGLING">SMUGGLING</option>
+                                    <option value="DRUGS">DRUGS</option>
+                                    <option value="KIDNAPPING">KIDNAPPING</option>
+                                    <option value="HULIDAP">HULIDAP</option>
+                                    <option value="ILLEGAL GAMBLING">ILLEGAL GAMBLING</option>
+                                    <option value="PHYSICAL INJURIES">PHYSICAL INJURIES</option>
+                                    <option value="GUN RUNNING">GUN RUNNING</option>
+                                    <option value="ILLEGAL LOGGING">ILLEGAL LOGGING</option>
+                                    <option value="ACT AS PROTECTOR">ACT AS PROTECTOR</option>
+                                    <option value="UNEXPLAINED WEALTH">UNEXPLAINED WEALTH</option>
+                                    <option value="OTHER ANALOGOUS ANOMALIES">OTHER ANALOGOUS ANOMALIES</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="col-form-label">Place of Incident</label>
+                                <input type="text" class="form-control" rows="10" [(ngModel)]="placeIncident"
+                                    (ngModelChange)="placeIncident = $event.toUpperCase()" required name="placeIncident"
+                                    #placeIncidentModel="ngModel" #placeIncidentEl />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="col-form-label">Date of incident</label>
+                                <input type="text" class="form-control" bsDatepicker [bsValue]="dateIncident"
+                                    (bsValueChange)="dateIncidentValueChanged($event)">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="col-form-label">Date Reported</label>
+                                <input type="text" class="form-control" bsDatepicker [bsValue]="dateReported"
+                                    (bsValueChange)="dateReportedValueChanged($event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label class="col-form-label">Reported Thru</label>
+                                <select class="form-control" [(ngModel)]="reportedThru" name="reportedThru"
+                                    #reportedThruModel="ngModel" #reportedThruEl>
+                                    <option value="IN PERSON">IN PERSON</option>
+                                    <option value="PHONE CALL">PHONE CALL</option>
+                                    <option value="SMS">SMS</option>
+                                    <option value="WEB">WEB</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label class="col-form-label">Reported to other agency?</label>
+                                <select class="form-control" [(ngModel)]="reportOtherAgency" name="reportOtherAgency" #reportOtherAgencyModel="ngModel" #reportOtherAgencyEl>
+                                    <option value="NO">NO</option>
+                                    <option value="YES">YES</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label class="col-form-label">&nbsp;</label>
+                                <button type="button" class="form-control btn btn-primary" (click)="refresh()">
+                                    <i class="fas fa-search"></i>&nbsp;SEARCH</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap" [busy]="isTableLoading">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Number</th>
+                                <th>Suspect</th>
+                                <th>Unit</th>
+                                <th>Reported Thru</th>
+                                <th>Report to Other Agency</th>
+                                <th>Nature</th>
+                                <th>Place Incident</th>
+                                <th>Date Incident</th>
+                                <th>Date Reported</th>
+                                <th>Victim Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let complaint of complaints | paginate
+                      : {
+                          id: 'server',
+                          itemsPerPage: pageSize,
+                          currentPage: pageNumber,
+                          totalItems: totalItems
+                        }
+                ">
+                                <td>
+                                    <a [routerLink]="['/app/edit-complaint', complaint.complaintId]">{{ complaint.sheetNumber }}</a>
+                                </td>
+                                <td>{{ complaint.suspect }}</td>
+                                <td>{{ complaint.unit }}</td>
+                                <td>{{ complaint.reportedThru }}</td>
+                                <td>{{ complaint.reportToOtherAgency ? 'YES' : 'NO' }}</td>
+                                <td>{{ complaint.nature }}</td>
+                                <td>{{ complaint.incidentPlace }}</td>
+                                <td>{{ complaint.incidentDate | date:'MM/dd/yyyy' }}</td>
+                                <td>{{ complaint.incidentReported | date:'MM/dd/yyyy' }}</td>
+                                <td>{{ complaint.victim }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer bg-light border-top">
+                    <div class="row">
+                        <div class="col-sm-4 col-12 text-sm-left text-center">
+                            <button class="btn btn-secondary" (click)="refresh()">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                        </div>
+                        <div class="col-sm-4 col-12 text-center">
+                            <p class="mb-0 my-2">
+                                {{ "TotalRecordsCount" | localize: totalItems }}
+                            </p>
+                        </div>
+                        <div class="col-sm-4 col-12">
+                            <div class="float-sm-right m-auto">
+                                <abp-pagination-controls id="server" (pageChange)="getDataPage($event)">
+                                </abp-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

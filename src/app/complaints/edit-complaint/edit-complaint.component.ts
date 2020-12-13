@@ -159,21 +159,12 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
       }
     );
     createSuspect.content.onSave.subscribe(() => {
-      const person = createSuspect.content.person;
-      const suspect: PersonDto = new PersonDto();
-      suspect.address = person.address;
-      suspect.age = person.age;
-      suspect.firstName = person.firstName;
-      suspect.middleName = person.middleName;
-      suspect.lastName = person.lastName;
-      suspect.gender = person.gender;
-      suspect.mobileNumber = person.mobileNumber;
-      suspect.alias = person.alias;
-      suspect.title = person.title;
-      suspect.qualifier = person.qualifier;
-      suspect.type = 'SUSPECT';
-      suspect.complaintId = this.complaint.id;
-      this.suspects.push(suspect);
+      const person: CreatePersonDto = createSuspect.content.person;
+      person.type = 'SUSPECT';
+      person.complaintId = this.complaint.id;
+      this.personService.create(person).subscribe((result: PersonDto) => {
+        this.suspects.push(result);
+      });
     });
   }
 
@@ -222,18 +213,12 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
       }
     );
     createWitnessDlg.content.onSave.subscribe(() => {
-      const person = createWitnessDlg.content.person;
-      const witness: PersonDto = new PersonDto();
-      witness.address = person.address;
-      witness.firstName = person.firstName;
-      witness.middleName = person.middleName;
-      witness.lastName = person.lastName;
-      witness.mobileNumber = person.mobileNumber;
-      witness.title = person.title;
-      witness.qualifier = person.qualifier;
-      witness.type = 'WITNESS';
-      witness.complaintId = this.complaint.id;
-      this.witnesses.push(witness);
+      const person: CreatePersonDto = createWitnessDlg.content.person;
+      person.type = 'WITNESS';
+      person.complaintId = this.complaint.id;
+      this.personService.create(person).subscribe((result: PersonDto) => {
+        this.witnesses.push(result);
+      });
     });
   }
 

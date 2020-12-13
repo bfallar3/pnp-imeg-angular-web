@@ -1,3 +1,5 @@
+import { ReportComponent } from './report/report.component';
+import { SearchComponent } from './complaints/search/search.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { DosierItemViewerComponent } from './dosiers/dosier-item-viewer/dosier-item-viewer.component';
 import { DosierDtoResolver } from './dosiers/edit-dosier/edit-dosier-resolver';
@@ -39,6 +41,11 @@ import { EditDosierComponent } from './dosiers/edit-dosier/edit-dosier.component
                         canActivate: [AppRouteGuard]
                     },
                     {
+                        path: 'complaints/search',
+                        component: SearchComponent,
+                        canActivate: [AppRouteGuard]
+                    },
+                    {
                         path: 'create-complaint',
                         component: CreateComplaintComponent
                     },
@@ -52,6 +59,11 @@ import { EditDosierComponent } from './dosiers/edit-dosier/edit-dosier.component
                     {
                         path: 'dosiers',
                         component: DosiersComponent,
+                        canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'reports',
+                        component: ReportComponent,
                         canActivate: [AppRouteGuard]
                     },
                     {
