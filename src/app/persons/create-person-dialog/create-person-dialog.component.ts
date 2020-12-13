@@ -1,4 +1,4 @@
-import { PersonDto, ReferenceDtoPagedResultDto, ReferenceServiceProxy } from './../../../shared/service-proxies/service-proxies';
+import { CreatePersonDto, PersonDto, ReferenceDtoPagedResultDto, ReferenceServiceProxy } from './../../../shared/service-proxies/service-proxies';
 import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -12,7 +12,7 @@ import * as _ from 'lodash';
 export class CreatePersonDialogComponent extends AppComponentBase implements OnInit {
 
   saving = false;
-  person = new PersonDto();
+  person = new CreatePersonDto();
 
   ranks: string[] = [];
   units: string[] = [];
@@ -41,5 +41,4 @@ export class CreatePersonDialogComponent extends AppComponentBase implements OnI
     this.bsModalRef.hide();
     this.onSave.emit();
   }
-
 }

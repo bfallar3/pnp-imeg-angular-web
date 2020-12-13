@@ -221,6 +221,10 @@
                         <button type="button" class="btn btn-sm bg-danger" (click)="removeVictim(victim)">
                           <i class="fas fa-trash"></i>
                         </button>
+                        &nbsp;
+                        <button type="button" class="btn btn-sm bg-secondary" (click)="editVictim(victim)">
+                          <i class="fas fa-pencil-alt"></i>
+                        </button>
                       </td>
                       <td>{{ fullName(victim) }}</td>
                       <td>{{ victim.age }}</td>
@@ -262,6 +266,10 @@
                         <button type="button" class="btn btn-sm bg-danger" (click)="removeSuspect(suspect)">
                           <i class="fas fa-trash"></i>
                         </button>
+                        &nbsp;
+                        <button type="button" class="btn btn-sm bg-secondary" (click)="editSuspect(suspect)">
+                          <i class="fas fa-pencil-alt"></i>
+                        </button>
                       </td>
                       <td>{{ fullName(suspect) }}</td>
                       <td> {{ suspect.age }}</td>
@@ -300,6 +308,10 @@
                       <td>
                         <button type="button" class="btn btn-sm bg-danger" (click)="removeWitness(witness)">
                           <i class="fas fa-trash"></i>
+                        </button>
+                        &nbsp;
+                        <button type="button" class="btn btn-sm bg-secondary" (click)="editWitness(witness)">
+                          <i class="fas fa-pencil-alt"></i>
                         </button>
                       </td>
                       <td>{{  fullName(witness) }}</td>

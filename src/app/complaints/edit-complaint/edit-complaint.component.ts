@@ -1,7 +1,8 @@
+import { EditPersonDialogComponent } from './../../persons/edit-person-dialog/edit-person-dialog.component';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import {
-  ComplaintDto, ComplaintServiceProxy, PersonDto, PersonServiceProxy, UpdateComplaintDto,
+  ComplaintDto, ComplaintServiceProxy, CreatePersonDto, PersonDto, PersonServiceProxy, UpdateComplaintDto,
 } from './../../../shared/service-proxies/service-proxies';
 import { Component, Injector, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
@@ -28,7 +29,7 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
   receivedOn: Date;
   dateCreated: string;
   previouslyReportedOn: Date;
-  people: PersonDto[] = [];
+  persons: PersonDto[] = [];
   victims: PersonDto[] = [];
   suspects: PersonDto[] = [];
   witnesses: PersonDto[] = [];
@@ -65,14 +66,14 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
 
   save(): void {
     this.saving = true;
-
     this.complaint.dateIncident = moment(this.dateOfIncident);
     this.complaint.receivedOn = moment(this.receivedOn);
     this.complaint.previouslyReportedWhen = moment(this.previouslyReportedOn);
     this.complaint.timeIncident = moment(this.timeIncident);
     this.updateComplaintDto.complaint = this.complaint;
-    this.people = _.concat(this.victims, this.suspects, this.witnesses);
-    this.updateComplaintDto.persons = this.people;
+    this.persons = _.concat(this.victims, this.suspects, this.witnesses);
+    this.updateComplaintDto.persons = this.persons;
+    console.log(this.updateComplaintDto);
 
     this.complaintService.updateComplaint(this.updateComplaintDto)
       .pipe(finalize(() => { this.saving = false; }))
@@ -102,29 +103,50 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
       }
     );
     createVictimDlg.content.onSave.subscribe(() => {
-      const person = createVictimDlg.content.person;
-      const victim: PersonDto = new PersonDto();
-      victim.address = person.address;
-      victim.age = person.age;
-      victim.firstName = person.firstName;
-      victim.middleName = person.middleName;
-      victim.lastName = person.lastName;
-      victim.gender = person.gender;
-      victim.mobileNumber = person.mobileNumber;
-      victim.title = person.title;
-      victim.qualifier = person.qualifier;
-      victim.type = 'VICTIM';
-      this.victims.push(victim);
+      const person: CreatePersonDto = createVictimDlg.content.person;
+      person.type = 'VICTIM';
+      person.complaintId = this.complaint.id;
+      this.personService.create(person).subscribe((result: PersonDto) => {
+        this.victims.push(result);
+      });
     });
   }
 
   removeVictim(person: PersonDto): void {
     abp.message.confirm('Are you sure to delete the victim?', 'Confirm', (confirm) => {
       if (confirm) {
-        _.remove(this.victims, (item) => {
-          return item === person;
+        this.personService.delete(person.id).subscribe(() => {
+          _.remove(this.victims, (item) => {
+            return item === person;
+          });
         });
       }
+    });
+  }
+
+  editVictim(person: PersonDto): void {
+    let editVictimDialog: BsModalRef;
+    editVictimDialog = this._modalService.show(
+      EditPersonDialogComponent,
+      {
+        class: 'modal-lg',
+        initialState: {
+          person: person
+        }
+      }
+    );
+    editVictimDialog.content.onSave.subscribe(() => {
+      person = editVictimDialog.content.person;
+      person.complaint = this.complaint;
+      this.personService.delete(person.id).subscribe(() => {
+        let dto: CreatePersonDto = new CreatePersonDto();
+        dto = this.convertToCreatePersonDto(person, 'VICTIM');
+        this.personService.create(dto).subscribe((result: PersonDto) => {
+          person.id = result.id;
+        }, (error) => {
+            console.error(error);
+        });
+      });
     });
   }
 
@@ -150,6 +172,7 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
       suspect.title = person.title;
       suspect.qualifier = person.qualifier;
       suspect.type = 'SUSPECT';
+      suspect.complaintId = this.complaint.id;
       this.suspects.push(suspect);
     });
   }
@@ -161,6 +184,32 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
           return item === person;
         });
       }
+    });
+  }
+
+  editSuspect(person: PersonDto): void {
+    let editDialog: BsModalRef;
+    editDialog = this._modalService.show(
+      EditPersonDialogComponent,
+      {
+        class: 'modal-lg',
+        initialState: {
+          person: person
+        }
+      }
+    );
+    editDialog.content.onSave.subscribe(() => {
+      person = editDialog.content.person;
+      person.complaint = this.complaint;
+      this.personService.delete(person.id).subscribe(() => {
+        let dto: CreatePersonDto = new CreatePersonDto();
+        dto = this.convertToCreatePersonDto(person, 'SUSPECT');
+        this.personService.create(dto).subscribe((result: PersonDto) => {
+          person.id = result.id;
+        }, (error) => {
+          console.error(error);
+        });
+      });
     });
   }
 
@@ -183,6 +232,7 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
       witness.title = person.title;
       witness.qualifier = person.qualifier;
       witness.type = 'WITNESS';
+      witness.complaintId = this.complaint.id;
       this.witnesses.push(witness);
     });
   }
@@ -194,6 +244,32 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
           return item === person;
         });
       }
+    });
+  }
+
+  editWitness(person: PersonDto): void {
+    let editDialog: BsModalRef;
+    editDialog = this._modalService.show(
+      EditPersonDialogComponent,
+      {
+        class: 'modal-lg',
+        initialState: {
+          person: person
+        }
+      }
+    );
+    editDialog.content.onSave.subscribe(() => {
+      person = editDialog.content.person;
+      person.complaint = this.complaint;
+      this.personService.delete(person.id).subscribe(() => {
+        let dto: CreatePersonDto = new CreatePersonDto();
+        dto = this.convertToCreatePersonDto(person, 'WITNESS');
+        this.personService.create(dto).subscribe((result: PersonDto) => {
+          person.id = result.id;
+        }, (error) => {
+          console.error(error);
+        });
+      });
     });
   }
 
@@ -220,6 +296,25 @@ export class EditComplaintComponent extends AppComponentBase implements OnInit {
         }
       }
     );
+  }
+
+  convertToCreatePersonDto(person: PersonDto, type: string): CreatePersonDto {
+    const dto: CreatePersonDto = new CreatePersonDto();
+    dto.address = person.address;
+    dto.age = person.age;
+    dto.alias = person.alias;
+    dto.complaintId = person.complaintId;
+    dto.firstName = person.firstName;
+    dto.gender = person.gender;
+    dto.lastName = person.lastName;
+    dto.middleName = person.middleName;
+    dto.mobileNumber = person.mobileNumber;
+    dto.office = person.office;
+    dto.qualifier = person.qualifier;
+    dto.title = person.title;
+    dto.type = type;
+    dto.unit = person.unit;
+    return dto;
   }
 
 }

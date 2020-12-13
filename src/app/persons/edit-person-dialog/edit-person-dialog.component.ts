@@ -1,4 +1,4 @@
-import { PersonDto, ReferenceDtoPagedResultDto, ReferenceServiceProxy } from './../../../shared/service-proxies/service-proxies';
+import { PersonDto, ReferenceDtoPagedResultDto, ReferenceServiceProxy, PersonServiceProxy } from './../../../shared/service-proxies/service-proxies';
 import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -33,12 +33,10 @@ export class EditPersonDialogComponent extends AppComponentBase implements OnIni
         this.units = _.map(_.filter(records, { 'type': 'UNIT' }), 'name');
         this.offices = _.map(_.filter(records, { 'type': 'OFFICE' }), 'name');
       });
-    console.log(this.person);
   }
 
   save(): void {
     this.bsModalRef.hide();
     this.onSave.emit();
   }
-
 }

@@ -15,9 +15,9 @@
             <div class="col">
                 <div class="form-group">
                     <label class="col-form-label">Middle Name</label>
-                    <input type="text" class="form-control" [(ngModel)]="person.middleName"
+                    <input type="text" class="form-control" [(ngModel)]="person.middleName" maxlength="256"
                         (ngModelChange)="person.middleName = $event.toUpperCase()"
-                        [ngModelOptions]="{standalone: true}">
+                        name="personMiddlename" #personMiddlenameModel="ngModel" #personMiddlenameEl>
                 </div>
             </div>
             <div class="col">
@@ -42,9 +42,10 @@
             <div class="col-2">
                 <div class="form-group">
                     <label class="col-form-label">Rank</label>
-                    <select class="form-control" [(ngModel)]="person.title" [ngModelOptions]="{standalone: true}">
+                    <select class="form-control" [(ngModel)]="person.title" name="title"
+                        #titleModel="ngModel" #titleEl>
                         <option></option>
-                        <option *ngFor="let record of ranks">{{ record }}</option>
+                        <option [value]="record" *ngFor="let record of ranks">{{ record }}</option>
                     </select>
                 </div>
             </div>
@@ -53,7 +54,7 @@
                     <label class="col-form-label">Unit</label>
                     <select class="form-control" [(ngModel)]="person.unit" [ngModelOptions]="{standalone: true}">
                         <option></option>
-                        <option *ngFor="let record of units">{{ record }}</option>
+                        <option [value]="record" *ngFor="let record of units">{{ record }}</option>
                     </select>
                 </div>
             </div>

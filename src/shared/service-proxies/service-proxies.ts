@@ -3795,280 +3795,6 @@ export interface IRegisterOutput {
     canLogin: boolean;
 }
 
-export class Person implements IPerson {
-    title: string | undefined;
-    firstName: string | undefined;
-    middleName: string | undefined;
-    lastName: string | undefined;
-    qualifier: string | undefined;
-    unit: string | undefined;
-    office: string | undefined;
-    address: string | undefined;
-    age: number;
-    mobileNumber: string | undefined;
-    gender: string | undefined;
-    alias: string | undefined;
-    type: string | undefined;
-    complaintId: number | undefined;
-    complaint: Complaint;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    id: number;
-
-    constructor(data?: IPerson) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.title = _data["title"];
-            this.firstName = _data["firstName"];
-            this.middleName = _data["middleName"];
-            this.lastName = _data["lastName"];
-            this.qualifier = _data["qualifier"];
-            this.unit = _data["unit"];
-            this.office = _data["office"];
-            this.address = _data["address"];
-            this.age = _data["age"];
-            this.mobileNumber = _data["mobileNumber"];
-            this.gender = _data["gender"];
-            this.alias = _data["alias"];
-            this.type = _data["type"];
-            this.complaintId = _data["complaintId"];
-            this.complaint = _data["complaint"] ? Complaint.fromJS(_data["complaint"]) : <any>undefined;
-            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = _data["lastModifierUserId"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = _data["creatorUserId"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): Person {
-        data = typeof data === 'object' ? data : {};
-        let result = new Person();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["title"] = this.title;
-        data["firstName"] = this.firstName;
-        data["middleName"] = this.middleName;
-        data["lastName"] = this.lastName;
-        data["qualifier"] = this.qualifier;
-        data["unit"] = this.unit;
-        data["office"] = this.office;
-        data["address"] = this.address;
-        data["age"] = this.age;
-        data["mobileNumber"] = this.mobileNumber;
-        data["gender"] = this.gender;
-        data["alias"] = this.alias;
-        data["type"] = this.type;
-        data["complaintId"] = this.complaintId;
-        data["complaint"] = this.complaint ? this.complaint.toJSON() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): Person {
-        const json = this.toJSON();
-        let result = new Person();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPerson {
-    title: string | undefined;
-    firstName: string | undefined;
-    middleName: string | undefined;
-    lastName: string | undefined;
-    qualifier: string | undefined;
-    unit: string | undefined;
-    office: string | undefined;
-    address: string | undefined;
-    age: number;
-    mobileNumber: string | undefined;
-    gender: string | undefined;
-    alias: string | undefined;
-    type: string | undefined;
-    complaintId: number | undefined;
-    complaint: Complaint;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    id: number;
-}
-
-export class Complaint implements IComplaint {
-    sheetNumber: string | undefined;
-    reportedThru: string | undefined;
-    previouslyReported: boolean;
-    previouslyReportedAgency: string | undefined;
-    previouslyReportedWhom: string | undefined;
-    previouslyReportedWhen: moment.Moment;
-    nature: string | undefined;
-    placeIncident: string | undefined;
-    dateIncident: moment.Moment;
-    timeIncident: moment.Moment;
-    statement: string | undefined;
-    referredBy: string | undefined;
-    referralNumber: string | undefined;
-    assignedTo: string | undefined;
-    receivedOn: moment.Moment;
-    receivingOffice: string | undefined;
-    officeMakingAssignment: string | undefined;
-    status: string | undefined;
-    informerName: string | undefined;
-    informerAddress: string | undefined;
-    informerContactNumber: string | undefined;
-    persons: Person[] | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    id: number;
-
-    constructor(data?: IComplaint) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.sheetNumber = _data["sheetNumber"];
-            this.reportedThru = _data["reportedThru"];
-            this.previouslyReported = _data["previouslyReported"];
-            this.previouslyReportedAgency = _data["previouslyReportedAgency"];
-            this.previouslyReportedWhom = _data["previouslyReportedWhom"];
-            this.previouslyReportedWhen = _data["previouslyReportedWhen"] ? moment(_data["previouslyReportedWhen"].toString()) : <any>undefined;
-            this.nature = _data["nature"];
-            this.placeIncident = _data["placeIncident"];
-            this.dateIncident = _data["dateIncident"] ? moment(_data["dateIncident"].toString()) : <any>undefined;
-            this.timeIncident = _data["timeIncident"] ? moment(_data["timeIncident"].toString()) : <any>undefined;
-            this.statement = _data["statement"];
-            this.referredBy = _data["referredBy"];
-            this.referralNumber = _data["referralNumber"];
-            this.assignedTo = _data["assignedTo"];
-            this.receivedOn = _data["receivedOn"] ? moment(_data["receivedOn"].toString()) : <any>undefined;
-            this.receivingOffice = _data["receivingOffice"];
-            this.officeMakingAssignment = _data["officeMakingAssignment"];
-            this.status = _data["status"];
-            this.informerName = _data["informerName"];
-            this.informerAddress = _data["informerAddress"];
-            this.informerContactNumber = _data["informerContactNumber"];
-            if (Array.isArray(_data["persons"])) {
-                this.persons = [] as any;
-                for (let item of _data["persons"])
-                    this.persons.push(Person.fromJS(item));
-            }
-            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = _data["lastModifierUserId"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = _data["creatorUserId"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): Complaint {
-        data = typeof data === 'object' ? data : {};
-        let result = new Complaint();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["sheetNumber"] = this.sheetNumber;
-        data["reportedThru"] = this.reportedThru;
-        data["previouslyReported"] = this.previouslyReported;
-        data["previouslyReportedAgency"] = this.previouslyReportedAgency;
-        data["previouslyReportedWhom"] = this.previouslyReportedWhom;
-        data["previouslyReportedWhen"] = this.previouslyReportedWhen ? this.previouslyReportedWhen.toISOString() : <any>undefined;
-        data["nature"] = this.nature;
-        data["placeIncident"] = this.placeIncident;
-        data["dateIncident"] = this.dateIncident ? this.dateIncident.toISOString() : <any>undefined;
-        data["timeIncident"] = this.timeIncident ? this.timeIncident.toISOString() : <any>undefined;
-        data["statement"] = this.statement;
-        data["referredBy"] = this.referredBy;
-        data["referralNumber"] = this.referralNumber;
-        data["assignedTo"] = this.assignedTo;
-        data["receivedOn"] = this.receivedOn ? this.receivedOn.toISOString() : <any>undefined;
-        data["receivingOffice"] = this.receivingOffice;
-        data["officeMakingAssignment"] = this.officeMakingAssignment;
-        data["status"] = this.status;
-        data["informerName"] = this.informerName;
-        data["informerAddress"] = this.informerAddress;
-        data["informerContactNumber"] = this.informerContactNumber;
-        if (Array.isArray(this.persons)) {
-            data["persons"] = [];
-            for (let item of this.persons)
-                data["persons"].push(item.toJSON());
-        }
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): Complaint {
-        const json = this.toJSON();
-        let result = new Complaint();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IComplaint {
-    sheetNumber: string | undefined;
-    reportedThru: string | undefined;
-    previouslyReported: boolean;
-    previouslyReportedAgency: string | undefined;
-    previouslyReportedWhom: string | undefined;
-    previouslyReportedWhen: moment.Moment;
-    nature: string | undefined;
-    placeIncident: string | undefined;
-    dateIncident: moment.Moment;
-    timeIncident: moment.Moment;
-    statement: string | undefined;
-    referredBy: string | undefined;
-    referralNumber: string | undefined;
-    assignedTo: string | undefined;
-    receivedOn: moment.Moment;
-    receivingOffice: string | undefined;
-    officeMakingAssignment: string | undefined;
-    status: string | undefined;
-    informerName: string | undefined;
-    informerAddress: string | undefined;
-    informerContactNumber: string | undefined;
-    persons: Person[] | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    id: number;
-}
-
 export class PersonDto implements IPersonDto {
     title: string | undefined;
     firstName: string | undefined;
@@ -4084,7 +3810,7 @@ export class PersonDto implements IPersonDto {
     alias: string | undefined;
     type: string | undefined;
     complaintId: number | undefined;
-    complaint: Complaint;
+    complaint: ComplaintDto;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -4116,7 +3842,7 @@ export class PersonDto implements IPersonDto {
             this.alias = _data["alias"];
             this.type = _data["type"];
             this.complaintId = _data["complaintId"];
-            this.complaint = _data["complaint"] ? Complaint.fromJS(_data["complaint"]) : <any>undefined;
+            this.complaint = _data["complaint"] ? ComplaintDto.fromJS(_data["complaint"]) : <any>undefined;
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
             this.lastModifierUserId = _data["lastModifierUserId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
@@ -4180,7 +3906,7 @@ export interface IPersonDto {
     alias: string | undefined;
     type: string | undefined;
     complaintId: number | undefined;
-    complaint: Complaint;
+    complaint: ComplaintDto;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -4534,6 +4260,8 @@ export class CreatePersonDto implements ICreatePersonDto {
     gender: string | undefined;
     alias: string | undefined;
     type: string | undefined;
+    complaintId: number | undefined;
+    complaint: ComplaintDto;
 
     constructor(data?: ICreatePersonDto) {
         if (data) {
@@ -4559,6 +4287,8 @@ export class CreatePersonDto implements ICreatePersonDto {
             this.gender = _data["gender"];
             this.alias = _data["alias"];
             this.type = _data["type"];
+            this.complaintId = _data["complaintId"];
+            this.complaint = _data["complaint"] ? ComplaintDto.fromJS(_data["complaint"]) : <any>undefined;
         }
     }
 
@@ -4584,6 +4314,8 @@ export class CreatePersonDto implements ICreatePersonDto {
         data["gender"] = this.gender;
         data["alias"] = this.alias;
         data["type"] = this.type;
+        data["complaintId"] = this.complaintId;
+        data["complaint"] = this.complaint ? this.complaint.toJSON() : <any>undefined;
         return data; 
     }
 
@@ -4609,6 +4341,8 @@ export interface ICreatePersonDto {
     gender: string | undefined;
     alias: string | undefined;
     type: string | undefined;
+    complaintId: number | undefined;
+    complaint: ComplaintDto;
 }
 
 export class CreateComplaintDto implements ICreateComplaintDto {
