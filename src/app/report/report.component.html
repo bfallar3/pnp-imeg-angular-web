@@ -43,8 +43,11 @@
                     </div>
                     <div class="row">
                         <div class="col-2">
-                            <button type="button" class="form-control btn btn-primary" (click)="generate()">
+                            <button type="button" class="form-control btn btn-primary" (click)="generate()" [disabled]="disabled">
                                 <i class="fas fa-search"></i>&nbsp;GENERATE</button>
+                            <div *ngIf="downloadReady" class="download-panel">
+                                <a [href]="downloadLink" target="_blank">Download Report Here</a>
+                            </div>
                         </div>
                     </div>
                 </div>
