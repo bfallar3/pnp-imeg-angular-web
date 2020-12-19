@@ -4320,7 +4320,8 @@ export class QueryDto implements IQueryDto {
     suspectName: string | undefined;
     victimName: string | undefined;
     nature: string | undefined;
-    place: string | undefined;
+    unit: string | undefined;
+    rank: string | undefined;
     incidentDate: moment.Moment | undefined;
     incidentReported: moment.Moment | undefined;
     reportedThru: string | undefined;
@@ -4342,7 +4343,8 @@ export class QueryDto implements IQueryDto {
             this.suspectName = _data["suspectName"];
             this.victimName = _data["victimName"];
             this.nature = _data["nature"];
-            this.place = _data["place"];
+            this.unit = _data["unit"];
+            this.rank = _data["rank"];
             this.incidentDate = _data["incidentDate"] ? moment(_data["incidentDate"].toString()) : <any>undefined;
             this.incidentReported = _data["incidentReported"] ? moment(_data["incidentReported"].toString()) : <any>undefined;
             this.reportedThru = _data["reportedThru"];
@@ -4364,7 +4366,8 @@ export class QueryDto implements IQueryDto {
         data["suspectName"] = this.suspectName;
         data["victimName"] = this.victimName;
         data["nature"] = this.nature;
-        data["place"] = this.place;
+        data["unit"] = this.unit;
+        data["rank"] = this.rank;
         data["incidentDate"] = this.incidentDate ? this.incidentDate.toISOString() : <any>undefined;
         data["incidentReported"] = this.incidentReported ? this.incidentReported.toISOString() : <any>undefined;
         data["reportedThru"] = this.reportedThru;
@@ -4386,7 +4389,8 @@ export interface IQueryDto {
     suspectName: string | undefined;
     victimName: string | undefined;
     nature: string | undefined;
-    place: string | undefined;
+    unit: string | undefined;
+    rank: string | undefined;
     incidentDate: moment.Moment | undefined;
     incidentReported: moment.Moment | undefined;
     reportedThru: string | undefined;

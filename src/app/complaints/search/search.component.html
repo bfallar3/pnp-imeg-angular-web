@@ -53,10 +53,21 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label class="col-form-label">Place of Incident</label>
-                                <input type="text" class="form-control" rows="10" [(ngModel)]="placeIncident"
-                                    (ngModelChange)="placeIncident = $event.toUpperCase()" required name="placeIncident"
-                                    #placeIncidentModel="ngModel" #placeIncidentEl />
+                                <label class="col-form-label">Unit</label>
+                                <select class="form-control" [(ngModel)]="unit" name="unit"
+                                    #unitModel="ngModel" #unitEl>
+                                    <option></option>
+                                    <option *ngFor="let record of units">{{ record }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="col-form-label">Rank</label>
+                                <select class="form-control" [(ngModel)]="rank" name="rank" #rankModel="ngModel" #rankEl>
+                                    <option></option>
+                                    <option *ngFor="let record of ranks">{{ record }}</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col">
@@ -66,6 +77,8 @@
                                     (bsValueChange)="dateIncidentValueChanged($event)">
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <label class="col-form-label">Date Reported</label>
@@ -73,8 +86,6 @@
                                     (bsValueChange)="dateReportedValueChanged($event)">
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-4">
                             <div class="form-group">
                                 <label class="col-form-label">Reported Thru</label>
@@ -96,12 +107,11 @@
                                 </select>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-2">
-                            <div class="form-group">
-                                <label class="col-form-label">&nbsp;</label>
-                                <button type="button" class="form-control btn btn-primary" (click)="refresh()">
-                                    <i class="fas fa-search"></i>&nbsp;SEARCH</button>
-                            </div>
+                            <button type="button" class="form-control btn btn-primary" (click)="refresh()">
+                                <i class="fas fa-search"></i>&nbsp;SEARCH</button>
                         </div>
                     </div>
                 </div>
