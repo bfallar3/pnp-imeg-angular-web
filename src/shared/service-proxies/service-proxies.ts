@@ -4323,7 +4323,11 @@ export class QueryDto implements IQueryDto {
     unit: string | undefined;
     rank: string | undefined;
     incidentDate: moment.Moment | undefined;
+    startIncidentDate: moment.Moment | undefined;
+    endIncidentDate: moment.Moment | undefined;
     incidentReported: moment.Moment | undefined;
+    startReportedDate: moment.Moment | undefined;
+    endReportedDate: moment.Moment | undefined;
     reportedThru: string | undefined;
     previouslyReported: boolean;
     skipCount: number;
@@ -4346,7 +4350,11 @@ export class QueryDto implements IQueryDto {
             this.unit = _data["unit"];
             this.rank = _data["rank"];
             this.incidentDate = _data["incidentDate"] ? moment(_data["incidentDate"].toString()) : <any>undefined;
+            this.startIncidentDate = _data["startIncidentDate"] ? moment(_data["startIncidentDate"].toString()) : <any>undefined;
+            this.endIncidentDate = _data["endIncidentDate"] ? moment(_data["endIncidentDate"].toString()) : <any>undefined;
             this.incidentReported = _data["incidentReported"] ? moment(_data["incidentReported"].toString()) : <any>undefined;
+            this.startReportedDate = _data["startReportedDate"] ? moment(_data["startReportedDate"].toString()) : <any>undefined;
+            this.endReportedDate = _data["endReportedDate"] ? moment(_data["endReportedDate"].toString()) : <any>undefined;
             this.reportedThru = _data["reportedThru"];
             this.previouslyReported = _data["previouslyReported"];
             this.skipCount = _data["skipCount"];
@@ -4369,7 +4377,11 @@ export class QueryDto implements IQueryDto {
         data["unit"] = this.unit;
         data["rank"] = this.rank;
         data["incidentDate"] = this.incidentDate ? this.incidentDate.toISOString() : <any>undefined;
+        data["startIncidentDate"] = this.startIncidentDate ? this.startIncidentDate.toISOString() : <any>undefined;
+        data["endIncidentDate"] = this.endIncidentDate ? this.endIncidentDate.toISOString() : <any>undefined;
         data["incidentReported"] = this.incidentReported ? this.incidentReported.toISOString() : <any>undefined;
+        data["startReportedDate"] = this.startReportedDate ? this.startReportedDate.toISOString() : <any>undefined;
+        data["endReportedDate"] = this.endReportedDate ? this.endReportedDate.toISOString() : <any>undefined;
         data["reportedThru"] = this.reportedThru;
         data["previouslyReported"] = this.previouslyReported;
         data["skipCount"] = this.skipCount;
@@ -4392,7 +4404,11 @@ export interface IQueryDto {
     unit: string | undefined;
     rank: string | undefined;
     incidentDate: moment.Moment | undefined;
+    startIncidentDate: moment.Moment | undefined;
+    endIncidentDate: moment.Moment | undefined;
     incidentReported: moment.Moment | undefined;
+    startReportedDate: moment.Moment | undefined;
+    endReportedDate: moment.Moment | undefined;
     reportedThru: string | undefined;
     previouslyReported: boolean;
     skipCount: number;

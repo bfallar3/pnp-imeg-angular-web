@@ -24,7 +24,11 @@ export class SearchComponent extends PagedListingComponentBase<ComplaintDto> imp
   unit: string;
   rank: string;
   dateIncident: Date;
+  startDateIncident: Date;
+  endDateIncident: Date;
   dateReported: Date;
+  startDateReported: Date;
+  endDateReported: Date;
   reportOtherAgency = 'NO';
   reportedThru = 'IN PERSON';
   ranks: string[] = [];
@@ -48,22 +52,30 @@ export class SearchComponent extends PagedListingComponentBase<ComplaintDto> imp
       });
   }
 
-  dateIncidentValueChanged(value: Date): void {
-    this.dateIncident = value;
+  dateIncidentValueChanged($event): void {
+    //this.dateIncident = value;
+    this.startDateIncident = $event[0].toJSON().split('T')[0];
+    this.endDateIncident = $event[1].toJSON().split('T')[0];
   }
 
-  dateReportedValueChanged(value: Date): void {
-    this.dateReported = value;
+  dateReportedValueChanged($event): void {
+    //this.dateReported = value;
+    this.startDateReported = $event[0].toJSON().split('T')[0];
+    this.endDateReported = $event[1].toJSON().split('T')[0];
   }
 
   protected list(request: QueryDto, pageNumber: number, finishedCallback: Function): void {
     this.isTableLoading = true;
     const query: QueryDto = new QueryDto();
-    if (this.dateIncident) {
-      query.incidentDate = moment(this.dateIncident);
+    if (this.startDateIncident) {
+      //query.incidentDate = moment(this.dateIncident);
+      query.startIncidentDate = moment(this.startDateIncident);
+      query.endIncidentDate = moment(this.endDateIncident);
     }
-    if (this.dateReported) {
-      query.incidentReported = moment(this.dateReported);
+    if (this.startDateReported) {
+      //query.incidentReported = moment(this.dateReported);
+      query.startReportedDate = moment(this.startDateReported);
+      query.endReportedDate = moment(this.endDateReported);
     }
     query.nature = this.nature;
     query.unit = this.unit;
