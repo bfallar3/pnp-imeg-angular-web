@@ -4801,22 +4801,22 @@ export interface IRegisterOutput {
 }
 
 export class PersonDto implements IPersonDto {
+    title: string | undefined;
     firstName: string | undefined;
     middleName: string | undefined;
     lastName: string | undefined;
     qualifier: string | undefined;
-    mobileNumber: string | undefined;
-    address: string | undefined;
-    type: string | undefined;
-    fullName: string | undefined;
     unit: string | undefined;
-    title: string | undefined;
-    alias: string | undefined;
-    gender: string | undefined;
     office: string | undefined;
+    address: string | undefined;
     age: number;
-    complaintId: number;
+    mobileNumber: string | undefined;
+    gender: string | undefined;
+    alias: string | undefined;
+    type: string | undefined;
+    complaintId: number | undefined;
     complaint: ComplaintDto;
+    readonly fullName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
@@ -4834,22 +4834,22 @@ export class PersonDto implements IPersonDto {
 
     init(_data?: any) {
         if (_data) {
+            this.title = _data["title"];
             this.firstName = _data["firstName"];
             this.middleName = _data["middleName"];
             this.lastName = _data["lastName"];
             this.qualifier = _data["qualifier"];
-            this.mobileNumber = _data["mobileNumber"];
-            this.address = _data["address"];
-            this.type = _data["type"];
-            this.fullName = _data["fullName"];
             this.unit = _data["unit"];
-            this.title = _data["title"];
-            this.alias = _data["alias"];
-            this.gender = _data["gender"];
             this.office = _data["office"];
+            this.address = _data["address"];
             this.age = _data["age"];
+            this.mobileNumber = _data["mobileNumber"];
+            this.gender = _data["gender"];
+            this.alias = _data["alias"];
+            this.type = _data["type"];
             this.complaintId = _data["complaintId"];
             this.complaint = _data["complaint"] ? ComplaintDto.fromJS(_data["complaint"]) : <any>undefined;
+            (<any>this).fullName = _data["fullName"];
             this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
             this.lastModifierUserId = _data["lastModifierUserId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
@@ -4867,22 +4867,22 @@ export class PersonDto implements IPersonDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
         data["firstName"] = this.firstName;
         data["middleName"] = this.middleName;
         data["lastName"] = this.lastName;
         data["qualifier"] = this.qualifier;
-        data["mobileNumber"] = this.mobileNumber;
-        data["address"] = this.address;
-        data["type"] = this.type;
-        data["fullName"] = this.fullName;
         data["unit"] = this.unit;
-        data["title"] = this.title;
-        data["alias"] = this.alias;
-        data["gender"] = this.gender;
         data["office"] = this.office;
+        data["address"] = this.address;
         data["age"] = this.age;
+        data["mobileNumber"] = this.mobileNumber;
+        data["gender"] = this.gender;
+        data["alias"] = this.alias;
+        data["type"] = this.type;
         data["complaintId"] = this.complaintId;
         data["complaint"] = this.complaint ? this.complaint.toJSON() : <any>undefined;
+        data["fullName"] = this.fullName;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         data["lastModifierUserId"] = this.lastModifierUserId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
@@ -4900,22 +4900,22 @@ export class PersonDto implements IPersonDto {
 }
 
 export interface IPersonDto {
+    title: string | undefined;
     firstName: string | undefined;
     middleName: string | undefined;
     lastName: string | undefined;
     qualifier: string | undefined;
-    mobileNumber: string | undefined;
-    address: string | undefined;
-    type: string | undefined;
-    fullName: string | undefined;
     unit: string | undefined;
-    title: string | undefined;
-    alias: string | undefined;
-    gender: string | undefined;
     office: string | undefined;
+    address: string | undefined;
     age: number;
-    complaintId: number;
+    mobileNumber: string | undefined;
+    gender: string | undefined;
+    alias: string | undefined;
+    type: string | undefined;
+    complaintId: number | undefined;
     complaint: ComplaintDto;
+    fullName: string | undefined;
     lastModificationTime: moment.Moment | undefined;
     lastModifierUserId: number | undefined;
     creationTime: moment.Moment;
